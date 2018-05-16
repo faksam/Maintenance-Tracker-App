@@ -125,7 +125,7 @@ a {
 }
 button {
   font-family: Arial;
-  background-color: rgb(99, 125, 193);
+  background-color: rgb(57, 83, 150);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -134,7 +134,13 @@ button {
 }
 button:hover {
   background-color: #4CAF50;
-  font-weight: bold;
+}
+button.danger:hover
+{
+  border: 2px solid #CB3438;
+  /**/
+  background-color: #CB3438;
+  color: #ffffff;
 }
 button:disabled {
   background-color: #eee;
@@ -230,8 +236,35 @@ nav a.active {
   .col-1-4 {
     width: calc(100% / 4);
   }
+  .col-1-5 {
+    width: calc(100% / 5);
+  }
+  .col-1-6 {
+    width: calc(100% / 6);
+  }
+  .col-1-7 {
+    width: calc(100% / 7);
+  }
+  .col-1-8 {
+    width: calc(100% / 8);
+  }
+  .col-1-9 {
+    width: calc(100% / 9);
+  }
+  .col-1-10 {
+    width: calc(100% / 10);
+  }
+  .col-1-15 {
+    width: calc(100% / 15);
+  }
+  .col-4-5 {
+    width: calc(100% / 5 * 4);
+  }
   .col-2-3 {
     width: calc(100% / 3 * 2);
+  }
+  .col-3-15 {
+    width: calc(100% / 15 * 3);
   }
   .col {
     float: left;
@@ -309,7 +342,7 @@ nav a.active {
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
-  text-align: center;
+  text-align: left;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -407,9 +440,9 @@ nav a.active {
 }
 .card_content a button.danger:hover
 {
-  border: 2px solid rgb(99, 125, 193);;
+  border: 2px solid #CB3438;
   /**/
-  background-color: rgb(99, 125, 193);;
+  background-color: #CB3438;
   color: #ffffff;
 }
 
@@ -425,8 +458,28 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+tr {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #f4f4f4;
+  background-color: #dddada;
+  line-height: 28px;
+}
+tr.header {
+  background-color: #afafaf;
+}
+tr:hover.header {
+  border: 2px solid ;
+  border-bottom-color: black;
+  /**/
+  background-color: #afafaf;
+  color: black;
+}
+tr:hover {
+  border: 2px solid rgb(91, 124, 209);
+  /**/
+  background-color: rgb(91, 124, 209);
+  color: #ffffff;
 }
 .footer .row p a {
   color: rgb(242, 239, 239);
@@ -437,4 +490,8 @@ tr:nth-child(even) {
   font-weight: bold;
   background-color: rgb(91, 124, 209);
   color: #ffffff;
+}
+div i {
+  display: inline-flex;
+  vertical-align: middle;
 }
