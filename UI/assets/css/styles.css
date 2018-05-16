@@ -429,12 +429,12 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 .footer .row p a {
-  color: rgb(206, 173, 174);
+  color: rgb(242, 239, 239);
 }
 .footer .row p a:hover {
-  border: 2px solid rgb(198, 58, 63);
+  border: 2px solid rgb(91, 124, 209);
   /**/
   font-weight: bold;
-  background-color: rgb(198, 58, 63);
+  background-color: rgb(91, 124, 209);
   color: #ffffff;
 }
