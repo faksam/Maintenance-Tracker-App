@@ -29,8 +29,6 @@ $(document).ready(() => {
   const signUpModal = document.getElementById('signupModal');
   // Get the signinModal
   const signInModal = document.getElementById('signinModal');
-  // Get the catererSigninModal
-  const catererSigninModal = document.getElementById('catererSigninModal');
 
 
 
@@ -40,7 +38,7 @@ $(document).ready(() => {
   const signInBtn = document.getElementById('signinBtn');
   const signUpBtn = document.getElementById('signupBtn');
 
-  if (signUpBtn != null || signInBtn != null || catererSigninBtn) {
+  if (signUpBtn != null || signInBtn != null) {
     const signUpSpan = document.getElementById('signupSpan');
     const signInSpan = document.getElementById('signinSpan');
 
@@ -56,10 +54,13 @@ $(document).ready(() => {
       signInModal.style.display = 'block';
     };
 
-    if (signUpSpan != null) {
+    if (signUpSpan != null || signInSpan != null) {
       // When the user clicks on <span> (x), close the modal
       signUpSpan.onclick = function () {
         signUpModal.style.display = 'none';
+      };
+      signInSpan.onclick = function () {
+        signInModal.style.display = 'none';
       };
     }
 
