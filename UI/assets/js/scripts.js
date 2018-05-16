@@ -26,13 +26,12 @@ $(document).ready(() => {
 
   // Get the button that opens the modal
   // Get signupModal
-  const signUpModal = document.getElementById('0signupModal');
+  const signUpModal = document.getElementById('signupModal');
   // Get the signinModal
   const signInModal = document.getElementById('signinModal');
   // Get the catererSigninModal
   const catererSigninModal = document.getElementById('catererSigninModal');
 
-  // Get Meal Modal
 
 
   // Get the <span> element that closes the modal
@@ -40,12 +39,10 @@ $(document).ready(() => {
   // Get the button that opens the modal
   const signInBtn = document.getElementById('signinBtn');
   const signUpBtn = document.getElementById('signupBtn');
-  const catererSigninBtn = document.getElementById('catererSigninBtn');
 
   if (signUpBtn != null || signInBtn != null || catererSigninBtn) {
-    const signUpSpan = document.getElementById('0signupSpan');
+    const signUpSpan = document.getElementById('signupSpan');
     const signInSpan = document.getElementById('signinSpan');
-    const catererSignInSpan = document.getElementById('catererSigninSpan');
 
     // Get the <span> element that closes the modal
 
@@ -59,21 +56,11 @@ $(document).ready(() => {
       signInModal.style.display = 'block';
     };
 
-    // When the user clicks the button, open the modal
-    // catererSigninBtn.onclick = function () {
-    //   catererSigninModal.style.display = 'block';
-    // };
-    if (signUpSpan != null || signInSpan != null) {
+    if (signUpSpan != null) {
       // When the user clicks on <span> (x), close the modal
       signUpSpan.onclick = function () {
         signUpModal.style.display = 'none';
       };
-      signInSpan.onclick = function () {
-        signInModal.style.display = 'none';
-      };
-      // catererSignInSpan.onclick = function () {
-      //   catererSigninModal.style.display = 'none';
-      // };
     }
 
     // When the user clicks anywhere outside of the modal, close it
@@ -82,8 +69,6 @@ $(document).ready(() => {
         signUpModal.style.display = 'none';
       } else if (event.target === signInModal) {
         signInModal.style.display = 'none';
-      } else if (event.target === catererSigninModal) {
-        catererSigninModal.style.display = 'none';
       }
     };
   }
