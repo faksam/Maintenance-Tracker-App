@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Track your maintenance request - MTA</title>
+    <meta name="author" content="Fakunle Samuel">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Import css-->
+    <link type="text/css" rel="stylesheet" href="./assets/css/styles.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/navigation.css" />
+</head>
+
+<body>
+    <div class="main-container" style="min-width: 800px;">
+    <div class="row">
+        <section class="navigation">
+            <div class="nav-container">
+                <div class="brand">
+                    <a href="./index.html">
+                        <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
+                </div>
+                <nav>
+                    <div class="nav-mobile">
+                        <a id="nav-toggle" href="#!">
+                            <span></span>
+                        </a>
+                    </div>
+                    <ul class="nav-list">
+                        <li>
+                            <a href="./user_account.html">My Account</a>
+                        </li>
+                        <li>
+                            <a href="./index.html">Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </div>
+        <div class="container">
+
+            <br>
+            <div class="row">
+                <h2 class="center">All Requests</h2>
+                <div class="row">
+                    <div class="col-m col-1-10">
+                        <a>
+                            <button  onclick="createRequest()">
+                                <i class="material-icons">add</i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-m col-2-1-3">
+                        <input id="search" style="width: 100%" placeholder="Search">
+                    </div>
+                    <div class="col-m col-3-15">
+                        <select>
+                            <option value="all">All</option>
+                            <option value="new">New</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+
+                </div>
+                <table>
+                    <tr class="header">
+                        <th>Name</th>
+                        <th colspan="3">Request</th>
+                        <th>Status</th>
+                        <th colspan="2">Date</th>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Stephen Colbert</td>
+                        <td colspan="3">
+                            <b>Broken Desk</b> - One of the desk's in my office is broken.</td>
+                        <td>New</td>
+                        <td>18-04-2018</td>
+                        <td>
+                            <a>
+                                <button onclick="editRequest()">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="clickedRequest(this)">
+                        <td>Mr Jimmy Fallon</td>
+                        <td colspan="3">
+                            <b>Broken Monitor</b> - One of the Monitor's in my office is broken.</td>
+                        <td>Rejected</td>
+                        <td>17-04-2018</td>
+                        <td></td>
+                    </tr>
+                    <tr onclick="clickedRequest(this)">
+                        <td>Mr Francisco Chang</td>
+                        <td colspan="3">
+                            <b>Broken AC</b> - One of the Air conditioner's in my office is broken.</td>
+                        <td>Approved</td>
+                        <td>16-04-2018</td>
+                        <td></td>
+                    </tr>
+                    <tr onclick="clickedRequest(this)">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                        <td>Approved</td>
+                        <td>13-04-2018</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Create Request Modal -->
+            <div id="createRequestModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span id="createRequestSpan" class="close">&times;</span>
+                            <h2 class="center">Create A New Request</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="container">
+                                    <form class=" center">
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="input col col-1">
+                                                    <input id="requestTitle" type="text" placeholder="Request Title" class="validate">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input col col-1">
+                                                    <textarea rows="5" cols="50" id="requestDescription" placeholder="Request Description" style="height: unset;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                        <a class="center" href="./homepage.html"><button style="width: 50%">Create</button></a>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+            </div>
+            <!-- Edit Request Modal -->
+            <div id="editRequestModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span id="editRequestSpan" class="close">&times;</span>
+                            <h2 class="center">Edit Request</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="container">
+                                    <form class=" center">
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="input col col-1">
+                                                    <input id="editRequestTitle" type="text" placeholder="Request Title" class="validate">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input col col-1">
+                                                    <textarea rows="5" cols="50" id="editRequestDescription" placeholder="Request Description" style="height: unset;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                        <a class="center" href="./homepage.html"><button style="width: 50%">Edit</button></a>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+            </div>
+
+        <!-- view Request Modal -->
+        <div id="viewRequestModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span id="viewRequestSpan" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row left">
+                            <div class="container">
+                                <br>
+                                <div class="col col-1">
+                                    <div class="row">
+                                        <h2>
+                                            <b>Request title: </b>
+                                        </h2>
+                                        <h3>
+                                            <b>Broken Desk</b>
+                                        </h3>
+                                        <hr>
+                                        <h2><b>Request content:</b></h2>
+                                        <h3>One of the desk's in my office is broken.One of the desk's in my office is broken.One
+                                            of the desk's in my office is broken.One of the desk's in my office is broken. One
+                                            of the desk's in my office is broken.One of the desk's in my office is broken.One
+                                            of the desk's in my office is broken.One of the desk's in my office is broken. One
+                                            of the desk's in my office is broken.
+                                        </h3>
+                                        <h2><b>Request by:</b></h2>
+                                        <h3>Mr Stephen Colbert</h3>
+                                        <h2><b>Request date:</b></h2>
+                                        <h3>18-04-2018</h3>
+                                        <h2><b>Status:</b></h2>
+                                        <h3>Approved</h3>
+                                    </div>
+    
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <p>
+                    © 2018 Copyright M-T-A by
+                    <a target="_blank" href="http://www.fakunlesamuel.com">FakSam</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <!--Import jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--Import js scripts-->
+    <script type="text/javascript">
+        $(document).ready(() => {
+            const editRequestModal = document.getElementById('editRequestModal');
+            const editRequestSpan = document.getElementById('editRequestSpan');
+
+            const createRequestModal = document.getElementById('createRequestModal');
+            const createRequestSpan = document.getElementById('createRequestSpan');
+
+            const viewRequestModal = document.getElementById('viewRequestModal');
+            const viewRequestSpan = document.getElementById('viewRequestSpan');
+
+            if (viewRequestSpan != null || createRequestSpan != null || editRequestSpan != null) {
+                // When the user clicks on <span> (x), close the modal
+                viewRequestSpan.onclick = function () {
+                    viewRequestModal.style.display = 'none';
+                };
+                createRequestSpan.onclick = function () {
+                    createRequestModal.style.display = 'none';
+                };
+                editRequestSpan.onclick = function () {
+                    editRequestModal.style.display = 'none';
+                };
+            }
+            window.onclick = function (event) {
+                if (event.target === viewRequestModal) {
+                    viewRequestModal.style.display = 'none';
+                } else if (event.target === createRequestModal) {
+                    createRequestModal.style.display = 'none';
+                } else if (event.target === editRequestModal) {
+                    editRequestModal.style.display = 'none';
+                }
+            };
+        });
+        //when table row is clicked
+        function clickedRequest(x) {
+            // Get the viewRequestModal
+            const viewRequestModal = document.getElementById('viewRequestModal');
+            viewRequestModal.style.display = 'block';
+        }
+        function createRequest() {
+            // Get the createRequestModal
+            const createRequestModal = document.getElementById('createRequestModal');
+            createRequestModal.style.display = 'block';
+        }
+        function editRequest() {
+            // Get the editRequestModal
+            const editRequestModal = document.getElementById('editRequestModal');
+            editRequestModal.style.display = 'block';
+        }
+
+    </script>
+    <script type="text/javascript" src="./assets/js/scripts.js"> </script>
+</body>
+
+</html>
