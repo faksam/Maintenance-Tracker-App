@@ -1,11 +1,30 @@
 // import json file
 import usersRequest from '../db/usersRequest.json';
 
+/**
+ * @class usersController
+ *
+ * @export
+ */
 export default class usersController {
-  /*
-   * GET /request route to retrieve all the requests.
+  /**
+   * @description - Get all Requests
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
    */
   static getRequests(req, res) {
+    /**
+     * @description - Finds request
+     * @param {request} item - UserRequest
+     *
+     * @returns {boolean} Class Instance
+     */
     function filterByUserID(item) {
       if (item.userId === 1) {
         return true;
@@ -16,8 +35,16 @@ export default class usersController {
     res.status(200).send({ currentUserRequests });
   }
 
-  /*
-   * POST /request to save a new request.
+  /**
+   * @description - Add a new Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
    */
   static postRequest(req, res) {
     const newRequest = {};
@@ -33,31 +60,56 @@ export default class usersController {
     res.status(201).send(newRequest);
   }
 
-  /*
-   * GET /request/:id route to retrieve a request given its id.
+  /**
+   * @description - Get a Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
    */
   static getRequest(req, res) {
+    const requestId = parseInt(req.params.id, 10);
+    /**
+     * @description - Finds request
+     * @param {request} request - UserRequest
+     *
+     * @returns {object} Class Instance
+     */
     function findRequest(request) {
-      return request.id === req.params.id;
+      return request.id === requestId;
     }
-    res.send(usersRequest.requests.find(findRequest));
+    const foundRequest = usersRequest.requests.find(findRequest);
+    res.status(200).send(foundRequest);
   }
 
-  /*
-   * PUT /request/:id to updatea a request given its id
+  /**
+   * @description - Update a Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
    */
   static updateRequest(req, res) {
     let requestChecker = false;
     let foundRequest;
+    const requestId = parseInt(req.params.id, 10);
     usersRequest.requests.forEach((element, index) => {
       requestChecker = true;
-      if (element.id === req.params.id) {
+      if (element.id === requestId) {
         foundRequest = element;
         foundRequest.title = req.body.title;
         foundRequest.description = req.body.description;
         usersRequest.requests[index] = foundRequest;
+        return res.status(200).send(foundRequest);
       }
-      return res.status(200).send(foundRequest);
     });
     if (!requestChecker) {
       res.status(404).send(usersRequest);

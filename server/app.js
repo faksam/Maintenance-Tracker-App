@@ -38,12 +38,16 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
+// app.use(function (req, res, next) {
+//   res.status(404).send("Not Found")
+// })
+
 // error handler
 app.use((err, req, res) => {
   // render the error page
   if (err.status) { res.status(err.status); } else { res.status(500); }
   res.send({
-    ErrorMessage: err.message,
+    // ErrorMessage: err.message,
     ErrorStatus: err.status,
   });
 });
