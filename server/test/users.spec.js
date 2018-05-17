@@ -31,7 +31,7 @@ describe('API endpoint /users/requests', () => {
   });
 
   // GET existing request
-  it('it should return error Not found', (done) => {
+  it('it should return request with id 3', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests/3')
       .then((res) => {
