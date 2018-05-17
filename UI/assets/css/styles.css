@@ -50,7 +50,25 @@ input, textarea, select, button {
   width: 100%;
   padding-top: 15px;
 }
+.col-m {
+  float: left;
+  padding: 10px;
+}
 
+.col-2-1-3 {
+  width: calc(100% / 3 * 2);
+  padding-top: 10px;
+}
+
+.col-3-15 {
+  width: calc(100% / 15 * 3);
+  padding-top: 10px;
+}
+
+.col-1-10 {
+  width: calc(100% / 10 * 1);
+  padding-top: 10px;
+}
 /*
 .container {
   width: 80%;
@@ -226,45 +244,63 @@ nav a.active {
   /* Desktop styles go here */
   .col-1 {
     width: 100%;
+    padding-top: 10px;
   }
   .col-1-2 {
     width: calc((100% / 2) - 5%);
+    padding-top: 10px;
   }
   .col-1-3 {
     width: calc(100% / 3);
+    padding-top: 10px;
   }
   .col-1-4 {
     width: calc(100% / 4);
+    padding-top: 10px;
   }
   .col-1-5 {
     width: calc(100% / 5);
+    padding-top: 10px;
   }
   .col-1-6 {
     width: calc(100% / 6);
+    padding-top: 10px;
   }
   .col-1-7 {
     width: calc(100% / 7);
+    padding-top: 10px;
   }
   .col-1-8 {
     width: calc(100% / 8);
+    padding-top: 10px;
   }
   .col-1-9 {
     width: calc(100% / 9);
+    padding-top: 10px;
   }
   .col-1-10 {
     width: calc(100% / 10);
+    padding-top: 10px;
   }
   .col-1-15 {
     width: calc(100% / 15);
+    padding-top: 10px;
   }
   .col-4-5 {
     width: calc(100% / 5 * 4);
+    padding-top: 10px;
+  }
+  .col-2-1-3 {
+    width: calc(100% / 3 * 2);
+    padding-top: 10px;
   }
   .col-2-3 {
     width: calc(100% / 3 * 2);
+    padding-top: 10px;
   }
   .col-3-15 {
     width: calc(100% / 15 * 3);
+    padding-top: 10px;
   }
   .col {
     float: left;
