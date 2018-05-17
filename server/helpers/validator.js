@@ -33,11 +33,12 @@ export const verifyRequestInput = (req, res, next) => {
 
 export const verifyIfRequestExist = (req, res, next) => {
   let requestChecker = false;
+  const requestId = parseInt(req.params.id, 10);
   usersRequest.requests.forEach((element) => {
-    if (element.id === req.params.id) {
+    if (element.id === requestId) {
       requestChecker = true;
+      return next();
     }
-    return next();
   });
   if (!requestChecker) {
     res.status(404).send(usersRequest);
