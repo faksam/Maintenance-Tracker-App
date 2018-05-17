@@ -1,0 +1,60 @@
+{
+    "requests": [
+        {
+            "id": "1",
+            "title": "Fried Rice & CHicken",
+            "description": "Dem Fry Rice with groundnut oil and put plenty maggi, abeggi I no know",
+            "userId": 1,
+            "date": "04-20-2018",
+            "status": "New"
+        },
+        {
+            "id": "2",
+            "title": "Jollof Rice & CHicken",
+            "description": "Dem Fry Pepper with groundnut oil and put plenty maggi, abeggi I no know",
+            "userId": 1,
+            "date": "04-21-2018",
+            "status": "New"
+        },
+        {
+            "id": "3",
+            "title": "Fufu and Egusi",
+            "description": "Dem Fry Egusi with groundnut oil and put plenty maggi, abeggi I no know",
+            "userId": 1,
+            "date": "04-22-2018",
+            "status": "New"
+        },
+        {
+            "id": "4",
+            "title": "Afang soup and Fufu",
+            "description": "DSincerely I dont know how to make afang, not even a clue.",
+            "userId": 1,
+            "date": "04-23-2018",
+            "status": "New"
+        },
+        {
+            "id": "5",
+            "title": "Semo and Egusi",
+            "description": "Dem Fry Egusi with groundnut oil and put plenty maggi, abeggi I no know",
+            "userId": 1,
+            "date": "04-24-2018",
+            "status": "New"
+        },
+        {
+            "id": "6",
+            "title": "Pounded Yam",
+            "description": "Trust me I know how to make pounded yam, but no time",
+            "userId": 1,
+            "date": "05-25-2018",
+            "status": "New"
+        },
+        {
+            "id": "7",
+            "title": "Amala & Ewedu",
+            "description": "Trust me I know how to make amala and ewedu, but again no time",            
+            "userId": 1,
+            "date": "05-26-2018",
+            "status": "New"
+        }
+    ]
+}

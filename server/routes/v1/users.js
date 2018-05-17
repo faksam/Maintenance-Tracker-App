@@ -1,11 +1,9 @@
-// import passport from 'passport';
-// import { verrifyUserExist, verifySignInInput,verrifyUserCanSignIn, verifySignUpInput } from '../../helpers/userValidator';
-// import Authentication from '../../controllers/authController';
+import usersCtrl from '../../controllers/usersController';
+import { verifyRequestInput, verifyIfRequestExist } from '../../helpers/validator';
 
-
-// const requireSignIn = passport.authenticate('local', { session: false });
-
-// module.exports = (app) => {
-//   app.post('/auth/login',verifySignInInput,verrifyUserCanSignIn, requireSignIn, Authentication.login);
-//   app.post('/auth/signup',verifySignUpInput, verrifyUserExist, Authentication.signup);
-// };
+module.exports = (app) => {
+  app.get('/users/requests', usersCtrl.getRequests);
+  app.get('/users/requests/:id', verifyIfRequestExist, usersCtrl.getRequest);
+  app.post('/users/requests', verifyRequestInput, usersCtrl.postRequest);
+  app.put('/users/requests/:id', verifyRequestInput, usersCtrl.updateRequest);
+};
