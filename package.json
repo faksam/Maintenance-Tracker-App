@@ -6,7 +6,7 @@
     "clean": "rimraf ./dist/",
     "build-babel": "babel ./server --out-dir ./dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log,./dist --copy-files",
     "build": "npm run clean && npm run build-babel",
-    "start": "babel-node /dist/app.js",
+    "start": "babel-node ./server/app.js",
     "dev": "nodemon ./server/app.js --exec babel-node --presets babel-preset-env",
     "test": "mocha ./server/test/**.spec.js --recursive --compilers js:babel-register --exit",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
