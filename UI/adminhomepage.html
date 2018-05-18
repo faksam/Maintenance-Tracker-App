@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Track your maintenance request - MTA</title>
+    <meta name="author" content="Fakunle Samuel">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Import css-->
+    <link type="text/css" rel="stylesheet" href="./assets/css/styles.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/navigation.css" />
+</head>
+
+<body>
+    <div class="main-container">
+    <div class="row">
+        <section class="navigation">
+            <div class="nav-container">
+                <div class="brand">
+                    <a href="./index.html">
+                        <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
+                </div>
+                <nav>
+                    <div class="nav-mobile">
+                        <a id="nav-toggle" href="#!">
+                            <span></span>
+                        </a>
+                    </div>
+                    <ul class="nav-list">
+                        <li>
+                            <a href="./user_account.html">My Account</a>
+                        </li>
+                        <li>
+                            <a href="./index.html">Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </div>
+        <div class="container">
+            <br>
+            <div class="row">
+                <h1 class="center"><b>All Requests</b></h1>
+                <div class="row">
+                    <div class="col-m col-2-1-3-m" style="padding-top: 10px;">
+                        <input id="search" style="width: 100%" placeholder="Search">
+                    </div>
+                    <div class="col-m col-1-3-m" style="padding-top: 10px;">
+                        <select>
+                            <option value="all">All</option>
+                            <option value="new">New</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <table>
+                    <tr class="header">
+                        <th>Name</th>
+                        <th colspan="3">Request</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th colspan="2">Approve/Reject</th>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Stephen Colbert</td>
+                        <td colspan="3">
+                            <b>Broken Desk</b> - One of the desk's in my office is broken.</td>
+                            <td>New</td>
+                            <td>18-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Jimmy Fallon</td>
+                        <td colspan="3">
+                            <b>Broken Monitor</b> - One of the Monitor's in my office is broken.</td>
+                            <td>New</td>
+                        <td>17-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="clickedRequest(this)">
+                        <td>Mr Francisco Chang</td>
+                        <td colspan="3">
+                            <b>Broken AC</b> - One of the Air conditioner's in my office is broken.</td>
+                            <td>Approved</td>
+                        <td>16-04-2018</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Francisco Chang</td>
+                        <td colspan="3">
+                            <b>Broken AC</b> - One of the Air conditioner's in my office is broken.</td>
+                            <td>Rejected</td>
+                        <td>16-04-2018</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Francisco Chang</td>
+                        <td colspan="3">
+                            <b>Broken AC</b> - One of the Air conditioner's in my office is broken.</td>
+                            <td>New</td>
+                        <td>16-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                            <td>New</td>
+                        <td>13-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                            <td>New</td>
+                        <td>13-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                            <td>New</td>
+                        <td>13-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="clickedRequest(this)">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                            <td>Approved</td>
+                        <td>13-04-2018</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                            <td>New</td>
+                        <td>13-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr onclick="">
+                        <td>Mr Jide Babatunde</td>
+                        <td colspan="3">
+                            <b>Laptop Over-Heating</b> - Please My laptop is emitting smoke and over heating.</td>
+                            <td>New</td>
+                        <td>13-04-2018</td>
+                        <td class="admin">
+                            <a>
+                                <button onclick="approveRequest()">
+                                    <i class="material-icons">check</i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="admin">
+                            <a>
+                                <button class="danger" onclick="rejectRequest()">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <!-- view Request Modal -->
+        <div id="viewRequestModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="viewRequestSpan" class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row left">
+                        <div class="container">
+                            <br>
+                            <div class="col col-1">
+                                <div class="row">
+                                    <h2>
+                                        <b>Request title: </b>
+                                    </h2>
+                                    <h3>
+                                        <b>Broken Desk</b>
+                                    </h3>
+                                    <hr>
+                                    <h2><b>Request content:</b></h2>
+                                    <h3>One of the desk's in my office is broken.One of the desk's in my office is broken.One
+                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
+                                        of the desk's in my office is broken.One of the desk's in my office is broken.One
+                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
+                                        of the desk's in my office is broken.
+                                    </h3>
+                                    <h2><b>Request by:</b></h2>
+                                    <h3>Mr Stephen Colbert</h3>
+                                    <h2><b>Request date:</b></h2>
+                                    <h3>18-04-2018</h3>
+                                    <h2><b>Status:</b></h2>
+                                    <h3>Approved</h3>
+                                </div>
+
+                                <div class="" style="width: 45% ;">
+                                    <a class="">
+                                        <button class="">
+                                            Resolve
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <p>
+                    © 2018 Copyright M-T-A by
+                    <a target="_blank" href="http://www.fakunlesamuel.com">FakSam</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <!--Import jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--Import js scripts-->
+    <script type="text/javascript">
+        $(document).ready(() => {
+            const viewRequestModal = document.getElementById('viewRequestModal');
+            const viewRequestSpan = document.getElementById('viewRequestSpan');
+            if (viewRequestSpan != null) {
+                // When the user clicks on <span> (x), close the modal
+                viewRequestSpan.onclick = function () {
+                    viewRequestModal.style.display = 'none';
+                };
+            }
+            window.onclick = function (event) {
+                if (event.target === viewRequestModal) {
+                    viewRequestModal.style.display = 'none';
+                }
+            };
+        });
+        //when table row is clicked
+        function clickedRequest(x) {
+            // Get the viewRequestModal
+            const viewRequestModal = document.getElementById('viewRequestModal');
+            viewRequestModal.style.display = 'block';
+        }
+        //Approve Request
+        function approveRequest() {
+            // Get the viewRequestModal
+            const viewRequestModal = document.getElementById('viewRequestModal');
+            viewRequestModal.style.display = 'block';
+        }
+        //Reject request
+        function rejectRequest() {
+            
+            // Get the viewRequestModal
+            const viewRequestModal = document.getElementById('viewRequestModal');
+            viewRequestModal.style.display = 'block';
+        }
+
+    </script>
+    <script type="text/javascript" src="./assets/js/scripts.js"> </script>
+</body>
+
+</html>
