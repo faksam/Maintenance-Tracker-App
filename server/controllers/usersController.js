@@ -87,4 +87,29 @@ export default class usersController {
     res.status(201).send(newRequest);
   }
 
+  /**
+   * @description - Update a Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
+   */
+  static updateRequest(req, res) {
+    let foundRequest;
+    const requestId = parseInt(req.params.id, 10);
+    usersRequest.requests.forEach((element, index) => {
+      if (element.id === requestId) {
+        foundRequest = element;
+        foundRequest.title = req.body.title;
+        foundRequest.description = req.body.description;
+        usersRequest.requests[index] = foundRequest;
+        return res.status(200).send(foundRequest);
+      }
+    });
+  }
+  
 }
