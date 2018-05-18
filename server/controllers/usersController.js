@@ -35,5 +35,32 @@ export default class usersController {
     res.status(200).send({ currentUserRequests });
   }
 
+  
+  /**
+   * @description - Get a Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
+   */
+  static getRequest(req, res) {
+    const requestId = parseInt(req.params.id, 10);
+    /**
+     * @description - Finds request
+     * @param {request} request - UserRequest
+     *
+     * @returns {object} Class Instance
+     */
+    function findRequest(request) {
+      return request.id === requestId;
+    }
+    const foundRequest = usersRequest.requests.find(findRequest);
+    res.status(200).send(foundRequest);
+  }
+
 
 }
