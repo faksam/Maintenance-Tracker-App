@@ -34,7 +34,6 @@ $(document).ready(() => {
   const viewRequestModal = document.getElementById('viewRequestModal');
 
 
-
   // Get the <span> element that closes the modal
 
   // Get the button that opens the modal
@@ -73,11 +72,9 @@ $(document).ready(() => {
         signUpModal.style.display = 'none';
       } else if (event.target === signInModal) {
         signInModal.style.display = 'none';
-      }else if (event.target === viewRequestModal) {
+      } else if (event.target === viewRequestModal) {
         viewRequestModal.style.display = 'none';
       }
     };
   }
-
-
 }); // end DOM ready
