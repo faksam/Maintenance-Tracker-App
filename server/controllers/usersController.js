@@ -98,11 +98,9 @@ export default class usersController {
    * @returns {object} Class Instance
    */
   static updateRequest(req, res) {
-    let requestChecker = false;
     let foundRequest;
     const requestId = parseInt(req.params.id, 10);
     usersRequest.requests.forEach((element, index) => {
-      requestChecker = true;
       if (element.id === requestId) {
         foundRequest = element;
         foundRequest.title = req.body.title;
@@ -111,8 +109,5 @@ export default class usersController {
         return res.status(200).send(foundRequest);
       }
     });
-    if (!requestChecker) {
-      res.status(404).send(usersRequest);
-    }
   }
 }
