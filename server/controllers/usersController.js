@@ -35,7 +35,7 @@ export default class usersController {
     res.status(200).send({ currentUserRequests });
   }
 
-  
+
   /**
    * @description - Get a Request
    * @static
@@ -111,5 +111,4 @@ export default class usersController {
       }
     });
   }
-  
 }
