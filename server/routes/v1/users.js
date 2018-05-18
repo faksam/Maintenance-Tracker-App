@@ -4,5 +4,6 @@ import { verifyRequestInput, verifyIfRequestExist } from '../../helpers/validato
 module.exports = (app) => {
   app.get('/users/requests', usersCtrl.getRequests);
   app.get('/users/requests/:id', verifyIfRequestExist, usersCtrl.getRequest);
+  app.post('/users/requests', verifyRequestInput, usersCtrl.postRequest);
 
 };

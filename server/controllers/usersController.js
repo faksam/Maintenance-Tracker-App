@@ -62,5 +62,29 @@ export default class usersController {
     res.status(200).send(foundRequest);
   }
 
+  /**
+   * @description - Add a new Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} Class Instance
+   */
+  static postRequest(req, res) {
+    const newRequest = {};
+
+    newRequest.id = usersRequest.requests.length + 1;
+    newRequest.title = req.body.title;
+    newRequest.date = new Date();
+    newRequest.status = 'New';
+    newRequest.description = req.body.description;
+    newRequest.userId = 2;
+
+    usersRequest.requests.push(newRequest);
+    res.status(201).send(newRequest);
+  }
 
 }
