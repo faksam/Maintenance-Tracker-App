@@ -13,7 +13,6 @@ describe('API endpoint /users/requests', () => {
       .get('/api/v1/users/requests')
       .then((res) => {
         expect(res).to.have.status(200);
-        // expect(res).to.be.json;
         expect(res.body).to.be.an('object');
         done();
       });
@@ -26,6 +25,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
+        expect(res.body.message).to.equal('request id not found');
         done();
       });
   });
@@ -41,6 +41,19 @@ describe('API endpoint /users/requests', () => {
       });
   });
 
+  // GET existing request
+  it('it should not get a request when id is not a number', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests/lifeisarace')
+      .then((res) => {
+        expect(res.body.message).to.equal('"id parameter" must be a valid integer number');
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        done();
+      });
+  });
+
+
   // POST  Add new request
   it('it should add new request', (done) => {
     chai.request(app)
@@ -49,6 +62,8 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(201);
         expect(res.body).to.be.an('object');
+        expect(res.body.title).to.equal(request[0].title);
+        expect(res.body.description).to.equal(request[0].description);
         done();
       });
   });
@@ -61,6 +76,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
+        expect(res.body.errors[0].msg).to.equal('title is required');
         done();
       });
   });
@@ -73,6 +89,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
+        expect(res.body.errors[0].msg).to.equal('description is required');
         done();
       });
   });
@@ -85,6 +102,21 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
+        expect(res.body.title).to.equal(request[0].title);
+        expect(res.body.description).to.equal(request[0].description);
+        done();
+      });
+  });
+
+  // PUT  Update none esxisting request/100 by id
+  it('it should return 404 not found error request/100', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/100')
+      .send(request[0])
+      .then((res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message).to.equal('request id not found');
         done();
       });
   });
