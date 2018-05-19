@@ -1,8 +1,7 @@
 language: node_js
 node_js:
   - "stable"
-  addons:
-  chrome: stable
+addons:
   code_climate:
     repo_token:
       secure: "dcbc5ef06fc1350dfb5f98a847056bf672bbf6b9f3fb4bd9207ba4bd4d4149b3"
