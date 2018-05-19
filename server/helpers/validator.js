@@ -81,7 +81,7 @@ export const verifyIfRequestExist = (req, res, next) => {
     error.message = 'request id not found';
     res.status(404).send({
       success: false,
-      status: 400,
+      status: 404,
       error
     });
   }
