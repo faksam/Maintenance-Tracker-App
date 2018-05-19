@@ -2,11 +2,19 @@ language: node_js
 node_js:
   - "stable"
   addons:
+  chrome: stable
   code_climate:
     repo_token:
       secure: "dcbc5ef06fc1350dfb5f98a847056bf672bbf6b9f3fb4bd9207ba4bd4d4149b3"
+before_script:
+  - yarn global add nyc
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
+  - nyc --reporter=lcov yarn run unit
   - npm run test
 after_success:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 - npm run coveralls
 - npm run coverage
