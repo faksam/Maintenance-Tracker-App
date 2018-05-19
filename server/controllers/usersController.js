@@ -1,3 +1,4 @@
+import uuid from 'uuid';
 // import json file
 import usersRequest from '../db/usersRequest.json';
 
@@ -16,23 +17,15 @@ export default class usersController {
    *
    * @memberOf usersController
    *
-   * @returns {object} Class Instance
+   * @returns {object} response JSON Object
    */
   static getRequests(req, res) {
-    /**
-     * @description - Finds request
-     * @param {request} item - UserRequest
-     *
-     * @returns {boolean} Class Instance
-     */
-    function filterByUserID(item) {
-      if (item.userId === 1) {
-        return true;
-      }
-      return false;
-    }
-    const currentUserRequests = usersRequest.requests.filter(filterByUserID);
-    res.status(200).send({ currentUserRequests });
+    const data = usersRequest.requests;
+    res.status(200).send({
+      success: true,
+      status: 200,
+      data
+    });
   }
 
 
@@ -45,7 +38,7 @@ export default class usersController {
    *
    * @memberOf usersController
    *
-   * @returns {object} Class Instance
+   * @returns {object} response JSON Object
    */
   static getRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
@@ -58,8 +51,12 @@ export default class usersController {
     function findRequest(request) {
       return request.id === requestId;
     }
-    const foundRequest = usersRequest.requests.find(findRequest);
-    res.status(200).send(foundRequest);
+    const data = usersRequest.requests.find(findRequest);
+    res.status(200).send({
+      success: true,
+      status: 200,
+      data
+    });
   }
 
   /**
@@ -71,7 +68,7 @@ export default class usersController {
    *
    * @memberOf usersController
    *
-   * @returns {object} Class Instance
+   * @returns {object} response JSON Object
    */
   static postRequest(req, res) {
     const newRequest = {};
@@ -81,10 +78,14 @@ export default class usersController {
     newRequest.date = new Date();
     newRequest.status = 'New';
     newRequest.description = req.body.description;
-    newRequest.userId = 2;
+    newRequest.userId = uuid.v4();
 
     usersRequest.requests.push(newRequest);
-    res.status(201).send(newRequest);
+    res.status(201).send({
+      success: true,
+      status: 201,
+      data: newRequest
+    });
   }
 
   /**
@@ -96,7 +97,7 @@ export default class usersController {
    *
    * @memberOf usersController
    *
-   * @returns {object} Class Instance
+   * @returns {object} response JSON Object
    */
   static updateRequest(req, res) {
     let foundRequest;
@@ -107,7 +108,11 @@ export default class usersController {
         foundRequest.title = req.body.title;
         foundRequest.description = req.body.description;
         usersRequest.requests[index] = foundRequest;
-        return res.status(200).send(foundRequest);
+        return res.status(200).send({
+          success: true,
+          status: 200,
+          data: foundRequest
+        });
       }
     });
   }

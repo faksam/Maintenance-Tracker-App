@@ -43,7 +43,8 @@
     "pg-hstore": "^2.3.2",
     "prettier": "^1.12.1",
     "sequelize": "^4.37.6",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "uuid": "^3.2.1"
   },
   "description": "Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.",
   "main": "app.js",
