@@ -11,7 +11,7 @@
     "test": "mocha ./server/test/**.spec.js --recursive --compilers js:babel-register --exit",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "posttest": "eslint --ignore-path .gitignore .",
+    "posttest": "eslint --ignore-path .eslintignore  .",
     "postinstall": "npm run build"
   },
   "dependencies": {
