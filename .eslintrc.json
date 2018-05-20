@@ -5,9 +5,9 @@
       "node": true,
       "es6": true,
       "mocha": true,
+      "jquery": true,
       "browser": true,
-      "commonjs": true,
-      "jquery": true
+      "commonjs": true
     },
     "rules": { 
       "one-var": 0,

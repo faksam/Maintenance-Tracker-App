@@ -11,3 +11,5 @@ dist/
 .env
 
 config.js
+
+UI/

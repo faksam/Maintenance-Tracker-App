@@ -51,7 +51,13 @@ export default class usersController {
     function findRequest(request) {
       return request.id === requestId;
     }
-    const data = usersRequest.requests.find(findRequest);
+    const foundRequest = usersRequest.requests.find(findRequest);
+    const data = {};
+    data.id = foundRequest.id;
+    data.title = foundRequest.title;
+    data.description = foundRequest.description;
+    data.date = foundRequest.date;
+    data.status = foundRequest.status;
     res.status(200).send({
       success: true,
       status: 200,
@@ -75,16 +81,22 @@ export default class usersController {
 
     newRequest.id = usersRequest.requests.length + 1;
     newRequest.title = req.body.title;
-    newRequest.date = new Date();
-    newRequest.status = 'New';
     newRequest.description = req.body.description;
     newRequest.userId = uuid.v4();
+    newRequest.date = new Date();
+    newRequest.status = 'New';
 
     usersRequest.requests.push(newRequest);
     res.status(201).send({
       success: true,
       status: 201,
-      data: newRequest
+      data: {
+        id: newRequest.id,
+        title: newRequest.title,
+        description: newRequest.description,
+        date: newRequest.date,
+        status: newRequest.status,
+      }
     });
   }
 
@@ -100,7 +112,7 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static updateRequest(req, res) {
-    let foundRequest;
+    let foundRequest = {};
     const requestId = parseInt(req.params.id, 10);
     usersRequest.requests.forEach((element, index) => {
       if (element.id === requestId) {
@@ -108,10 +120,17 @@ export default class usersController {
         foundRequest.title = req.body.title;
         foundRequest.description = req.body.description;
         usersRequest.requests[index] = foundRequest;
+
         return res.status(200).send({
           success: true,
           status: 200,
-          data: foundRequest
+          data: {
+            id: foundRequest.id,
+            title: foundRequest.title,
+            description: foundRequest.description,
+            date: foundRequest.date,
+            status: foundRequest.status,
+          }
         });
       }
     });
