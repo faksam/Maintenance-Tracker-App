@@ -34,6 +34,12 @@ $(document).ready(() => {
   const viewRequestModal = document.getElementById('viewRequestModal');
 
 
+  const editRequestModal = document.getElementById('editRequestModal');
+  const editRequestSpan = document.getElementById('editRequestSpan');
+
+  const createRequestModal = document.getElementById('createRequestModal');
+  const createRequestSpan = document.getElementById('createRequestSpan');
+  const viewRequestSpan = document.getElementById('viewRequestSpan');
 
   // Get the <span> element that closes the modal
 
@@ -73,11 +79,71 @@ $(document).ready(() => {
         signUpModal.style.display = 'none';
       } else if (event.target === signInModal) {
         signInModal.style.display = 'none';
-      }else if (event.target === viewRequestModal) {
+      } else if (event.target === viewRequestModal) {
         viewRequestModal.style.display = 'none';
       }
     };
   }
+  if (viewRequestSpan != null) {
+    // When the user clicks on <span> (x), close the modal
+    viewRequestSpan.onclick = function () {
+      viewRequestModal.style.display = 'none';
+    };
+  }
+  window.onclick = function (event) {
+    if (event.target === viewRequestModal) {
+      viewRequestModal.style.display = 'none';
+    }
+  };
 
+  if (viewRequestSpan != null || createRequestSpan != null || editRequestSpan != null) {
+    // When the user clicks on <span> (x), close the modal
+    viewRequestSpan.onclick = function () {
+      viewRequestModal.style.display = 'none';
+    };
+    createRequestSpan.onclick = function () {
+      createRequestModal.style.display = 'none';
+    };
+    editRequestSpan.onclick = function () {
+      editRequestModal.style.display = 'none';
+    };
+  }
+  window.onclick = function (event) {
+    if (event.target === viewRequestModal) {
+      viewRequestModal.style.display = 'none';
+    } else if (event.target === createRequestModal) {
+      createRequestModal.style.display = 'none';
+    } else if (event.target === editRequestModal) {
+      editRequestModal.style.display = 'none';
+    }
+  };
 
 }); // end DOM ready
+
+//when table row is clicked
+function clickedRequest(x) {
+  viewRequestModal.style.display = 'block';
+}
+//Approve Request
+function approveRequest() {
+  viewRequestModal.style.display = 'block';
+}
+//Reject request
+function rejectRequest() {
+  viewRequestModal.style.display = 'block';
+}
+
+//when table row is clicked
+function clickedRequest(x) {
+  viewRequestModal.style.display = 'block';
+}
+function createRequest() {
+  createRequestModal.style.display = 'block';
+}
+function editRequest() {
+  editRequestModal.style.display = 'block';
+}
+
+function order() {
+  signInModal.style.display = "block";
+}

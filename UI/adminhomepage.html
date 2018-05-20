@@ -351,43 +351,6 @@
     <!--Import jQuery-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!--Import js scripts-->
-    <script type="text/javascript">
-        $(document).ready(() => {
-            const viewRequestModal = document.getElementById('viewRequestModal');
-            const viewRequestSpan = document.getElementById('viewRequestSpan');
-            if (viewRequestSpan != null) {
-                // When the user clicks on <span> (x), close the modal
-                viewRequestSpan.onclick = function () {
-                    viewRequestModal.style.display = 'none';
-                };
-            }
-            window.onclick = function (event) {
-                if (event.target === viewRequestModal) {
-                    viewRequestModal.style.display = 'none';
-                }
-            };
-        });
-        //when table row is clicked
-        function clickedRequest(x) {
-            // Get the viewRequestModal
-            const viewRequestModal = document.getElementById('viewRequestModal');
-            viewRequestModal.style.display = 'block';
-        }
-        //Approve Request
-        function approveRequest() {
-            // Get the viewRequestModal
-            const viewRequestModal = document.getElementById('viewRequestModal');
-            viewRequestModal.style.display = 'block';
-        }
-        //Reject request
-        function rejectRequest() {
-            
-            // Get the viewRequestModal
-            const viewRequestModal = document.getElementById('viewRequestModal');
-            viewRequestModal.style.display = 'block';
-        }
-
-    </script>
     <script type="text/javascript" src="./assets/js/scripts.js"> </script>
 </body>
 

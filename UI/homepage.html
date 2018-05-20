@@ -258,57 +258,6 @@
     <!--Import jQuery-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!--Import js scripts-->
-    <script type="text/javascript">
-        $(document).ready(() => {
-            const editRequestModal = document.getElementById('editRequestModal');
-            const editRequestSpan = document.getElementById('editRequestSpan');
-
-            const createRequestModal = document.getElementById('createRequestModal');
-            const createRequestSpan = document.getElementById('createRequestSpan');
-
-            const viewRequestModal = document.getElementById('viewRequestModal');
-            const viewRequestSpan = document.getElementById('viewRequestSpan');
-
-            if (viewRequestSpan != null || createRequestSpan != null || editRequestSpan != null) {
-                // When the user clicks on <span> (x), close the modal
-                viewRequestSpan.onclick = function () {
-                    viewRequestModal.style.display = 'none';
-                };
-                createRequestSpan.onclick = function () {
-                    createRequestModal.style.display = 'none';
-                };
-                editRequestSpan.onclick = function () {
-                    editRequestModal.style.display = 'none';
-                };
-            }
-            window.onclick = function (event) {
-                if (event.target === viewRequestModal) {
-                    viewRequestModal.style.display = 'none';
-                } else if (event.target === createRequestModal) {
-                    createRequestModal.style.display = 'none';
-                } else if (event.target === editRequestModal) {
-                    editRequestModal.style.display = 'none';
-                }
-            };
-        });
-        //when table row is clicked
-        function clickedRequest(x) {
-            // Get the viewRequestModal
-            const viewRequestModal = document.getElementById('viewRequestModal');
-            viewRequestModal.style.display = 'block';
-        }
-        function createRequest() {
-            // Get the createRequestModal
-            const createRequestModal = document.getElementById('createRequestModal');
-            createRequestModal.style.display = 'block';
-        }
-        function editRequest() {
-            // Get the editRequestModal
-            const editRequestModal = document.getElementById('editRequestModal');
-            editRequestModal.style.display = 'block';
-        }
-
-    </script>
     <script type="text/javascript" src="./assets/js/scripts.js"> </script>
 </body>
 
