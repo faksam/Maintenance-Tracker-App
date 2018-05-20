@@ -121,22 +121,22 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="container">
-                            <form class="center" action="./homepage.html">
+                            <form class=" center">
                                 <div class="row">
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons">email</i>
-                                            <input id="0email" name="0email" type="email" placeholder="Email" required>
+                                            <input id="0email" type="text" placeholder="Email" class="validate">
                                         </div>
                                         <div class="input col col-1-2">
                                             <i class="material-icons">account_circle</i>
-                                            <input id="0account_password" name="0account_password" type="password" placeholder="Password" required>
+                                            <input id="0account_password" type="password" placeholder="Password" class="validate">
                                         </div>
                                     </div>
                                 </div>
                                 <br>
-                                <button style="width: 50%">Sign In</button>
                             </form>
+                            <a class="center" href="./homepage.html"><button style="width: 50%">Sign In</button></a>
                             <br>
                         </div>
                     </div>
@@ -159,32 +159,32 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="container">
-                            <form class=" center" action="./homepage.html">
+                            <form class=" center">
                                 <div class="row">
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_box</i>
-                                            <input id="fullName" type="text" placeholder="Full Name" required>
+                                            <input id="fullName" type="text" placeholder="Full Name" class="validate">
                                         </div>
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">email</i>
-                                            <input id="email" type="email" placeholder="Email" required>
+                                            <input id="email" type="text" placeholder="Email" class="validate">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <input id="account_password" type="password" placeholder="Password" required>
+                                            <input id="account_password" type="password" placeholder="Password" class="validate">
                                         </div>
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">phone</i>
-                                            <input id="phoneNo" type="text" placeholder="Phone Number" required>
+                                            <input id="phoneNo" type="text" placeholder="Phone Number" class="validate">
                                         </div>
                                     </div>
                                 </div>
                                 <br>
-                                <button style="width: 50%">Sign Up</button>
                             </form>
+                            <a class="center" href="./homepage.html"><button style="width: 50%">Sign Up</button></a>
                             <br>
                         </div>
                     </div>
@@ -219,6 +219,13 @@
     <!--Import jQuery-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!--Import js scripts-->
+    <script type="text/javascript">
+        function order() {// Get the signinModal
+            var signInModal = document.getElementById('signinModal');
+            signInModal.style.display = "block";
+        }
+
+    </script>
     <script type="text/javascript" src="./assets/js/scripts.js"> </script>
 </body>
 
