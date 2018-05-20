@@ -99,7 +99,7 @@ $(document).ready(() => {
         signUpModal.style.display = 'none';
       } else if (event.target === signInModal) {
         signInModal.style.display = 'none';
-      } 
+      }
     };
   }
 
@@ -161,31 +161,30 @@ $(document).ready(() => {
       userAccountModal.style.display = 'none';
     }
   };
-
 }); // end DOM ready
 
-//when table row is clicked
+// when table row is clicked
 function clickedRequest(x) {
   viewRequestModal.style.display = 'block';
 }
-//when table row of resolved is clicked
+// when table row of resolved is clicked
 function clickedResolved(x) {
   viewResolvedModal.style.display = 'block';
 }
-//when table row of rejected is clicked
+// when table row of rejected is clicked
 function clickedRejected(x) {
   viewRejectedModal.style.display = 'block';
 }
-//Approve Request
+// Approve Request
 function approveRequest() {
   viewRequestModal.style.display = 'block';
 }
-//Reject request
+// Reject request
 function rejectRequest() {
   addRejectReasonModal.style.display = 'block';
 }
 
-//when table row is clicked
+// when table row is clicked
 function clickedRequest(x) {
   viewRequestModal.style.display = 'block';
 }
@@ -197,5 +196,5 @@ function editRequest() {
 }
 
 function order() {
-  signInModal.style.display = "block";
+  signInModal.style.display = 'block';
 }
