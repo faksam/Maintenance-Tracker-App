@@ -616,7 +616,15 @@ only screen and (max-width: 760px),
 		left: -9999px;
 	}
 	
-	tr { border: 3px solid #ffffff; }
+  tr { border: 3px solid #ffffff; }
+  
+tr:hover {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  background-color: #ebeaea;
+  line-height: 28px;
+  color: black;
+}
 	
 	td { 
 		/* Behave  like a "row" */
@@ -650,7 +658,7 @@ only screen and (max-width: 760px),
   td.admin:nth-of-type(5):before { content: "Approve"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
   td.admin:nth-of-type(6):before { content: "Reject"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
   
-  td a button {
-    width: 30%;
+  td button {
+    width: 32%;
   }
 }
