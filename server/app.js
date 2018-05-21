@@ -44,4 +44,24 @@ app.use((req, res) => {
   });
 });
 
+// error handler
+app.use((err, req, res, next) => {
+  // render the error page
+  if (err.status)
+    res.status(err.status);
+  else {
+    res.status(500);
+    err.status = 500;
+  }
+
+  res.send({
+    success: false,
+    status: err.status,
+    message: err.message,
+    error: {
+      message: err.message,
+    }
+  });
+});
+
 module.exports = app;
