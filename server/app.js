@@ -45,11 +45,9 @@ app.use((req, res) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // render the error page
-  if (err.status)
-    res.status(err.status);
-  else {
+  if (err.status) { res.status(err.status); } else {
     res.status(500);
     err.status = 500;
   }
