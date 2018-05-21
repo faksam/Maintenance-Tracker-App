@@ -45,6 +45,21 @@ app.use((req, res) => {
 });
 
 // error handler
+app.use((err, req, res, next) => {
+  // render the error page
+  if (err.status) { res.status(err.status); }
+  res.send({
+    success: false,
+    status: err.status,
+    message: err.message,
+    error: {
+      message: err.message,
+    }
+  });
+  next(err);
+});
+
+// error handler
 app.use((err, req, res) => {
   // render the error page
   if (err.status) { res.status(err.status); } else {
