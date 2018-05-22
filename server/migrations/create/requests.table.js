@@ -16,7 +16,7 @@ pool.query(
                 'date timestamp not null, ' +
                 'status VARCHAR(20) not null, ' +
                 'userId uuid not null references users(id))',
-  (err) => {
+  () => {
     pool.end();
   }
 );
@@ -26,7 +26,7 @@ const client = new Client({
 });
 client.connect();
 
-client.query('SELECT NOW()', (err) => {
+client.query('SELECT NOW()', () => {
   client.end();
 });
 
