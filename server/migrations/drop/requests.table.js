@@ -7,7 +7,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-pool.query('DROP TABLE IF EXISTS requests, requests CASCADE;', (err) => {
+pool.query('DROP TABLE IF EXISTS requests, requests CASCADE;', () => {
 
 });
 
