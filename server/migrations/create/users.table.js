@@ -14,7 +14,7 @@ pool.query(
     'email VARCHAR(100) not null, ' +
     'phoneNo VARCHAR(30) not null, ' +
     'role VARCHAR(20) not null); ',
-  (err) => {
+  () => {
     pool.end();
   }
 );
