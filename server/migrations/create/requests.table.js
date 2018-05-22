@@ -34,8 +34,5 @@ const client = new Client({
   connectionString,
 });
 client.connect();
-
-client.query('SELECT NOW()', () => {
-  client.end();
-});
+client.end();
 
