@@ -3,10 +3,12 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import expressValidator from 'express-validator';
+import dotenv from 'dotenv';
 
 import apiv1 from './routes/v1/api1';
 
 const app = express();
+dotenv.config();
 
 // view engine setup
 app.set('views', path.join(__dirname, '../UI'));
