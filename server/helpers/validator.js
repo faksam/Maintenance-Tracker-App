@@ -1,5 +1,37 @@
+import jwt from 'jwt-simple';
 // import json file
 import usersRequest from '../db/usersRequest.json';
+
+export const verifyToken = (req, res, next) => {
+  let token;
+  let decode = "";
+  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') { // Authorization: Bearer g1jipjgi1ifjioj
+      // Handle token presented as a Bearer token in the Authorization header
+      const authHeader = req.headers.authorization.split(' ');
+      // token = authHeader[1];
+      try {
+        decode = jwt.decode(authHeader[1], config.secret);
+      } catch (error) {
+        return res.status(400).json({ error: "Invalid User",
+                                      errorMessage: error     });
+      }
+      
+    } else if (req.query && req.query.token) {
+      // Handle token presented as URI param
+      ({ token } = req.query);
+      decode = jwt.decode(token, config.secret);
+    } else if (req.body && req.body.token) {
+      // Handle token presented as a cookie parameter
+      ({ token } = req.body.token);
+      decode = jwt.decode(token, config.secret);
+    }
+  if(decode === "")
+    return res.status(400).json({ error: "Invalid User" });
+  if(decode !== null)
+    return decode;
+  
+  return res.status(400).json({ error: "Invalid User" });
+};
 
 export const verifyRequestInput = (req, res, next) => {
   const error = {};
