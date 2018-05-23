@@ -2,34 +2,40 @@ import jwt from 'jwt-simple';
 import dotenv from 'dotenv';
 // import json file
 import usersRequest from '../db/usersRequest.json';
+import appConfig from '../config/config';
 
 dotenv.config();
 
 export const verifyToken = (req, res) => {
   let token;
+  const error = {};
+  error.message = {};
   let decode = '';
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') { // Authorization: Bearer g1jipjgi1ifjioj
     // Handle token presented as a Bearer token in the Authorization header
     const authHeader = req.headers.authorization.split(' ');
     // token = authHeader[1];
     try {
-      decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
-    } catch (error) {
-      return res.status(400).json({
-        error: 'Invalid User',
-        errorMessage: error
-      });
+      decode = jwt.decode(authHeader[1], appConfig.secret);
+    } catch (err) {
+      error.message = err;
     }
   } else if (req.query && req.query.token) {
     // Handle token presented as URI param
     ({ token } = req.query);
-    decode = jwt.decode(token, process.env.SECRET_TOKEN);
+    decode = jwt.decode(token, appConfig.secret);
   } else if (req.body && req.body.token) {
     // Handle token presented as a cookie parameter
     ({ token } = req.body.token);
-    decode = jwt.decode(token, process.env.SECRET_TOKEN);
+    decode = jwt.decode(token, appConfig.secret);
   }
-  if (decode === '') { return res.status(400).json({ error: 'Invalid User' }); }
+  if (decode === '') {
+    return res.status(400).send({
+      success: false,
+      status: 409,
+      error
+    });
+  }
   if (decode !== null) { return decode; }
 
   return res.status(400).json({ error: 'Invalid User' });
@@ -81,12 +87,12 @@ export const verifyRequestInput = (req, res, next) => {
   return next();
 };
 
-  /**
-   * Check if parameter is integer
-   *
-   * @param {*} n the id parameter passed with HTTP request
-   * @returns {boolean} Is the parameter an integer
-   */
+/**
+ * Check if parameter is integer
+ *
+ * @param {*} n the id parameter passed with HTTP request
+ * @returns {boolean} Is the parameter an integer
+ */
 function isInt(n) {
   return n === parseInt(n, 10);
 }
