@@ -15,10 +15,6 @@ if (env === 'development') {
   connectionString = process.env.use_env_variable;
 }
 
-const pool = new Pool({
-  connectionString,
-});
-
 let userToken;
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
@@ -26,6 +22,9 @@ const tokenForUser = (user) => {
 };
 
 const signup = (req, res) => {
+  const pool = new Pool({
+    connectionString,
+  });
   const {
     fullName, email, phoneNo, password
   } = req.body;
@@ -52,12 +51,45 @@ const signup = (req, res) => {
         status: 201,
         token: userToken,
         data: {
-          fullName,
-          email,
-          phoneNo
+          Fullname: fullName,
+          Email: email,
+          Phone: phoneNo,
         },
       });
     });
 };
 
-module.exports = { signup };
+const login = (req, res) => {
+  const pool = new Pool({
+    connectionString,
+  });
+  const {
+    email, password
+  } = req.body;
+  const userEmail = email.toLowerCase();
+
+  const queryValues = [];
+  queryValues.push(userEmail);
+
+  pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
+    bcrypt.compare(password, result.rows[0].password)
+      .then((validPassword) => {
+        if (validPassword) {
+          userToken = tokenForUser(result.rows[0]);
+          res.set('authorization', userToken).status(201).send({
+            success: true,
+            status: 201,
+            token: userToken,
+            data: {
+              Fullname: result.rows[0].fullname,
+              Email: result.rows[0].email,
+              Phone: result.rows[0].phoneno,
+            }
+          });
+        } else { res.status(404).send({ error: 'User not found' }); }
+      });
+  });
+  pool.end();
+};
+
+module.exports = { signup, login };
