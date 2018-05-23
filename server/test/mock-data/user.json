@@ -31,6 +31,12 @@
             "fullName": "Fakunle Samuel",
             "email": "fakunlesamuel@yahoo.co.uk",
             "phoneNo": "07039248533"
+        },
+        {
+            "fullName": "Fakunle Samuel",
+            "email": "fakunlesamuel@hotmail.com",
+            "phoneNo": "07039248533",
+            "password": "Lifeisarace"
         }
     ]
 }
