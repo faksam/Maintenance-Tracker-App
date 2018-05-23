@@ -20,6 +20,7 @@ export const verrifyUserExist = (req, res, next) => {
   const email = req.body.email.toLowerCase();
   const queryValues = [];
   const error = {};
+  error.message = {};
   let errorChecker = false;
 
   queryValues.push(email);
@@ -31,7 +32,7 @@ export const verrifyUserExist = (req, res, next) => {
     }
     if (result.rows.length > 0) {
       errorChecker = true;
-      error.user = 'This email/user already exist in our server, try signing in.';
+      error.message = 'This email/user already exist in our server, try signing in.';
     }
     if (errorChecker) {
       return res.status(409).send({
@@ -43,38 +44,6 @@ export const verrifyUserExist = (req, res, next) => {
     return next();
   });
 };
-
-
-// export const verrifyUserCanSignIn = (req, res, next) => {
-//   const email  = req.body.email;
-//   // // validate the input
-//   req.checkBody('email', 'Email is required').notEmpty();
-//   req.checkBody('email', 'Email does not appear to be valid').isEmail();
-
-//   // check the validation object for errors
-//   let errors = req.validationErrors();
-
-//   console.log(errors);
-
-//   if (errors) {
-//     return res.status(400).send({errors})
-//   }
-
-//   const error = {};
-//   User.findAll({
-//     where: {
-//       email: email
-//     }
-//   })
-//     .then((user) => {
-//       if (user.length > 0) {
-//         return next();
-//       }
-//       error.user = 'User does not exist please sign up';
-
-//         return res.status(404).json({ error });
-//     });
-// };
 
 export const validateSignUpInput = (req, res, next) => {
   const {
@@ -128,49 +97,4 @@ export const validateSignUpInput = (req, res, next) => {
     error,
   });
 };
-
-
-// export const verifySignInInput = (req, res, next) => {
-// //   const {
-// //     email, password
-// //   } = req.body;
-
-// //   req.checkBody('email', 'Email is required').notEmpty();
-// //   req.checkBody('password', 'Password is required').notEmpty();
-// //   req.checkBody('email', 'Email does not appear to be valid').isEmail();
-
-// //   // check the validation object for errors
-// //   const errors = req.validationErrors();
-
-// //   if (errors) {
-// //     return res.status(400).send({ errors });
-// //   }
-
-// //   let errorChecker = false;
-// //   const error = {};
-
-// //   if (email === '' || email == null || email == undefined) {
-// //     errorChecker = true;
-// //     error.description = 'Email field is required';
-// //   }
-// //   if (password === '' || password == null || password == undefined) {
-// //     errorChecker = true;
-// //     error.status = 'Password field is required';
-// //   }
-
-// //   if (!errorChecker) { return next(); }
-
-// //   return res.status(400).json({ error });
-// // };
-
-// // export const findUserById = (userId) => {
-// //   return User
-// //     .findAll({
-// //       where: {
-// //         id: userId
-// //       }
-// //     })
-// //     .then(user => res.status(201).send({ user: user[0] }))
-// //     .catch(error => res.status(404).send({ error }));
-// };
 
