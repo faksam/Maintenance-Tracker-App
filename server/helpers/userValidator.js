@@ -12,11 +12,12 @@ if (env === 'development') {
   connectionString = process.env.use_env_variable;
 }
 
-const pool = new Pool({
-  connectionString,
-});
 
 export const verrifyUserExist = (req, res, next) => {
+  const pool = new Pool({
+    connectionString,
+  });
+
   const email = req.body.email.toLowerCase();
   const queryValues = [];
   const error = {};
@@ -33,6 +34,7 @@ export const verrifyUserExist = (req, res, next) => {
     if (result.rows.length > 0) {
       errorChecker = true;
       error.message = 'This email/user already exist in our server, try signing in.';
+      pool.end();
     }
     if (errorChecker) {
       return res.status(409).send({
@@ -95,6 +97,60 @@ export const validateSignUpInput = (req, res, next) => {
     success: false,
     status: 400,
     error,
+  });
+};
+
+export const validateSignInInput = (req, res, next) => {
+  const {
+    email
+  } = req.body;
+  const queryValues = [];
+  const error = {};
+  error.message = {};
+  let errorChecker = false;
+
+  const pool = new Pool({
+    connectionString,
+  });
+
+  req.checkBody('email', 'Email is required').notEmpty();
+  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('email', 'Email does not appear to be valid').isEmail();
+
+  // check the validation object for errors
+  const errors = req.validationErrors();
+  if (errors) {
+    errorChecker = true;
+    errors.forEach((value) => {
+      error.message[value.param] = value.msg;
+    });
+  }
+
+  if (errorChecker) {
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error
+    });
+  }
+  queryValues.push(email.toLowerCase());
+  pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
+    if (err) {
+      errorChecker = true;
+      error.err = err;
+    }
+    if (result.rows.length === 0) {
+      errorChecker = true;
+      error.message = 'User account not found.';
+      pool.end();
+    }
+    if (!errorChecker) { return next(); }
+
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error,
+    });
   });
 };
 
