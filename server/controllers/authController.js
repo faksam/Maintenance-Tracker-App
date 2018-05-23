@@ -33,7 +33,6 @@ const signup = (req, res) => {
 
   const queryValues = [];
   queryValues.push(userEmail);
-  // const phoneNo = req.body.phoneNo;
   const saltRounds = 12;
 
   bcrypt.hash(password, saltRounds)
@@ -53,9 +52,9 @@ const signup = (req, res) => {
         status: 201,
         token: userToken,
         data: {
-          'Full Name': fullName,
-          Email: email,
-          'Phone no': phoneNo
+          fullName,
+          email,
+          phoneNo
         },
       });
     });
