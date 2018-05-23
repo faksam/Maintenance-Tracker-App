@@ -11,21 +11,17 @@ export const verifyToken = (req, res) => {
   const error = {};
   error.message = {};
   let decode = '';
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') { // Authorization: Bearer g1jipjgi1ifjioj
-    // Handle token presented as a Bearer token in the Authorization header
+  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') { 
     const authHeader = req.headers.authorization.split(' ');
-    // token = authHeader[1];
     try {
       decode = jwt.decode(authHeader[1], appConfig.secret);
     } catch (err) {
       error.message = err;
     }
   } else if (req.query && req.query.token) {
-    // Handle token presented as URI param
     ({ token } = req.query);
     decode = jwt.decode(token, appConfig.secret);
   } else if (req.body && req.body.token) {
-    // Handle token presented as a cookie parameter
     ({ token } = req.body.token);
     decode = jwt.decode(token, appConfig.secret);
   }

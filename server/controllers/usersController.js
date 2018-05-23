@@ -36,7 +36,7 @@ export default class usersController {
     const pool = new Pool({
       connectionString,
     });
-    const decode = verifyToken(req, res);
+    let decode = verifyToken(req, res);
     const queryValues = [];
     queryValues.push(decode.sub);
     pool.query('SELECT * FROM requests WHERE userid = $1', [queryValues[0]], (err, result) => {
@@ -45,6 +45,7 @@ export default class usersController {
         status: 200,
         data: result.rows,
       });
+      pool.end();
     });
   }
 
