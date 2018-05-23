@@ -138,3 +138,30 @@ export const verifyIfRequestExist = (req, res, next) => {
   pool.end();
   });
 };
+
+
+export const checkRequestStatus = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const requestId = parseInt(req.params.id, 10);
+  let requestChecker = false;
+  const queryValues = [];
+  const pool = new Pool({
+    connectionString,
+  });
+  queryValues.push(requestId);
+  pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
+  if (result.rows[0].status !== 'New') {
+    requestChecker = true;
+    error.message = 'Only New Requests Can Be Edited!';
+  }
+  if (requestChecker) {
+    res.status(400).send({
+      success: false,
+      status: 400,
+      error
+    });
+  } else { return next(); }
+  pool.end();
+  });
+};
