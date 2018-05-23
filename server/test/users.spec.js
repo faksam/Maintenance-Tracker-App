@@ -13,7 +13,7 @@ describe('API endpoint /users/requests', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(users[7])
+      .send(users.user[7])
       .end((err, res) => {
         userToken = res.body.token;
         done();
@@ -36,6 +36,7 @@ describe('API endpoint /users/requests', () => {
   it('should return error Not found', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests/100')
+      .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
@@ -48,6 +49,7 @@ describe('API endpoint /users/requests', () => {
   it('should return request with id 3', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests/3')
+      .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -59,6 +61,7 @@ describe('API endpoint /users/requests', () => {
   it('should not get a request when id is not a number', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests/lifeisarace')
+      .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
         expect(res.body.error.message).to.equal('id parameter must be a valid integer number');
         expect(res).to.have.status(400);
@@ -72,6 +75,7 @@ describe('API endpoint /users/requests', () => {
   it('should add new request', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('authorization', `Bearer ${userToken}`)
       .send(request[0])
       .then((res) => {
         expect(res).to.have.status(201);
@@ -86,6 +90,7 @@ describe('API endpoint /users/requests', () => {
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('authorization', `Bearer ${userToken}`)
       .send(request[1])
       .then((res) => {
         expect(res).to.have.status(400);
@@ -99,6 +104,7 @@ describe('API endpoint /users/requests', () => {
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('authorization', `Bearer ${userToken}`)
       .send(request[2])
       .then((res) => {
         expect(res).to.have.status(400);
@@ -112,6 +118,7 @@ describe('API endpoint /users/requests', () => {
   it('should update request/3', (done) => {
     chai.request(app)
       .put('/api/v1/users/requests/3')
+      .set('authorization', `Bearer ${userToken}`)
       .send(request[0])
       .then((res) => {
         expect(res).to.have.status(200);
@@ -126,6 +133,7 @@ describe('API endpoint /users/requests', () => {
   it('should return 404 not found error request/100', (done) => {
     chai.request(app)
       .put('/api/v1/users/requests/100')
+      .set('authorization', `Bearer ${userToken}`)
       .send(request[0])
       .then((res) => {
         expect(res).to.have.status(404);
