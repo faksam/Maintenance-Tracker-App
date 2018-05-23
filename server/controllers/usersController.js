@@ -95,26 +95,31 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static postRequest(req, res) {
-    const newRequest = {};
-
-    newRequest.id = usersRequest.requests.length + 1;
-    newRequest.title = req.body.title;
-    newRequest.description = req.body.description;
-    newRequest.userId = uuid.v4();
-    newRequest.date = new Date();
-    newRequest.status = 'New';
-
-    usersRequest.requests.push(newRequest);
-    res.status(201).send({
-      success: true,
-      status: 201,
-      data: {
-        id: newRequest.id,
-        title: newRequest.title,
-        description: newRequest.description,
-        date: newRequest.date,
-        status: newRequest.status,
-      }
+    
+    const {
+      title, description
+    } = req.body;
+    const pool = new Pool({
+      connectionString,
+    });
+    const decode = verifyToken(req, res);
+    const insertQuery = {
+      name: 'get-users-requests',
+      text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)', 
+      values: [title, description, new Date(), 'New', decode.sub],
+    };
+    console.log(insertQuery);
+    pool.query(insertQuery, (err, result) => {
+      res.status(201).send({
+        success: true,
+        status: 201,
+        data: {
+          title,
+          description,
+          'status': 'New'
+        },
+      });
+      pool.end();
     });
   }
 
