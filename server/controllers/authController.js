@@ -76,7 +76,7 @@ const login = (req, res) => {
       .then((validPassword) => {
         if (validPassword) {
           userToken = tokenForUser(result.rows[0]);
-          res.set('authorization', userToken).status(201).send({
+          return res.set('authorization', userToken).status(201).send({
             success: true,
             status: 201,
             token: userToken,
@@ -86,7 +86,7 @@ const login = (req, res) => {
               Phone: result.rows[0].phoneno,
             }
           });
-        } else { res.status(404).send({ error: 'User not found' }); }
+        } else { return res.status(404).send({ error: 'User not found' }); }
       });
   });
   pool.end();
