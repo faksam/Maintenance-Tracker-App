@@ -117,7 +117,7 @@ describe('API endpoint /users/requests', () => {
   // PUT  Update specific request/3 by id
   it('should update request/3', (done) => {
     chai.request(app)
-      .put('/api/v1/users/requests/3')
+      .put('/api/v1/users/requests/4')
       .set('authorization', `Bearer ${userToken}`)
       .send(request[0])
       .then((res) => {
@@ -140,6 +140,6 @@ describe('API endpoint /users/requests', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.error.message).to.equal('request id not found');
         done();
-      });
+      }); 
   });
 });
