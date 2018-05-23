@@ -36,7 +36,7 @@ export default class usersController {
     const pool = new Pool({
       connectionString,
     });
-    let decode = verifyToken(req, res);
+    const decode = verifyToken(req, res);
     const queryValues = [];
     queryValues.push(decode.sub);
     pool.query('SELECT * FROM requests WHERE userid = $1', [queryValues[0]], (err, result) => {
@@ -63,26 +63,23 @@ export default class usersController {
    */
   static getRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    /**
-     * @description - Finds request
-     * @param {request} request - UserRequest
-     *
-     * @returns {object} Class Instance
-     */
-    function findRequest(request) {
-      return request.id === requestId;
-    }
-    const foundRequest = usersRequest.requests.find(findRequest);
-    const data = {};
-    data.id = foundRequest.id;
-    data.title = foundRequest.title;
-    data.description = foundRequest.description;
-    data.date = foundRequest.date;
-    data.status = foundRequest.status;
-    res.status(200).send({
-      success: true,
-      status: 200,
-      data
+    const pool = new Pool({
+      connectionString,
+    });
+    const decode = verifyToken(req, res);
+    const selectQuery = {
+      name: 'get-users-requests',
+      text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
+      values: [decode.sub, requestId],
+    };
+
+    pool.query(selectQuery, (err, result) => {
+      res.status(200).send({
+        success: true,
+        status: 200,
+        data: result.rows,
+      });
+      pool.end();
     });
   }
 

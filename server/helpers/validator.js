@@ -11,7 +11,7 @@ export const verifyToken = (req, res) => {
   const error = {};
   error.message = {};
   let decode = '';
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') { 
+  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const authHeader = req.headers.authorization.split(' ');
     try {
       decode = jwt.decode(authHeader[1], appConfig.secret);
