@@ -1,0 +1,36 @@
+{
+    "user": [
+        {
+            "fullName": "Fakunle Samuel",
+            "email": "fakunlesamuel@gmail.com",
+            "phoneNo": "07039248533",
+            "password": "Lifeisarace"
+        },
+        {
+            "fullName": "Fakunle Samuel",
+            "email": "fakunlesamuel@ymail.co.uk",
+            "phoneNo": "07039248533",
+            "password": "Lifeisarace"
+        },
+        {
+            "email": "fakunlesamuel@live.com",
+            "phoneNo": "07039248533",
+            "password": "Lifeisarace"
+        },
+        {
+            "fullName": "Fakunle Samuel",
+            "phoneNo": "07039248533",
+            "password": "Lifeisarace"
+        },
+        {
+            "fullName": "Fakunle Samuel",
+            "email": "fakunlesamuel@yahoo.co.uk",
+            "password": "Lifeisarace"
+        },
+        {
+            "fullName": "Fakunle Samuel",
+            "email": "fakunlesamuel@yahoo.co.uk",
+            "phoneNo": "07039248533"
+        }
+    ]
+}
