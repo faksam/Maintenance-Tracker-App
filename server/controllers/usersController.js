@@ -1,7 +1,20 @@
 import uuid from 'uuid';
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+import { verifyToken } from '../helpers/validator';
 // import json file
 import usersRequest from '../db/usersRequest.json';
 
+dotenv.config();
+
+const env = process.env.NODE_ENV;
+let connectionString;
+
+if (env === 'development') {
+  connectionString = process.env.DATABASE_URL;
+} else {
+  connectionString = process.env.use_env_variable;
+}
 /**
  * @class usersController
  *
@@ -9,7 +22,7 @@ import usersRequest from '../db/usersRequest.json';
  */
 export default class usersController {
 /**
-   * @description - Get all Requests
+   * @description - Get all Users Requests
    * @static
    *
    * @param {object} req - HTTP Request
@@ -20,11 +33,19 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static getRequests(req, res) {
-    const data = usersRequest.requests;
-    res.status(200).send({
-      success: true,
-      status: 200,
-      data
+    const pool = new Pool({
+      connectionString,
+    });
+    let decode = verifyToken(req, res);
+    const queryValues = [];
+    queryValues.push(decode.sub);
+    pool.query('SELECT * FROM requests WHERE userid = $1', [queryValues[0]], (err, result) => {
+      res.status(200).send({
+        success: true,
+        status: 200,
+        data: result.rows,
+      });
+      pool.end();
     });
   }
 
