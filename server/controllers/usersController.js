@@ -95,7 +95,6 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static postRequest(req, res) {
-    
     const {
       title, description
     } = req.body;
@@ -135,27 +134,32 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static updateRequest(req, res) {
-    let foundRequest = {};
     const requestId = parseInt(req.params.id, 10);
-    usersRequest.requests.forEach((element, index) => {
-      if (element.id === requestId) {
-        foundRequest = element;
-        foundRequest.title = req.body.title;
-        foundRequest.description = req.body.description;
-        usersRequest.requests[index] = foundRequest;
-
-        return res.status(200).send({
-          success: true,
-          status: 200,
-          data: {
-            id: foundRequest.id,
-            title: foundRequest.title,
-            description: foundRequest.description,
-            date: foundRequest.date,
-            status: foundRequest.status,
-          }
-        });
-      }
+    const {
+      title, description
+    } = req.body;
+    const pool = new Pool({
+      connectionString,
     });
+    const decode = verifyToken(req, res);
+    const insertQuery = {
+      name: 'get-users-requests',
+      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4', 
+      values: [title, description, requestId, decode.sub],
+    };
+    console.log(insertQuery);
+    pool.query(insertQuery, (err, result) => {
+      res.status(200).send({
+        success: true,
+        status: 200,
+        data: {
+          title,
+          description,
+          'status': 'New'
+        },
+      });
+      pool.end();
+    }); 
   }
+
 }
