@@ -22,6 +22,7 @@ pool.query(
     'fullName VARCHAR(200) not null, ' +
     'email VARCHAR(100) not null, ' +
     'phoneNo VARCHAR(30) not null, ' +
+    'password VARCHAR(100) not null, ' +
     'role VARCHAR(20) not null); ',
   () => {
     pool.end();
