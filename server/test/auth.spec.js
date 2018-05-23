@@ -14,7 +14,8 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
   after(() => {
 
   });
-  // POST - Signup existing user
+
+  // POST - Signup Existing User
   it('should not signup existing user', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -27,21 +28,22 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup user
-  it('it should add new user', (done) => {
+  // POST - Signup User
+  it('should add new user', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(users.user[1])
+      .send(users.user[6])
       .then((res) => {
         expect(res).to.have.status(201);
         expect(res.body).to.be.an('object');
-        expect(res.body.data.fullName).to.equal(users.user[1].fullName);
-        expect(res.body.data.email).to.equal(users.user[1].email);
+        expect(res.body.data.Fullname).to.equal(users.user[6].fullName);
+        expect(res.body.data.Email).to.equal(users.user[6].email);
+        expect(res.body.data.Phone).to.equal(users.user[6].phoneNo);
         done();
       });
   });
 
-  // POST - Signup user
+  // POST - Signup User
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -54,7 +56,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup user
+  // POST - Signup User
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -67,7 +69,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup user
+  // POST - Signup User
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -80,15 +82,56 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup user
+  // POST - Signup User
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/auth/login')
       .send(users.user[5])
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         expect(res.body.error.message.password).to.equal('Password is required');
+        done();
+      });
+  });
+
+  // POST - Login User
+  it('should return 400 Bad Request', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.user[3])
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message.email).to.equal('Email does not appear to be valid');
+        done();
+      });
+  });
+
+  // POST - Login User
+  it('should return 400 Bad Request', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.user[5])
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message.password).to.equal('Password is required');
+        done();
+      });
+  });
+
+  // POST - Login User
+  it('should login user', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.user[6])
+      .then((res) => {
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data.Fullname).to.equal(users.user[6].fullName);
+        expect(res.body.data.Email).to.equal(users.user[6].email);
+        expect(res.body.data.Phone).to.equal(users.user[6].phoneNo);
         done();
       });
   });
