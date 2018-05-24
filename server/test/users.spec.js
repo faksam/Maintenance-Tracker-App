@@ -40,15 +40,15 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('request id not found');
+        expect(res.body.error.message).to.equal('request does not exist');
         done();
       });
   });
 
   // GET existing request
-  it('should return request with id 3', (done) => {
+  it('should return request with id 4', (done) => {
     chai.request(app)
-      .get('/api/v1/users/requests/3')
+      .get('/api/v1/users/requests/4')
       .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
         expect(res).to.have.status(200);
@@ -115,7 +115,7 @@ describe('API endpoint /users/requests', () => {
   });
 
   // PUT  Update specific request/3 by id
-  it('should update request/3', (done) => {
+  it('should update request/4', (done) => {
     chai.request(app)
       .put('/api/v1/users/requests/4')
       .set('authorization', `Bearer ${userToken}`)
@@ -138,8 +138,9 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('request id not found');
+        expect(res.body.error.message).to.equal('request does not exist');
         done();
       });
   });
 });
+

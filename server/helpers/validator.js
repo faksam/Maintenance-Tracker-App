@@ -19,6 +19,14 @@ export const verifyToken = (req, res) => {
   const error = {};
   error.message = {};
   let decode = '';
+  if (req.headers.authorization === undefined || req.headers.authorization === null || req.headers.authorization === '') {
+    error.message = 'Token not valid';
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error
+    });
+  }
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const authHeader = req.headers.authorization.split(' ');
     try {
@@ -134,7 +142,7 @@ export const verifyIfRequestExist = (req, res, next) => {
       requestChecker = true;
     }
     if (requestChecker) {
-      error.message = 'request id not found';
+      error.message = 'request does not exist';
       res.status(404).send({
         success: false,
         status: 404,
