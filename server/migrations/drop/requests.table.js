@@ -14,6 +14,7 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
+  ssl: true,
 });
 
 pool.query('DROP TABLE IF EXISTS requests, requests CASCADE;', () => {
@@ -22,6 +23,7 @@ pool.query('DROP TABLE IF EXISTS requests, requests CASCADE;', () => {
 
 const client = new Client({
   connectionString,
+  ssl: true,
 });
 client.connect();
 client.end();
