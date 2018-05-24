@@ -74,22 +74,20 @@ export default class usersController {
       text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
       values: [decode.sub, requestId],
     };
-
     pool.query(selectQuery, (err, result) => {
-      if(result.rows[0].length > 0) {
+      if (result.rows.length > 0) {
         res.status(200).send({
           success: true,
           status: 200,
           data: result.rows,
         });
-      }
-      else {
-        error.message = 'Request not found';
+      } else {
+        error.message = `Request with id - ${requestId} does not exist for current user`;
         return res.status(404).send({
-        success: false,
-        status: 404,
-        error,
-      });
+          success: false,
+          status: 404,
+          error,
+        });
       }
       pool.end();
     });
