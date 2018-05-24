@@ -14,6 +14,7 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
+  ssl: true,
 });
 
 // async/await
@@ -74,4 +75,11 @@ const pool = new Pool({
   await pool.end();
 })().catch(e => setImmediate(() => { throw e; }));
 
+
+const client = new Client({
+  connectionString,
+  ssl: true,
+});
+client.connect();
+client.end();
 
