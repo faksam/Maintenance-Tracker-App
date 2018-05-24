@@ -16,6 +16,7 @@ if (env === 'development') {
 export const verrifyUserExist = (req, res, next) => {
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
 
   const email = req.body.email.toLowerCase();
@@ -111,6 +112,7 @@ export const validateSignInInput = (req, res, next) => {
 
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
 
   req.checkBody('email', 'Email is required').notEmpty();
