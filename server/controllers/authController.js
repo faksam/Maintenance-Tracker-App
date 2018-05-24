@@ -25,6 +25,7 @@ const tokenForUser = (user) => {
 const signup = (req, res) => {
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
   const {
     fullName, email, phoneNo, password
@@ -63,6 +64,7 @@ const signup = (req, res) => {
 const login = (req, res) => {
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
   const {
     email, password
