@@ -3,6 +3,7 @@ import jwt from 'jwt-simple';
 import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import appConfig from '../config/config';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ if (env === 'development') {
 let userToken;
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET_TOKEN);
+  return jwt.encode({ sub: user.id, iat: timestamp }, appConfig.secret);
 };
 
 const signup = (req, res) => {
