@@ -75,9 +75,3 @@ const pool = new Pool({
 })().catch(e => setImmediate(() => { throw e; }));
 
 
-const client = new Client({
-  connectionString,
-});
-client.connect();
-client.end();
-
