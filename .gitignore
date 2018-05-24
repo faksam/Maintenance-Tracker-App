@@ -8,7 +8,5 @@ coverage/
 
 dist/
 
-.sample.env
-
-.env
+.sample2.env
 
