@@ -109,6 +109,7 @@ export const verifyIfRequestExist = (req, res, next) => {
   const queryValues = [];
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
   if (requestId < 0 || !isInt(requestId)) {
     // either age was not a valid number, integer, or is not in range
@@ -145,6 +146,7 @@ export const checkRequestStatus = (req, res, next) => {
   const queryValues = [];
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
   queryValues.push(requestId);
   pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {

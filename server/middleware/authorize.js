@@ -19,6 +19,7 @@ export const authorizeAdmin = (req, response, next) => {
 
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
   const queryValues = [];
   queryValues.push(decode.sub);
@@ -42,6 +43,7 @@ export const authorizeUser = (req, res, next) => {
 
   const pool = new Pool({
     connectionString,
+    ssl: true,
   });
   const queryValues = [];
   queryValues.push(decode.sub);
