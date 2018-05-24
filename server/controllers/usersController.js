@@ -61,6 +61,8 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static getRequest(req, res) {
+    const error = {};
+    error.message = {};
     const requestId = parseInt(req.params.id, 10);
     const pool = new Pool({
       connectionString,
@@ -74,11 +76,21 @@ export default class usersController {
     };
 
     pool.query(selectQuery, (err, result) => {
-      res.status(200).send({
-        success: true,
-        status: 200,
-        data: result.rows,
+      if(result.rowCount > 0) {
+        res.status(200).send({
+          success: true,
+          status: 200,
+          data: result.rows,
+        });
+      }
+      else {
+        error.message = 'Request not found';
+        return res.status(404).send({
+        success: false,
+        status: 404,
+        error,
       });
+      }
       pool.end();
     });
   }
