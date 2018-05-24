@@ -17,7 +17,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "pretest": "npm run migrations && npm run seeders",
     "posttest": "eslint --ignore-path .eslintignore  .",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build && npm run pretest"
   },
   "dependencies": {
     "babel-register": "^6.26.0",
