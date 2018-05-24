@@ -76,7 +76,7 @@ export default class usersController {
     };
 
     pool.query(selectQuery, (err, result) => {
-      if(result.rowCount > 0) {
+      if(result.rows[0].length > 0) {
         res.status(200).send({
           success: true,
           status: 200,
