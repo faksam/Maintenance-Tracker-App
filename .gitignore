@@ -9,3 +9,6 @@ coverage/
 dist/
 
 .sample.env
+
+.env
+
