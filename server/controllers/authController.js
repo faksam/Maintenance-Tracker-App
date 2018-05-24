@@ -86,7 +86,7 @@ const login = (req, res) => {
               Phone: result.rows[0].phoneno,
             }
           });
-        } else { return res.status(404).send({ error: 'User not found' }); }
+        } return res.status(404).send({ error: 'User not found' });
       });
   });
   pool.end();
