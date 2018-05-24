@@ -8,6 +8,8 @@ let connectionString;
 
 if (env === 'development') {
   connectionString = process.env.DATABASE_URL;
+} else if(env === 'testing') {
+  connectionString = process.env.TEST_DATABASE_URL;
 } else {
   connectionString = process.env.use_env_variable;
 }
