@@ -32,11 +32,19 @@ export const verifyToken = (req, res) => {
   } else if (req.body && req.body.token) {
     ({ token } = req.body.token);
     decode = jwt.decode(token, appConfig.secret);
-  }
-  if (decode === '') {
+  } else {
+    error.message = 'User not valid';
     return res.status(400).send({
       success: false,
-      status: 409,
+      status: 400,
+      error
+    });
+  }
+  if (decode === '') {
+    error.message = 'Token not valid';
+    return res.status(400).send({
+      success: false,
+      status: 400,
       error
     });
   }
