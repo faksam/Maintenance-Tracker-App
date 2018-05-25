@@ -79,9 +79,9 @@ const login = (req, res) => {
       .then((validPassword) => {
         if (validPassword) {
           userToken = tokenForUser(result.rows[0]);
-          return res.set('authorization', userToken).status(201).send({
+          return res.set('authorization', userToken).status(200).send({
             success: true,
-            status: 201,
+            status: 200,
             token: userToken,
             data: {
               Fullname: result.rows[0].fullname,
