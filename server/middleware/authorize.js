@@ -1,7 +1,6 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import jwt from 'jwt-simple';
-import appConfig from '../config/config';
 
 dotenv.config();
 
