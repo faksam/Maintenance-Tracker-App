@@ -3,7 +3,6 @@ import jwt from 'jwt-simple';
 import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
-import appConfig from '../config/config';
 
 dotenv.config();
 

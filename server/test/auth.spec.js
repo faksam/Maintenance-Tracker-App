@@ -135,5 +135,4 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
         done();
       });
   });
-  
 });
