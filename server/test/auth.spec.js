@@ -127,7 +127,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .post('/api/v1/auth/login')
       .send(users.user[6])
       .then((res) => {
-        expect(res).to.have.status(201);
+        expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         expect(res.body.data.Fullname).to.equal(users.user[6].fullName);
         expect(res.body.data.Email).to.equal(users.user[6].email);
@@ -135,4 +135,5 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
         done();
       });
   });
+  
 });

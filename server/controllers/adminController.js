@@ -18,17 +18,17 @@ if (env === 'development') {
  * @export
  */
 export default class usersController {
-/**
-   * @description - Get all Users Requests
-   * @static
-   *
-   * @param {object} req - HTTP Request
-   * @param {object} res - HTTP Response
-   *
-   * @memberOf usersController
-   *
-   * @returns {object} response JSON Object
-   */
+  /**
+     * @description - Get all Users Requests
+     * @static
+     *
+     * @param {object} req - HTTP Request
+     * @param {object} res - HTTP Response
+     *
+     * @memberOf usersController
+     *
+     * @returns {object} response JSON Object
+     */
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
@@ -57,9 +57,7 @@ export default class usersController {
    */
   static approveRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const {
-      status
-    } = req.body;
+    const status = 'Approved';
     const pool = new Pool({
       connectionString,
       ssl: true,
@@ -70,9 +68,14 @@ export default class usersController {
       values: [status, requestId],
     };
     pool.query(insertQuery, () => {
-      res.status(200).send({
-        success: true,
-        status: 200,
+      const queryValues = [];
+      queryValues.push(requestId);
+      pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
+        res.status(200).send({
+          success: true,
+          status: 200,
+          data: result.rows,
+        });
       });
       pool.end();
     });
@@ -91,9 +94,7 @@ export default class usersController {
    */
   static rejectRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const {
-      status
-    } = req.body;
+    const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
       ssl: true,
@@ -104,9 +105,14 @@ export default class usersController {
       values: [status, requestId],
     };
     pool.query(insertQuery, () => {
-      res.status(200).send({
-        success: true,
-        status: 200,
+      const queryValues = [];
+      queryValues.push(requestId);
+      pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
+        res.status(200).send({
+          success: true,
+          status: 200,
+          data: result.rows,
+        });
       });
       pool.end();
     });
@@ -125,9 +131,7 @@ export default class usersController {
    */
   static resolveRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const {
-      status
-    } = req.body;
+    const status = 'Resolved';
     const pool = new Pool({
       connectionString,
       ssl: true,
@@ -138,9 +142,14 @@ export default class usersController {
       values: [status, requestId],
     };
     pool.query(insertQuery, () => {
-      res.status(200).send({
-        success: true,
-        status: 200,
+      const queryValues = [];
+      queryValues.push(requestId);
+      pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
+        res.status(200).send({
+          success: true,
+          status: 200,
+          data: result.rows,
+        });
       });
       pool.end();
     });
