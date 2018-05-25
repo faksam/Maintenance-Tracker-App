@@ -19,7 +19,7 @@ if (env === 'development') {
 let userToken;
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, appConfig.secret);
+  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET_TOKEN);
 };
 
 const signup = (req, res) => {

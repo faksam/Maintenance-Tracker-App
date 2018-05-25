@@ -33,7 +33,7 @@ export const authorizeAdmin = (req, response, next) => {
     } else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
       const authHeader = req.headers.authorization.split(' ');
       try {
-        decode = jwt.decode(authHeader[1], appConfig.secret);
+        decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
       } catch (err) {
         error.message = err;
       }
@@ -88,7 +88,7 @@ export const authorizeUser = (req, res, next) => {
   } else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const authHeader = req.headers.authorization.split(' ');
     try {
-      decode = jwt.decode(authHeader[1], appConfig.secret);
+      decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
     } catch (err) {
       error.message = err;
     }
