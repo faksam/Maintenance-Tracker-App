@@ -93,7 +93,7 @@ export default class usersController {
     const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+      ssl: true,
     });
     const insertQuery = {
       name: 'get-users-requests',
