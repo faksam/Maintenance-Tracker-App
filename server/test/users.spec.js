@@ -140,7 +140,7 @@ describe('API endpoint /users/requests', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.error.message).to.equal('request does not exist');
         done();
-      });
+      }); 
   });
 });
 

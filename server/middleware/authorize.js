@@ -1,21 +1,16 @@
 import { Pool } from 'pg';
+<<<<<<< HEAD
 import dotenv from 'dotenv';
 import jwt from 'jwt-simple';
 import appConfig from '../config/config';
+=======
+import { verifyToken } from '../helpers/validator';
+>>>>>>> parent of 7e4e83b... Merge pull request #26 from faksam/ft-admin-api-endpoints
 
-dotenv.config();
-
-const env = process.env.NODE_ENV;
-let connectionString;
-
-if (env === 'development') {
-  connectionString = process.env.DATABASE_URL;
-} else {
-  connectionString = process.env.use_env_variable;
-}
-
+const pool = new Pool();
 
 export const authorizeAdmin = (req, response, next) => {
+<<<<<<< HEAD
   let decode = '';
   const error = {};
   error.message = {};
@@ -113,6 +108,24 @@ export const authorizeUser = (req, res, next) => {
   const queryValues = [];
   queryValues.push(decode.sub);
   pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
+=======
+  const decode = verifyToken(req, response, next);
+
+  pool.query('SELECT * FROM users WHERE id = $1', parseInt(decode.sub, 10), (err, result) => {
+    if (err) {
+      throw err;
+    }
+
+    if (result.rows[0].role === 'Admin') { return next(); }
+    response.status(403).send({ error: 'You are Forbidden.' });
+  });
+};
+
+export const authorizeUser = (req, res, next) => {
+  const decode = verifyToken(req, res, next);
+
+  pool.query('SELECT * FROM users WHERE id = $1', parseInt(decode.sub, 10), (err, result) => {
+>>>>>>> parent of 7e4e83b... Merge pull request #26 from faksam/ft-admin-api-endpoints
     if (err) {
       return res.status(400).send({
         success: false,
@@ -122,13 +135,8 @@ export const authorizeUser = (req, res, next) => {
         },
       });
     }
+
     if (result.rows[0].role.length > 3) { return next(); }
-    res.status(401).send({
-      success: false,
-      status: 401,
-      error: {
-        message: 'You are not authorized.',
-      },
-    });
+    res.status(403).send({ error: 'You are not authorized.' });
   });
 };
