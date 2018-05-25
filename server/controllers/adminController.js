@@ -67,15 +67,11 @@ export default class usersController {
       text: 'UPDATE requests SET status=$1 WHERE id = $2',
       values: [status, requestId],
     };
-    pool.query(insertQuery, () => {
-      const queryValues = [];
-      queryValues.push(requestId);
-      pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
-        res.status(200).send({
-          success: true,
-          status: 200,
-          data: result.rows,
-        });
+    pool.query(insertQuery, (err, result) => {
+      res.status(200).send({
+        success: true,
+        status: 200,
+        data: result.rows,
       });
       pool.end();
     });
@@ -101,10 +97,10 @@ export default class usersController {
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING title, description, status',
+      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
-    pool.query(insertQuery, () => {
+    pool.query(insertQuery, (err, result) => {
       const queryValues = [];
       queryValues.push(requestId);
       res.status(200).send({
@@ -138,18 +134,16 @@ export default class usersController {
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2 ',
+      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
-    pool.query(insertQuery, () => {
-      pool.end();
-    });
-    pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
+    pool.query(insertQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
         data: result.rows,
       });
+      pool.end();
     });
   }
 }
