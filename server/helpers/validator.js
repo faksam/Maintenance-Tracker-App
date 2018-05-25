@@ -30,16 +30,16 @@ export const verifyToken = (req, res) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const authHeader = req.headers.authorization.split(' ');
     try {
-      decode = jwt.decode(authHeader[1], appConfig.secret);
+      decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
     } catch (err) {
       error.message = err;
     }
   } else if (req.query && req.query.token) {
     ({ token } = req.query);
-    decode = jwt.decode(token, appConfig.secret);
+    decode = jwt.decode(token, process.env.SECRET_TOKEN);
   } else if (req.body && req.body.token) {
     ({ token } = req.body.token);
-    decode = jwt.decode(token, appConfig.secret);
+    decode = jwt.decode(token, process.env.SECRET_TOKEN);
   } else {
     error.message = 'User not valid';
     return res.status(400).send({
