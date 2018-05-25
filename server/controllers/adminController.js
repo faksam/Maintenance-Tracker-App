@@ -97,11 +97,11 @@ export default class usersController {
     const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
-      ssl: true,
+      // ssl: true,
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
+      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING title, description, status',
       values: [status, requestId],
     };
     pool.query(insertQuery, () => {
