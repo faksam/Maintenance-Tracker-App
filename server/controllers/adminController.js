@@ -132,6 +132,8 @@ export default class usersController {
   static resolveRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
     const status = 'Resolved';
+    const queryValues = [];
+    queryValues.push(requestId);
     const pool = new Pool({
       connectionString,
       ssl: true,
@@ -142,16 +144,14 @@ export default class usersController {
       values: [status, requestId],
     };
     pool.query(insertQuery, () => {
-      const queryValues = [];
-      queryValues.push(requestId);
-      pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
-        res.status(200).send({
-          success: true,
-          status: 200,
-          data: result.rows,
-        });
-      });
       pool.end();
+    });
+    pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
+      res.status(200).send({
+        success: true,
+        status: 200,
+        data: result.rows,
+      });
     });
   }
 }
