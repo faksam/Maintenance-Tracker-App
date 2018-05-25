@@ -7,7 +7,7 @@ addons:
       secure: "dcbc5ef06fc1350dfb5f98a847056bf672bbf6b9f3fb4bd9207ba4bd4d4149b3"
 before_script:
 - npm install codeclimate-test-reporter 
-- psql -c 'create database travis;' -U postgres
+- psql -c 'create database dfqgep0ghj4c93;' -U postgres
 services:
   - postgresql
 script:
