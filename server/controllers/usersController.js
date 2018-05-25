@@ -1,6 +1,9 @@
+import uuid from 'uuid';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import { verifyToken } from '../helpers/validator';
+// import json file
+import usersRequest from '../db/usersRequest.json';
 
 dotenv.config();
 
@@ -115,17 +118,18 @@ export default class usersController {
     const decode = verifyToken(req, res);
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)',
+      text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)', 
       values: [title, description, new Date(), 'New', decode.sub],
     };
-    pool.query(insertQuery, () => {
+    console.log(insertQuery);
+    pool.query(insertQuery, (err, result) => {
       res.status(201).send({
         success: true,
         status: 201,
         data: {
           title,
           description,
-          status: 'New'
+          'status': 'New'
         },
       });
       pool.end();
@@ -155,20 +159,22 @@ export default class usersController {
     const decode = verifyToken(req, res);
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4',
+      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4', 
       values: [title, description, requestId, decode.sub],
     };
-    pool.query(insertQuery, () => {
+    console.log(insertQuery);
+    pool.query(insertQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
         data: {
           title,
           description,
-          status: 'New'
+          'status': 'New'
         },
       });
       pool.end();
-    });
+    }); 
   }
+
 }
