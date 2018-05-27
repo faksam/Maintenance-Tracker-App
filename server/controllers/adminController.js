@@ -18,23 +18,23 @@ if (env === 'development') {
  * @export
  */
 export default class usersController {
-/**
-   * @description - Get all Users Requests
-   * @static
-   *
-   * @param {object} req - HTTP Request
-   * @param {object} res - HTTP Response
-   *
-   * @memberOf usersController
-   *
-   * @returns {object} response JSON Object
-   */
+  /**
+     * @description - Get all Users Requests
+     * @static
+     *
+     * @param {object} req - HTTP Request
+     * @param {object} res - HTTP Response
+     *
+     * @memberOf usersController
+     *
+     * @returns {object} response JSON Object
+     */
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
       ssl: true,
     });
-    pool.query('SELECT * FROM requests', (err, result) => {
+    pool.query('SELECT * FROM requests ORDER BY id', (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
@@ -57,22 +57,21 @@ export default class usersController {
    */
   static approveRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const {
-      status
-    } = req.body;
+    const status = 'Approved';
     const pool = new Pool({
       connectionString,
       ssl: true,
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2',
+      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
-    pool.query(insertQuery, () => {
+    pool.query(insertQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
+        data: result.rows,
       });
       pool.end();
     });
@@ -91,22 +90,23 @@ export default class usersController {
    */
   static rejectRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const {
-      status
-    } = req.body;
+    const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
       ssl: true,
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2',
+      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
-    pool.query(insertQuery, () => {
+    pool.query(insertQuery, (err, result) => {
+      const queryValues = [];
+      queryValues.push(requestId);
       res.status(200).send({
         success: true,
         status: 200,
+        data: result.rows,
       });
       pool.end();
     });
@@ -125,22 +125,23 @@ export default class usersController {
    */
   static resolveRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const {
-      status
-    } = req.body;
+    const status = 'Resolved';
+    const queryValues = [];
+    queryValues.push(requestId);
     const pool = new Pool({
       connectionString,
       ssl: true,
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2',
+      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
-    pool.query(insertQuery, () => {
+    pool.query(insertQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
+        data: result.rows,
       });
       pool.end();
     });

@@ -1,9 +1,6 @@
 import { Pool } from 'pg';
 import jwt from 'jwt-simple';
 import dotenv from 'dotenv';
-// import json file
-import usersRequest from '../db/usersRequest.json';
-import appConfig from '../config/config';
 
 dotenv.config();
 
@@ -32,16 +29,16 @@ export const verifyToken = (req, res) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const authHeader = req.headers.authorization.split(' ');
     try {
-      decode = jwt.decode(authHeader[1], appConfig.secret);
+      decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
     } catch (err) {
       error.message = err;
     }
   } else if (req.query && req.query.token) {
     ({ token } = req.query);
-    decode = jwt.decode(token, appConfig.secret);
+    decode = jwt.decode(token, process.env.SECRET_TOKEN);
   } else if (req.body && req.body.token) {
     ({ token } = req.body.token);
-    decode = jwt.decode(token, appConfig.secret);
+    decode = jwt.decode(token, process.env.SECRET_TOKEN);
   } else {
     error.message = 'User not valid';
     return res.status(400).send({
@@ -119,6 +116,50 @@ function isInt(n) {
   return n === parseInt(n, 10);
 }
 
+
+export const verifyUserRequest = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const decode = verifyToken(req, res);
+  const requestId = parseInt(req.params.id, 10);
+  let requestChecker = false;
+  const queryValues = [];
+  const pool = new Pool({
+    connectionString,
+    ssl: true,
+  });
+  if (requestId < 0 || !isInt(requestId)) {
+    // either age was not a valid number, integer, or is not in range
+    error.message = 'id parameter must be a valid integer number';
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error
+    });
+  }
+  const selectQuery = {
+    name: 'get-users-request',
+    text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
+    values: [decode.sub, requestId],
+  };
+  queryValues.push(requestId);
+  queryValues.push(decode.sub);
+  pool.query(selectQuery, (err, result) => {
+    if (result.rows.length < 1) {
+      requestChecker = true;
+    }
+    if (requestChecker) {
+      error.message = `Request with id - ${requestId} does not exist for current user`;
+      res.status(404).send({
+        success: false,
+        status: 404,
+        error
+      });
+    } else { return next(); }
+    pool.end();
+  });
+};
+
 export const verifyIfRequestExist = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -138,14 +179,18 @@ export const verifyIfRequestExist = (req, res, next) => {
       error
     });
   }
+  const selectQuery = {
+    name: 'get-users-request',
+    text: 'SELECT * FROM requests WHERE id = $1',
+    values: [requestId],
+  };
   queryValues.push(requestId);
-  pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
-<<<<<<< HEAD
-    if (result.rows.length < 1) {
+  pool.query(selectQuery, (err, result) => {
+    if ((result === undefined) || result.rows.length < 1) {
       requestChecker = true;
     }
     if (requestChecker) {
-      error.message = 'request does not exist';
+      error.message = `Request with id - ${requestId} does not exist`;
       res.status(404).send({
         success: false,
         status: 404,
@@ -153,21 +198,6 @@ export const verifyIfRequestExist = (req, res, next) => {
       });
     } else { return next(); }
     pool.end();
-=======
-  if (result.rows.length < 1) {
-    requestChecker = true;
-  }
-  console.log(result.rows.length);
-  if (requestChecker) {
-    error.message = 'request id not found';
-    res.status(404).send({
-      success: false,
-      status: 404,
-      error
-    });
-  } else { return next(); }
-  pool.end();
->>>>>>> parent of 7e4e83b... Merge pull request #26 from faksam/ft-admin-api-endpoints
   });
 };
 
@@ -184,17 +214,17 @@ export const checkRequestStatus = (req, res, next) => {
   });
   queryValues.push(requestId);
   pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
-  if (result.rows[0].status !== 'New') {
-    requestChecker = true;
-    error.message = 'Only New Requests Can Be Edited!';
-  }
-  if (requestChecker) {
-    res.status(400).send({
-      success: false,
-      status: 400,
-      error
-    });
-  } else { return next(); }
-  pool.end();
+    if (result.rows[0].status !== 'New') {
+      requestChecker = true;
+      error.message = 'Only New Requests Can Be Edited!';
+    }
+    if (requestChecker) {
+      res.status(400).send({
+        success: false,
+        status: 400,
+        error
+      });
+    } else { return next(); }
+    pool.end();
   });
 };

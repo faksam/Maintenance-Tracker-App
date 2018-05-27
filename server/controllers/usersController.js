@@ -1,9 +1,6 @@
-import uuid from 'uuid';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import { verifyToken } from '../helpers/validator';
-// import json file
-import usersRequest from '../db/usersRequest.json';
 
 dotenv.config();
 
@@ -41,7 +38,7 @@ export default class usersController {
     const decode = verifyToken(req, res);
     const queryValues = [];
     queryValues.push(decode.sub);
-    pool.query('SELECT * FROM requests WHERE userid = $1', [queryValues[0]], (err, result) => {
+    pool.query('SELECT * FROM requests WHERE userid = $1 ORDER BY id', [queryValues[0]], (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
@@ -73,7 +70,7 @@ export default class usersController {
     });
     const decode = verifyToken(req, res);
     const selectQuery = {
-      name: 'get-users-requests',
+      name: 'get-users-request',
       text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
       values: [decode.sub, requestId],
     };
@@ -117,19 +114,18 @@ export default class usersController {
     });
     const decode = verifyToken(req, res);
     const insertQuery = {
-      name: 'get-users-requests',
-      text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)', 
+      name: 'create-a-new-users-requests',
+      text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)',
       values: [title, description, new Date(), 'New', decode.sub],
     };
-    console.log(insertQuery);
-    pool.query(insertQuery, (err, result) => {
+    pool.query(insertQuery, () => {
       res.status(201).send({
         success: true,
         status: 201,
         data: {
           title,
           description,
-          'status': 'New'
+          status: 'New'
         },
       });
       pool.end();
@@ -157,24 +153,18 @@ export default class usersController {
       ssl: true,
     });
     const decode = verifyToken(req, res);
-    const insertQuery = {
-      name: 'get-users-requests',
-      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4', 
+    const updateQuery = {
+      name: 'update-users-requests',
+      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4 RETURNING *',
       values: [title, description, requestId, decode.sub],
     };
-    console.log(insertQuery);
-    pool.query(insertQuery, (err, result) => {
+    pool.query(updateQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
-        data: {
-          title,
-          description,
-          'status': 'New'
-        },
+        data: result.rows[0],
       });
       pool.end();
-    }); 
+    });
   }
-
 }

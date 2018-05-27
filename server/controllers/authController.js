@@ -3,7 +3,6 @@ import jwt from 'jwt-simple';
 import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
-import appConfig from '../config/config';
 
 dotenv.config();
 
@@ -19,7 +18,7 @@ if (env === 'development') {
 let userToken;
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, appConfig.secret);
+  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET_TOKEN);
 };
 
 const signup = (req, res) => {
@@ -79,9 +78,9 @@ const login = (req, res) => {
       .then((validPassword) => {
         if (validPassword) {
           userToken = tokenForUser(result.rows[0]);
-          return res.set('authorization', userToken).status(201).send({
+          return res.set('authorization', userToken).status(200).send({
             success: true,
-            status: 201,
+            status: 200,
             token: userToken,
             data: {
               Fullname: result.rows[0].fullname,

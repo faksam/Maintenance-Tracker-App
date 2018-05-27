@@ -51,7 +51,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.fullName).to.equal('Full Name is required');
+        expect(res.body.error.message.fullName).to.equal('Full Name is required, must be between 3-40 characters');
         done();
       });
   });
@@ -77,20 +77,20 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.phoneNo).to.equal('Phone No is required');
+        expect(res.body.error.message.phoneNo).to.equal('Phone No is required, must be between 7-15 characters');
         done();
       });
   });
 
-  // POST - Signup User
+  // POST - Login User
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
-      .post('/api/v1/auth/login')
+      .post('/api/v1/auth/signup')
       .send(users.user[5])
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.password).to.equal('Password is required');
+        expect(res.body.error.message.password).to.equal('Password is required, must be between 8-20 characters');
         done();
       });
   });
@@ -127,7 +127,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .post('/api/v1/auth/login')
       .send(users.user[6])
       .then((res) => {
-        expect(res).to.have.status(201);
+        expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         expect(res.body.data.Fullname).to.equal(users.user[6].fullName);
         expect(res.body.data.Email).to.equal(users.user[6].email);
