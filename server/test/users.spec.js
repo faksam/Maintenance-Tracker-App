@@ -40,7 +40,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('request does not exist');
+        expect(res.body.error.message).to.equal('Request with id - 100 does not exist for current user');
         done();
       });
   });
@@ -138,7 +138,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('request does not exist');
+        expect(res.body.error.message).to.equal('Request with id - 100 does not exist for current user');
         done();
       });
   });

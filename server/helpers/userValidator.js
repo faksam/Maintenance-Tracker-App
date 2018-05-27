@@ -56,8 +56,8 @@ export const validateSignUpInput = (req, res, next) => {
   error.message = {};
   req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().isLength({ min: 3, max: 40 }).isString();
   req.checkBody('email', 'Email is required').notEmpty().isString();
-  req.checkBody('phoneNo', 'Phone No is required, must be alpha-numeric between 7-15 characters').notEmpty().isLength({ min: 7, max: 15 }).isString();
-  req.checkBody('password', 'Password is required, must be alpha-numeric between 8-20 characters').notEmpty().isLength({ min: 8, max: 20 }).isString();
+  req.checkBody('phoneNo', 'Phone No is required, must be between 7-15 characters').notEmpty().isLength({ min: 7, max: 15 }).isString();
+  req.checkBody('password', 'Password is required, must be between 8-20 characters').notEmpty().isLength({ min: 8, max: 20 }).isString();
   req.checkBody('email', 'Email does not appear to be valid').isEmail();
 
   // check the validation object for errors
