@@ -14,7 +14,7 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-  ssl: true,
+  // ssl: true,
 });
 
 // async/await
@@ -64,7 +64,7 @@ const pool = new Pool({
 
 const client = new Client({
   connectionString,
-  ssl: true,
+  // ssl: true,
 });
 client.connect();
 client.end();

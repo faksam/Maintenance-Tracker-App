@@ -19,7 +19,7 @@ app.set('view engine', 'html');
 // Start server
 const PORT = process.env.PORT || 3456;
 app.listen(PORT, () => {
-  // console.log(`The app is running on port ${PORT}`);
+  console.log(`The app is running on port ${PORT}`);
 });
 
 app.use(expressValidator());
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../UI')));
 
-// // Require static assets from template folder
+// Require static assets from template folder
 app.use('../UI', express.static(path.join(`${__dirname}../UI`)));
 
 app.use('/api/v1/', apiv1);
@@ -46,27 +46,12 @@ app.use((req, res) => {
   });
 });
 
-// error handler
-// app.use((err, req, res, next) => {
-//   // render the error page
-//   if (err.status) { res.status(err.status); }
-//   res.send({
-//     success: false,
-//     status: err.status,
-//     message: err.message,
-//     error: {
-//       message: err.message,
-//     }
-//   });
-//   next(err);
-// });
 
 // error handler
 app.use((err, req, res) => {
   // render the error page
   if (err.status) { res.status(err.status); } else {
     res.status(500);
-    err.status = 500;
   }
 
   res.send({
@@ -75,7 +60,7 @@ app.use((err, req, res) => {
     message: err.message,
     error: {
       message: err.message,
-    }
+    },
   });
 });
 
