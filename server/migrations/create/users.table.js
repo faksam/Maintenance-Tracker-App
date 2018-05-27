@@ -14,6 +14,7 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
+  ssl: true,
 });
 
 pool.query(
@@ -31,6 +32,7 @@ pool.query(
 
 const client = new Client({
   connectionString,
+  ssl: true,
 });
 client.connect();
 client.end();

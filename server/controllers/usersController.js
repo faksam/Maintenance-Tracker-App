@@ -12,6 +12,7 @@ if (env === 'development') {
 } else {
   connectionString = process.env.use_env_variable;
 }
+
 /**
  * @class usersController
  *
@@ -32,11 +33,12 @@ export default class usersController {
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
+      ssl: true,
     });
     const decode = verifyToken(req, res);
     const queryValues = [];
     queryValues.push(decode.sub);
-    pool.query('SELECT * FROM requests WHERE userid = $1', [queryValues[0]], (err, result) => {
+    pool.query('SELECT * FROM requests WHERE userid = $1 ORDER BY id', [queryValues[0]], (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
@@ -59,23 +61,34 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static getRequest(req, res) {
+    const error = {};
+    error.message = {};
     const requestId = parseInt(req.params.id, 10);
     const pool = new Pool({
       connectionString,
+      ssl: true,
     });
     const decode = verifyToken(req, res);
     const selectQuery = {
-      name: 'get-users-requests',
+      name: 'get-users-request',
       text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
       values: [decode.sub, requestId],
     };
-
     pool.query(selectQuery, (err, result) => {
-      res.status(200).send({
-        success: true,
-        status: 200,
-        data: result.rows,
-      });
+      if (result.rows.length > 0) {
+        res.status(200).send({
+          success: true,
+          status: 200,
+          data: result.rows,
+        });
+      } else {
+        error.message = `Request with id - ${requestId} does not exist for current user`;
+        return res.status(404).send({
+          success: false,
+          status: 404,
+          error,
+        });
+      }
       pool.end();
     });
   }
@@ -97,10 +110,11 @@ export default class usersController {
     } = req.body;
     const pool = new Pool({
       connectionString,
+      ssl: true,
     });
     const decode = verifyToken(req, res);
     const insertQuery = {
-      name: 'get-users-requests',
+      name: 'create-a-new-users-requests',
       text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)',
       values: [title, description, new Date(), 'New', decode.sub],
     };
@@ -136,22 +150,19 @@ export default class usersController {
     } = req.body;
     const pool = new Pool({
       connectionString,
+      ssl: true,
     });
     const decode = verifyToken(req, res);
-    const insertQuery = {
-      name: 'get-users-requests',
-      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4',
+    const updateQuery = {
+      name: 'update-users-requests',
+      text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4 RETURNING *',
       values: [title, description, requestId, decode.sub],
     };
-    pool.query(insertQuery, () => {
+    pool.query(updateQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
-        data: {
-          title,
-          description,
-          status: 'New'
-        },
+        data: result.rows[0],
       });
       pool.end();
     });
