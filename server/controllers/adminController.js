@@ -34,7 +34,7 @@ export default class usersController {
       connectionString,
       ssl: true,
     });
-    pool.query('SELECT * FROM requests', (err, result) => {
+    pool.query('SELECT * FROM requests ORDER BY id', (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,

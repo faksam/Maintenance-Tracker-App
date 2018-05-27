@@ -54,10 +54,10 @@ export const validateSignUpInput = (req, res, next) => {
   } = req.body;
   const error = {};
   error.message = {};
-  req.checkBody('fullName', 'Full Name is required').notEmpty();
-  req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('phoneNo', 'Phone No is required').notEmpty();
-  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().isLength({ min: 3, max: 40 }).isString();
+  req.checkBody('email', 'Email is required').notEmpty().isString();
+  req.checkBody('phoneNo', 'Phone No is required, must be alpha-numeric between 7-15 characters').notEmpty().isLength({ min: 7, max: 15 }).isString();
+  req.checkBody('password', 'Password is required, must be alpha-numeric between 8-20 characters').notEmpty().isLength({ min: 8, max: 20 }).isString();
   req.checkBody('email', 'Email does not appear to be valid').isEmail();
 
   // check the validation object for errors
@@ -141,9 +141,9 @@ export const validateSignInInput = (req, res, next) => {
       errorChecker = true;
       error.err = err;
     }
-    if (result.rows.length === 0) {
+    if ((result === undefined) || result.rows.length === 0) {
       errorChecker = true;
-      error.message = 'User account not found.';
+      error.message = 'User account does not exist.';
       pool.end();
     }
     if (!errorChecker) { return next(); }
