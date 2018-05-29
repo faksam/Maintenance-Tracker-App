@@ -135,4 +135,17 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
         done();
       });
   });
+
+  // POST - Login none Existing User
+  it('should not login none existing user', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.user[8])
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('User account does not exist.');
+        done();
+      });
+  });
 });

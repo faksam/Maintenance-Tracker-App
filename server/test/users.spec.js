@@ -28,6 +28,33 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('Broken Desk');
+        expect(res.body.data[0].description).to.equal('One of the desks in my office is broken. When will it be fixed and repaired. It is very important.');
+        done();
+      });
+  });
+
+  // GET List all requests with invalid token
+  it('should not get request if authorization is missing', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests')
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('Token not valid');
+        done();
+      });
+  });
+
+  // GET List all requests with invalid token
+  it('should not get request if token is invalid', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests')
+      .set('authorization', 'Bearer ')
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('Token not valid');
         done();
       });
   });
@@ -46,16 +73,32 @@ describe('API endpoint /users/requests', () => {
   });
 
   // GET existing request
-  it('should return request with id 4', (done) => {
+  it('should return request with id 5', (done) => {
     chai.request(app)
-      .get('/api/v1/users/requests/4')
+      .get('/api/v1/users/requests/5')
       .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('Office Chairs Are All squeaky');
+        expect(res.body.data[0].description).to.equal('All the Office Chairs Are squeaky in my office and one is broken. When will it be fixed and repaired. It is very important.');
         done();
       });
   });
+
+  // GET existing request
+  it('should return an error when request does not belong to user', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests/3')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('Request with id - 3 does not exist for current user');
+        done();
+      });
+  });
+
 
   // GET existing request
   it('should not get a request when id is not a number', (done) => {
@@ -140,7 +183,20 @@ describe('API endpoint /users/requests', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.error.message).to.equal('Request with id - 100 does not exist for current user');
         done();
-      }); 
+      });
+  });
+
+  // GET  List all requests
+  it('should return all /requests', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(403);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('You are Forbidden.');
+        done();
+      });
   });
 });
 

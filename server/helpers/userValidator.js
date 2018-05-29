@@ -1,22 +1,12 @@
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { setConnectionString } from '../helpers/validator';
 
-dotenv.config();
-
-const env = process.env.NODE_ENV;
-let connectionString;
-
-if (env === 'development') {
-  connectionString = process.env.DATABASE_URL;
-} else {
-  connectionString = process.env.use_env_variable;
-}
-
+const connectionString = setConnectionString();
 
 export const verrifyUserExist = (req, res, next) => {
   const pool = new Pool({
     connectionString,
-    ssl: true,
+    // ssl: true,
   });
 
   const email = req.body.email.toLowerCase();
@@ -26,7 +16,6 @@ export const verrifyUserExist = (req, res, next) => {
   let errorChecker = false;
 
   queryValues.push(email);
-
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
     if (err) {
       errorChecker = true;
@@ -41,7 +30,7 @@ export const verrifyUserExist = (req, res, next) => {
       return res.status(409).send({
         success: false,
         status: 409,
-        error
+        error,
       });
     }
     return next();
@@ -49,9 +38,6 @@ export const verrifyUserExist = (req, res, next) => {
 };
 
 export const validateSignUpInput = (req, res, next) => {
-  const {
-    fullName, email, phoneNo, password
-  } = req.body;
   const error = {};
   error.message = {};
   req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().isLength({ min: 3, max: 40 }).isString();
@@ -73,47 +59,13 @@ export const validateSignUpInput = (req, res, next) => {
     });
   }
 
-  let errorChecker = false;
-
-  if (fullName === '' || fullName === null || fullName === undefined) {
-    errorChecker = true;
-    error.fullName = 'Full name field is required';
-  }
-  if (email === '' || email === null || email === undefined) {
-    errorChecker = true;
-    error.description = 'Email field is required';
-  }
-  if (phoneNo === '' || phoneNo === null || phoneNo === undefined) {
-    errorChecker = true;
-    error.description = 'Phone no - field is required';
-  }
-  if (password === '' || password === null || password === undefined) {
-    errorChecker = true;
-    error.status = 'Password field is required';
-  }
-
-  if (!errorChecker) { return next(); }
-
-  return res.status(400).send({
-    success: false,
-    status: 400,
-    error,
-  });
+  return next();
 };
 
 export const validateSignInInput = (req, res, next) => {
-  const {
-    email
-  } = req.body;
-  const queryValues = [];
   const error = {};
   error.message = {};
   let errorChecker = false;
-
-  const pool = new Pool({
-    connectionString,
-    ssl: true,
-  });
 
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
@@ -132,16 +84,30 @@ export const validateSignInInput = (req, res, next) => {
     return res.status(400).send({
       success: false,
       status: 400,
-      error
+      error,
     });
-  }
+  } return next();
+};
+
+export const checkIfUserExist = (req, res, next) => {
+  const {
+    email,
+  } = req.body;
+  const queryValues = [];
+  const error = {};
+  error.message = {};
+  let errorChecker = false;
+
+  const pool = new Pool({
+    connectionString,
+    // ssl: true,
+  });
   queryValues.push(email.toLowerCase());
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
     if (err) {
       errorChecker = true;
       error.err = err;
-    }
-    if ((result === undefined) || result.rows.length === 0) {
+    } else if ((result === undefined) || result.rows.length === 0) {
       errorChecker = true;
       error.message = 'User account does not exist.';
       pool.end();
