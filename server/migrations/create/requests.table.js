@@ -14,9 +14,14 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-  // ssl: true,
+
 });
 
+/**
+ * @description - async/await connection pool
+ *
+ * @param {string} sqlQuery HTTP Request
+ */
 pool.query(
   `CREATE TABLE requests (id serial PRIMARY KEY, 
                 title VARCHAR(61) not null, 
@@ -32,7 +37,7 @@ pool.query(
 
 const client = new Client({
   connectionString,
-  // ssl: true,
+
 });
 client.connect();
 client.end();

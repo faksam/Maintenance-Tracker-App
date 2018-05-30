@@ -14,9 +14,14 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-  // ssl: true,
+
 });
 
+/**
+ * @description - async/await connection pool
+ *
+ * @param {string} sqlQuery HTTP Request
+ */
 pool.query(
   `CREATE TABLE users
     (id uuid not null PRIMARY KEY,
@@ -32,7 +37,7 @@ pool.query(
 
 const client = new Client({
   connectionString,
-  // ssl: true,
+
 });
 client.connect();
 client.end();

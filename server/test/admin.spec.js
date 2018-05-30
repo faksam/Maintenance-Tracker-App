@@ -8,7 +8,9 @@ let userToken;
 chai.use(chaiHttp);
 
 describe('API endpoint login user', () => {
-  // Login A User
+  /**
+   * @description - Login A User
+   */
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
@@ -19,7 +21,9 @@ describe('API endpoint login user', () => {
       });
   });
 
-  // GET  List all requests
+  /**
+   * @description - GET  List all requests
+   */
   it('should return all /requests', (done) => {
     chai.request(app)
       .get('/api/v1/requests')
@@ -33,7 +37,9 @@ describe('API endpoint login user', () => {
       });
   });
 
-  // PUT Approve specific request/3 by id
+  /**
+   * @description - PUT Approve specific request/3 by id
+   */
   it('should approve request/3', (done) => {
     chai.request(app)
       .put('/api/v1/requests/3/approve')
@@ -48,7 +54,10 @@ describe('API endpoint login user', () => {
       });
   });
 
-  // approve a requests with invalid token
+
+  /**
+   * @description - Approve a requests with invalid token
+   */
   it('should not get request if headers.authorization is missing', (done) => {
     chai.request(app)
       .put('/api/v1/requests/3/approve')
@@ -61,7 +70,9 @@ describe('API endpoint login user', () => {
   });
 
 
-  // PUT Approve specific request/3 by id
+  /**
+   * @description - PUT Approve specific request/3 by id
+   */
   it('should not approve request if token is invalid', (done) => {
     chai.request(app)
       .put('/api/v1/requests/3/approve')
@@ -75,7 +86,9 @@ describe('API endpoint login user', () => {
       });
   });
 
-  // PUT Disapprove specific request/3 by id
+  /**
+   * @description - PUT Disapprove specific request/3 by id
+   */
   it('should disapprove request/2', (done) => {
     chai.request(app)
       .put('/api/v1/requests/2/disapprove')
@@ -90,7 +103,9 @@ describe('API endpoint login user', () => {
       });
   });
 
-  // PUT Resolve specific request/3 by id
+  /**
+   * @description - PUT Resolve specific request/3 by id
+   */
   it('should resolve request/1', (done) => {
     chai.request(app)
       .put('/api/v1/requests/1/resolve')

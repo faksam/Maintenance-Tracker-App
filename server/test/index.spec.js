@@ -5,7 +5,9 @@ import app from '../app';
 chai.use(chaiHttp);
 
 describe('API endpoint /api/v1/', () => {
-  // GET - home page
+  /**
+   * @description - GET - home page
+   */
   it('get the home page status', (done) => {
     chai.request(app)
       .get('/api/v1/')
@@ -15,7 +17,9 @@ describe('API endpoint /api/v1/', () => {
       });
   });
 
-  // GET - Invalid path
+  /**
+   * @description - GET - Invalid path
+   */
   it('should return Not Found', (done) => {
     chai.request(app)
       .get('/INVALID_PATH')
