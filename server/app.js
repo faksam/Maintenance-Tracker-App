@@ -23,7 +23,7 @@ app.set('view engine', 'html');
  */
 const PORT = process.env.PORT || 3456;
 app.listen(PORT, () => {
-  console.log(`The app is running on port ${PORT}`);
+  
 });
 
 app.use(expressValidator());
