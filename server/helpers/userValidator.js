@@ -3,10 +3,18 @@ import { setConnectionString } from '../helpers/validator';
 
 const connectionString = setConnectionString();
 
+/**
+ * @description - Verify if User Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const verrifyUserExist = (req, res, next) => {
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
 
   const email = req.body.email.toLowerCase();
@@ -37,6 +45,14 @@ export const verrifyUserExist = (req, res, next) => {
   });
 };
 
+/**
+ * @description - Validate Signup Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const validateSignUpInput = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -62,6 +78,14 @@ export const validateSignUpInput = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description - Validate Signin Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const validateSignInInput = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -89,6 +113,14 @@ export const validateSignInInput = (req, res, next) => {
   } return next();
 };
 
+/**
+ * @description - Check If User Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const checkIfUserExist = (req, res, next) => {
   const {
     email,
@@ -100,7 +132,7 @@ export const checkIfUserExist = (req, res, next) => {
 
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   queryValues.push(email.toLowerCase());
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {

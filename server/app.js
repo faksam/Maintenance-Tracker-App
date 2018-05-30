@@ -10,13 +10,17 @@ import apiv1 from './routes/v1/api1';
 const app = express();
 dotenv.config();
 
-// view engine setup
-app.set('views', path.join(__dirname, '../UI'));
+/**
+ * @description - view engine setup
+ */
+app.set('views', path.join(__dirname, '../client'));
 app.engine('html', require('ejs').renderFile);
 
 app.set('view engine', 'html');
 
-// Start server
+/**
+ * @description - Start server
+ */
 const PORT = process.env.PORT || 3456;
 app.listen(PORT, () => {
   console.log(`The app is running on port ${PORT}`);
@@ -27,14 +31,22 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../UI')));
+app.use(express.static(path.join(__dirname, '../client')));
 
-// Require static assets from template folder
-app.use('../UI', express.static(path.join(`${__dirname}../UI`)));
+/**
+ * @description - Require static assets from template folder
+ */
+app.use('../client', express.static(path.join(`${__dirname}../client`)));
 
 app.use('/api/v1/', apiv1);
 
-// catch 404 and forward to error handler
+/**
+ * @description - catch 404 and forward to error handler
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @returns {object} returns res HTTP Response
+ */
 app.use((req, res) => {
   const error = {};
   error.message = 'Not Found';
@@ -46,10 +58,15 @@ app.use((req, res) => {
   });
 });
 
-
-// error handler
+/**
+ * @description - Error handler
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res HTTP Response
+ */
 app.use((err, req, res) => {
-  // render the error page
   if (err.status) { res.status(err.status); } else {
     res.status(500);
   }
