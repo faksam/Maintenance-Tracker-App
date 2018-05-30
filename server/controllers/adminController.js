@@ -23,7 +23,7 @@ export default class usersController {
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     pool.query('SELECT * FROM requests ORDER BY id', (err, result) => {
       res.status(200).send({
@@ -51,7 +51,7 @@ export default class usersController {
     const status = 'Pending';
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const insertQuery = {
       name: 'get-users-requests',
@@ -84,7 +84,7 @@ export default class usersController {
     const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const insertQuery = {
       name: 'get-users-requests',
@@ -121,7 +121,7 @@ export default class usersController {
     queryValues.push(requestId);
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const insertQuery = {
       name: 'get-users-requests',

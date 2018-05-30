@@ -40,7 +40,7 @@ export default class usersController {
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const decode = decodeToken(req.headers.authorization);
     const queryValues = [];
@@ -73,7 +73,7 @@ export default class usersController {
     const requestId = parseInt(req.params.id, 10);
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const decode = decodeToken(req.headers.authorization);
     const selectQuery = {
@@ -108,7 +108,7 @@ export default class usersController {
     } = req.body;
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const decode = decodeToken(req.headers.authorization);
     const insertQuery = {
@@ -148,7 +148,7 @@ export default class usersController {
     } = req.body;
     const pool = new Pool({
       connectionString,
-      // ssl: true,
+
     });
     const decode = decodeToken(req.headers.authorization);
     const updateQuery = {

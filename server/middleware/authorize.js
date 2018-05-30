@@ -5,7 +5,7 @@ import { setConnectionString } from '../helpers/validator';
 const connectionString = setConnectionString();
 
 /**
- * Decode user token if token is valid
+ * @description - Decode user token if token is valid
  *
  * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
  * @returns {boolean||object} false if token is invalid and token object if token is valid
@@ -30,6 +30,14 @@ function decodeToken(userToken) {
   return decode;
 }
 
+/**
+ * @description - Authorize Admin
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res HTTP Response
+ */
 export const authorizeAdmin = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -37,7 +45,7 @@ export const authorizeAdmin = (req, res, next) => {
   const decode = decodeToken(req.headers.authorization);
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   const queryValues = [];
   queryValues.push(decode.sub);
@@ -61,13 +69,21 @@ export const authorizeAdmin = (req, res, next) => {
   });
 };
 
+/**
+ * @description - Authorize User
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res HTTP Response
+ */
 export const authorizeUser = (req, res, next) => {
   const error = {};
   error.message = {};
   const decode = decodeToken(req.headers.authorization);
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   const queryValues = [];
   queryValues.push(decode.sub);

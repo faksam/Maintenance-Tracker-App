@@ -32,6 +32,7 @@ export const setConnectionString = () => {
   }
   return envConnectionString;
 };
+
 /**
  * Decode user token if token is valid
  *
@@ -48,6 +49,14 @@ function verifyToken(userToken) {
 }
 
 
+/**
+ * @description - Verify User Token
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const verifyUserToken = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -78,6 +87,14 @@ export const verifyUserToken = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description - Verify Request Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const verifyRequestInput = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -111,6 +128,14 @@ export const verifyRequestInput = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description - Verify User Request
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const verifyUserRequest = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -127,6 +152,14 @@ export const verifyUserRequest = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description - Check If User Request Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const checkIfUserRequestExist = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -134,7 +167,7 @@ export const checkIfUserRequestExist = (req, res, next) => {
   const requestId = parseInt(req.params.id, 10);
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   const selectQuery = {
     name: 'get-users-request',
@@ -155,13 +188,21 @@ export const checkIfUserRequestExist = (req, res, next) => {
   });
 };
 
+/**
+ * @description - Check If Request Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const checkIfRequestExist = (req, res, next) => {
   const error = {};
   error.message = {};
   const requestId = parseInt(req.params.id, 10);
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   const selectQuery = {
     name: 'get-users-request',
@@ -182,6 +223,14 @@ export const checkIfRequestExist = (req, res, next) => {
   });
 };
 
+/**
+ * @description - Validate Request ID
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const validateRequestID = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -198,6 +247,14 @@ export const validateRequestID = (req, res, next) => {
   return next();
 };
 
+/**
+ * @description - Check Request Status
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const checkRequestStatus = (req, res, next) => {
   const error = {};
   error.message = {};
@@ -205,7 +262,7 @@ export const checkRequestStatus = (req, res, next) => {
   const queryValues = [];
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   queryValues.push(requestId);
   pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {

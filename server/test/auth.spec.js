@@ -15,7 +15,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
 
   });
 
-  // POST - Signup Existing User
+  /**
+   * @description - POST - Signup Existing User
+   */
   it('should not signup existing user', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -28,7 +30,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup User
+  /**
+   * @description - POST - Signup User
+   */
   it('should add new user', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -43,7 +47,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup User
+  /**
+   * @description - POST - Signup User
+   */
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -56,7 +62,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup User
+  /**
+   * @description - POST - Signup User
+   */
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -69,7 +77,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Signup User
+  /**
+   * @description - POST - Signup User
+   */
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -82,7 +92,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Login User
+  /**
+   * @description - POST - Login User
+   */
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -95,7 +107,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Login User
+  /**
+   * @description - POST - Login User
+   */
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
@@ -108,7 +122,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Login User
+  /**
+   * @description - POST - Login User
+   */
   it('should return 400 Bad Request', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
@@ -121,7 +137,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Login User
+  /**
+   * @description - POST - Login User
+   */
   it('should login user', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
@@ -136,7 +154,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       });
   });
 
-  // POST - Login none Existing User
+  /**
+   * @description - POST - Login none Existing User
+   */
   it('should not login none existing user', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')

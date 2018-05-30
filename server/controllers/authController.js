@@ -11,11 +11,21 @@ const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET_TOKEN);
 };
-
+  /**
+   * @description - Signup a new user
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} response HTTP Response JSON Object
+   */
 const signup = (req, res) => {
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   const {
     fullName, email, phoneNo, password,
@@ -50,11 +60,19 @@ const signup = (req, res) => {
       });
     });
 };
-
+  /**
+   * @description - Login a new user
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @returns {object} response HTTP Response JSON Object
+   */
 const login = (req, res) => {
   const pool = new Pool({
     connectionString,
-    // ssl: true,
+
   });
   const {
     email, password,
