@@ -1,16 +1,7 @@
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { setConnectionString } from '../helpers/validator';
 
-dotenv.config();
-
-const env = process.env.NODE_ENV;
-let connectionString;
-
-if (env === 'development') {
-  connectionString = process.env.DATABASE_URL;
-} else {
-  connectionString = process.env.use_env_variable;
-}
+const connectionString = setConnectionString();
 
 /**
  * @class usersController
@@ -32,7 +23,7 @@ export default class usersController {
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
-      ssl: true,
+
     });
     pool.query('SELECT * FROM requests ORDER BY id', (err, result) => {
       res.status(200).send({
@@ -57,10 +48,10 @@ export default class usersController {
    */
   static approveRequest(req, res) {
     const requestId = parseInt(req.params.id, 10);
-    const status = 'Approved';
+    const status = 'Pending';
     const pool = new Pool({
       connectionString,
-      ssl: true,
+
     });
     const insertQuery = {
       name: 'get-users-requests',
@@ -93,7 +84,7 @@ export default class usersController {
     const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
-      ssl: true,
+
     });
     const insertQuery = {
       name: 'get-users-requests',
@@ -130,7 +121,7 @@ export default class usersController {
     queryValues.push(requestId);
     const pool = new Pool({
       connectionString,
-      ssl: true,
+
     });
     const insertQuery = {
       name: 'get-users-requests',

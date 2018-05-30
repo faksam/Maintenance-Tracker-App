@@ -2,32 +2,33 @@ import uuid from 'uuid';
 import jwt from 'jwt-simple';
 import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { setConnectionString } from '../helpers/validator';
 
-dotenv.config();
-
-const env = process.env.NODE_ENV;
-let connectionString;
-
-if (env === 'development') {
-  connectionString = process.env.DATABASE_URL;
-} else {
-  connectionString = process.env.use_env_variable;
-}
+const connectionString = setConnectionString();
 
 let userToken;
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET_TOKEN);
 };
-
+  /**
+   * @description - Signup a new user
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} response HTTP Response JSON Object
+   */
 const signup = (req, res) => {
   const pool = new Pool({
     connectionString,
-    ssl: true,
+
   });
   const {
-    fullName, email, phoneNo, password
+    fullName, email, phoneNo, password,
   } = req.body;
   const userEmail = email.toLowerCase();
 
@@ -59,14 +60,22 @@ const signup = (req, res) => {
       });
     });
 };
-
+  /**
+   * @description - Login a new user
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @returns {object} response HTTP Response JSON Object
+   */
 const login = (req, res) => {
   const pool = new Pool({
     connectionString,
-    ssl: true,
+
   });
   const {
-    email, password
+    email, password,
   } = req.body;
   const userEmail = email.toLowerCase();
 
@@ -74,21 +83,23 @@ const login = (req, res) => {
   queryValues.push(userEmail);
 
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
+    let user;
     bcrypt.compare(password, result.rows[0].password)
       .then((validPassword) => {
         if (validPassword) {
+          [user] = result.rows;
           userToken = tokenForUser(result.rows[0]);
-          return res.set('authorization', userToken).status(200).send({
-            success: true,
-            status: 200,
-            token: userToken,
-            data: {
-              Fullname: result.rows[0].fullname,
-              Email: result.rows[0].email,
-              Phone: result.rows[0].phoneno,
-            }
-          });
-        } return res.status(404).send({ error: 'User not found' });
+        }
+        return res.set('authorization', userToken).status(200).send({
+          success: true,
+          status: 200,
+          token: userToken,
+          data: {
+            Fullname: user.fullname,
+            Email: user.email,
+            Phone: user.phoneno,
+          },
+        });
       });
   });
   pool.end();

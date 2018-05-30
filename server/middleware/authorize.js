@@ -1,133 +1,110 @@
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
 import jwt from 'jwt-simple';
+import { setConnectionString } from '../helpers/validator';
 
-dotenv.config();
+const connectionString = setConnectionString();
 
-const env = process.env.NODE_ENV;
-let connectionString;
-
-if (env === 'development') {
-  connectionString = process.env.DATABASE_URL;
-} else {
-  connectionString = process.env.use_env_variable;
-}
-
-
-export const authorizeAdmin = (req, response, next) => {
-  let decode = '';
-  const error = {};
-  error.message = {};
-  if (req.headers.authorization === undefined || req.headers.authorization === null || req.headers.authorization === '') {
-    error.message = 'Token not valid';
-    return response.status(400).send({
-      success: false,
-      status: 400,
-      error
-    });
-  }
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    if (req.headers.authorization === undefined || req.headers.authorization === null || req.headers.authorization === '') {
-      error.message = 'Token not valid';
-      return response.status(400).send({
-        success: false,
-        status: 400,
-        error
-      });
-    } else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-      const authHeader = req.headers.authorization.split(' ');
-      try {
-        decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
-      } catch (err) {
-        error.message = err;
-      }
-      if (decode === '') {
-        error.message = 'Token not valid';
-        return response.status(400).send({
-          success: false,
-          status: 400,
-          error
-        });
-      }
-    }
-    const pool = new Pool({
-      connectionString,
-      ssl: true,
-    });
-    const queryValues = [];
-    queryValues.push(decode.sub);
-    pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
-      if (err) {
-        return response.status(400).send({
-          success: false,
-          status: 400,
-          error: {
-            message: 'You are not authorized. You do not seem to be logged in, please login and try again.',
-          },
-        });
-      }
-      if (result.rows[0].role === 'Admin') { return next(); }
-      response.status(403).send({
-        success: false,
-        status: 403,
-        error: {
-          message: 'You are Forbidden.'
-        },
-      });
-    });
-  }
-};
-
-export const authorizeUser = (req, res, next) => {
+/**
+ * @description - Decode user token if token is valid
+ *
+ * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
+ * @returns {boolean||object} false if token is invalid and token object if token is valid
+ */
+function decodeToken(userToken) {
   const error = {};
   error.message = {};
   let decode = '';
-  if (req.headers.authorization === undefined || req.headers.authorization === null || req.headers.authorization === '') {
-    error.message = 'Token not valid';
-    return res.status(400).send({
-      success: false,
-      status: 400,
-      error
-    });
-  } else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    const authHeader = req.headers.authorization.split(' ');
+  if (userToken === undefined || userToken === null || userToken === '') {
+    return false;
+  } else if (userToken && userToken.split(' ')[0] === 'Bearer') {
+    const authHeader = userToken.split(' ');
     try {
       decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
     } catch (err) {
       error.message = err;
     }
     if (decode === '') {
-      error.message = 'Token not valid';
-      return res.status(400).send({
-        success: false,
-        status: 400,
-        error
-      });
+      return false;
     }
   }
+  return decode;
+}
+
+/**
+ * @description - Authorize Admin
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res HTTP Response
+ */
+export const authorizeAdmin = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  let errorChecker = false;
+  const decode = decodeToken(req.headers.authorization);
   const pool = new Pool({
     connectionString,
-    ssl: true,
+
   });
   const queryValues = [];
   queryValues.push(decode.sub);
   pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
+    pool.end();
     if (err) {
-      return res.status(400).send({
+      errorChecker = true;
+      error.message = 'You are not authorized. You do not seem to be logged in, please login and try again.';
+    } else if (result.rows[0].role !== 'Admin') {
+      errorChecker = true;
+      error.message = 'You are Forbidden.';
+    }
+    if (errorChecker) {
+      return res.status(403).send({
         success: false,
-        status: 400,
-        error: {
-          message: 'You are not authorized. You do not seem to be logged in, please login and try again.',
-        },
+        status: 403,
+        error,
       });
     }
-    if (result.rows[0].role.length > 3) { return next(); }
-    res.status(401).send({
-      success: false,
-      status: 401,
-      error: {
-        message: 'You are not authorized.',
-      },
-    });
+    return next();
   });
 };
+
+/**
+ * @description - Authorize User
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res HTTP Response
+ */
+export const authorizeUser = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const decode = decodeToken(req.headers.authorization);
+  const pool = new Pool({
+    connectionString,
+
+  });
+  const queryValues = [];
+  queryValues.push(decode.sub);
+  pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
+    pool.end();
+    if (err) {
+      error.message = 'You are not authorized. You do not seem to be logged in, please login and try again.';
+      return res.status(403).send({
+        success: false,
+        status: 403,
+        error,
+      });
+    } else if (result.rows[0].length < 1) {
+      error.message = 'You are Forbidden.';
+      return res.status(403).send({
+        success: false,
+        status: 403,
+        error,
+      });
+    }
+    return next();
+  });
+};
+

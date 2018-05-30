@@ -14,10 +14,14 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-  ssl: true,
+
 });
 
-// async/await
+/**
+ * @description - async/await connection pool
+ *
+ * @param {string} sqlQuery HTTP Request
+ */
 (async () => {
   await pool.query('INSERT INTO requests ' +
     '(title, description, date, status, userid) VALUES ' +
@@ -64,7 +68,7 @@ const pool = new Pool({
 
 const client = new Client({
   connectionString,
-  ssl: true,
+
 });
 client.connect();
 client.end();

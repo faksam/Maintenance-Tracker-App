@@ -13,8 +13,51 @@ if (env === 'development') {
   connectionString = process.env.use_env_variable;
 }
 
-export const verifyToken = (req, res) => {
-  let token;
+/**
+ * Check if parameter is integer
+ *
+ * @param {*} n the id parameter passed with HTTP request
+ * @returns {boolean} Is the parameter an integer
+ */
+function isInt(n) {
+  return n === parseInt(n, 10);
+}
+
+export const setConnectionString = () => {
+  let envConnectionString;
+  if (env === 'development') {
+    envConnectionString = process.env.DATABASE_URL;
+  } else {
+    envConnectionString = process.env.use_env_variable;
+  }
+  return envConnectionString;
+};
+
+/**
+ * Decode user token if token is valid
+ *
+ * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
+ * @returns {boolean||object} false if token is invalid and token object if token is valid
+ */
+function verifyToken(userToken) {
+  const error = {};
+  error.message = {};
+  let decode = '';
+  const authHeader = userToken.split(' ');
+  decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
+  return decode;
+}
+
+
+/**
+ * @description - Verify User Token
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const verifyUserToken = (req, res, next) => {
   const error = {};
   error.message = {};
   let decode = '';
@@ -23,50 +66,39 @@ export const verifyToken = (req, res) => {
     return res.status(400).send({
       success: false,
       status: 400,
-      error
+      error,
     });
-  }
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+  } else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const authHeader = req.headers.authorization.split(' ');
     try {
       decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
     } catch (err) {
       error.message = err;
     }
-  } else if (req.query && req.query.token) {
-    ({ token } = req.query);
-    decode = jwt.decode(token, process.env.SECRET_TOKEN);
-  } else if (req.body && req.body.token) {
-    ({ token } = req.body.token);
-    decode = jwt.decode(token, process.env.SECRET_TOKEN);
-  } else {
-    error.message = 'User not valid';
-    return res.status(400).send({
-      success: false,
-      status: 400,
-      error
-    });
   }
   if (decode === '') {
     error.message = 'Token not valid';
     return res.status(400).send({
       success: false,
       status: 400,
-      error
+      error,
     });
   }
-  if (decode !== null) { return decode; }
-
-  return res.status(400).json({ error: 'Invalid User' });
+  return next();
 };
 
+/**
+ * @description - Verify Request Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const verifyRequestInput = (req, res, next) => {
   const error = {};
   error.message = {};
-  const {
-    title, description
-  } = req.body;
-  let errorChecker = false;
+  const errorChecker = false;
   req.sanitizeBody('title').trim();
   req.sanitizeBody('description').trim();
   req.checkBody('title', 'Title is required').notEmpty();
@@ -85,21 +117,11 @@ export const verifyRequestInput = (req, res, next) => {
     });
   }
 
-  if (title.length < 10 || title.length > 60) {
-    errorChecker = true;
-    error.message.title = 'Title should be between 10 and 60 characters';
-  }
-  if (description.length < 100 || description.length > 500) {
-    errorChecker = true;
-    error.message.description = 'Description should be in details between 100 and 500 characters';
-  }
-
-
   if (errorChecker) {
     return res.status(400).send({
       success: false,
       status: 400,
-      error
+      error,
     });
   }
 
@@ -107,124 +129,152 @@ export const verifyRequestInput = (req, res, next) => {
 };
 
 /**
- * Check if parameter is integer
+ * @description - Verify User Request
  *
- * @param {*} n the id parameter passed with HTTP request
- * @returns {boolean} Is the parameter an integer
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
  */
-function isInt(n) {
-  return n === parseInt(n, 10);
-}
-
-
 export const verifyUserRequest = (req, res, next) => {
   const error = {};
   error.message = {};
-  const decode = verifyToken(req, res);
   const requestId = parseInt(req.params.id, 10);
-  let requestChecker = false;
-  const queryValues = [];
-  const pool = new Pool({
-    connectionString,
-    ssl: true,
-  });
   if (requestId < 0 || !isInt(requestId)) {
     // either age was not a valid number, integer, or is not in range
     error.message = 'id parameter must be a valid integer number';
     return res.status(400).send({
       success: false,
       status: 400,
-      error
+      error,
     });
   }
+  return next();
+};
+
+/**
+ * @description - Check If User Request Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkIfUserRequestExist = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const decode = verifyToken(req.headers.authorization);
+  const requestId = parseInt(req.params.id, 10);
+  const pool = new Pool({
+    connectionString,
+
+  });
   const selectQuery = {
     name: 'get-users-request',
     text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
     values: [decode.sub, requestId],
   };
-  queryValues.push(requestId);
-  queryValues.push(decode.sub);
   pool.query(selectQuery, (err, result) => {
-    if (result.rows.length < 1) {
-      requestChecker = true;
-    }
-    if (requestChecker) {
+    pool.end();
+    if (err || (result.rows.length === 0)) {
       error.message = `Request with id - ${requestId} does not exist for current user`;
-      res.status(404).send({
+      return res.status(404).send({
         success: false,
         status: 404,
-        error
+        error,
       });
-    } else { return next(); }
-    pool.end();
+    }
+    return next();
   });
 };
 
-export const verifyIfRequestExist = (req, res, next) => {
+/**
+ * @description - Check If Request Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkIfRequestExist = (req, res, next) => {
   const error = {};
   error.message = {};
   const requestId = parseInt(req.params.id, 10);
-  let requestChecker = false;
-  const queryValues = [];
   const pool = new Pool({
     connectionString,
-    ssl: true,
+
   });
+  const selectQuery = {
+    name: 'get-users-request',
+    text: 'SELECT * FROM requests WHERE id = $1',
+    values: [requestId],
+  };
+  pool.query(selectQuery, (err, result) => {
+    pool.end();
+    if (err || (result.rows.length === 0)) {
+      error.message = 'Request does not exist';
+      return res.status(404).send({
+        success: false,
+        status: 404,
+        error,
+      });
+    }
+    return next();
+  });
+};
+
+/**
+ * @description - Validate Request ID
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const validateRequestID = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const requestId = parseInt(req.params.id, 10);
   if (requestId < 0 || !isInt(requestId)) {
     // either age was not a valid number, integer, or is not in range
     error.message = 'id parameter must be a valid integer number';
     return res.status(400).send({
       success: false,
       status: 400,
-      error
+      error,
     });
   }
-  const selectQuery = {
-    name: 'get-users-request',
-    text: 'SELECT * FROM requests WHERE id = $1',
-    values: [requestId],
-  };
-  queryValues.push(requestId);
-  pool.query(selectQuery, (err, result) => {
-    if ((result === undefined) || result.rows.length < 1) {
-      requestChecker = true;
-    }
-    if (requestChecker) {
-      error.message = `Request with id - ${requestId} does not exist`;
-      res.status(404).send({
-        success: false,
-        status: 404,
-        error
-      });
-    } else { return next(); }
-    pool.end();
-  });
+  return next();
 };
 
-
+/**
+ * @description - Check Request Status
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
 export const checkRequestStatus = (req, res, next) => {
   const error = {};
   error.message = {};
   const requestId = parseInt(req.params.id, 10);
-  let requestChecker = false;
   const queryValues = [];
   const pool = new Pool({
     connectionString,
-    ssl: true,
+
   });
   queryValues.push(requestId);
   pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
     if (result.rows[0].status !== 'New') {
-      requestChecker = true;
       error.message = 'Only New Requests Can Be Edited!';
-    }
-    if (requestChecker) {
-      res.status(400).send({
+      return res.status(400).send({
         success: false,
         status: 400,
-        error
+        error,
       });
-    } else { return next(); }
+    }
     pool.end();
+    return next();
   });
 };

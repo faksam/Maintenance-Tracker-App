@@ -14,25 +14,30 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-  ssl: true,
+
 });
 
+/**
+ * @description - async/await connection pool
+ *
+ * @param {string} sqlQuery HTTP Request
+ */
 pool.query(
-  'CREATE TABLE users ' +
-    '(id uuid not null PRIMARY KEY, ' +
-    'fullName VARCHAR(200) not null, ' +
-    'email VARCHAR(100) not null, ' +
-    'phoneNo VARCHAR(30) not null, ' +
-    'password VARCHAR(100) not null, ' +
-    'role VARCHAR(20) not null); ',
+  `CREATE TABLE users
+    (id uuid not null PRIMARY KEY,
+    fullName VARCHAR(200) not null, 
+    email VARCHAR(100) not null, 
+    phoneNo VARCHAR(30) not null, 
+    password VARCHAR(100) not null, 
+    role VARCHAR(20) not null); `,
   () => {
     pool.end();
-  }
+  },
 );
 
 const client = new Client({
   connectionString,
-  ssl: true,
+
 });
 client.connect();
 client.end();
