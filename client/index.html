@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Track your maintenance request - MTA</title>
+    <meta name="author" content="Fakunle Samuel">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!--Import css-->
+    <link type="text/css" rel="stylesheet" href="./assets/css/styles.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/navigation.css" />
+</head>
+
+<body>
+    <div class="row">
+        <section class="navigation">
+            <div class="nav-container">
+                <div class="brand">
+                    <a href="./index.html">
+                        <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
+                </div>
+                <nav>
+                    <div class="nav-mobile">
+                        <a id="nav-toggle" href="#!">
+                            <span></span>
+                        </a>
+                    </div>
+                    <ul class="nav-list">
+                        <li>
+                            <a id="signinBtn">Sign In</a>
+                        </li>
+                        <li class="signUp">
+                            <a id="signupBtn" class="signUp">Sign Up</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </div>
+    <br>
+    <div class="row wall center">
+        <h2 class="main_title">WORLD CLASS MAINTENANCE SERVICE</h2>
+        <p class="main_tagline">With M-T-A your maintenance requests can be tracked and gauranteed to be resolved immediately.</p>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <h3 class="center">WHAT IS M-T-A</h3>
+            <hr>
+        </div>
+        <div class="row center">
+            <div class="col col-1">
+                <p>M-T-A (Maintenance - Tracker - App) is an online maintenance service assistant that allows you to create a maintenance request and track the progress of your request until it is resolved and completely done.</p>
+                <p>With M-T-A there are no worries of leaving your office to look for the maitenance guy or waiting for days to know the progress of your maitenance request, all you need to do is just track it right from your comfort.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="center">HOW IT WORKS</h3>
+            <hr>
+        </div>
+        <div class="row center">
+            <div class="col col-1-4">
+                <div class="row">
+                    <img style="height: 70px;" src="./assets/images/create-request.png" />
+                </div>
+                <div class="row">
+                    <h3>CREATE A REQUEST</h3>
+                    <p>To create a new request you are required to fill in a request form. This form will contain details of your request (e.g Title, Description, and your Location/Department.)</p>
+                </div>
+            </div>
+            <div class="col col-1-4">
+                <div class="row">
+                    <img style="height: 70px;" src="./assets/images/await-approval.png" />
+                </div>
+                <div class="row">
+                    <h3>AWAIT APPROVAL</h3>
+                    <p>Once your create a new request by submitting a request form, your are to wait for the maintenance department to read and approve your request. If your request is not approved it will be rejected.</p>
+                </div>
+            </div>
+            <div class="col col-1-4">
+                <div class="row">
+                    <img style="height: 70px;" src="./assets/images/track-progress.png" />
+                </div>
+                <div class="row">
+                    <h3>TRACK PROGRESS</h3>
+                    <p>You can easily track the progress or your request and know how much work has been done by selecting the request or inputing the request id in the tracker.</p>
+                </div>
+            </div>
+            <div class="col col-1-4">
+                <div class="row">
+                    <img style="height: 70px;" src="./assets/images/get-notified.png" />
+                </div>
+                <div class="row">
+                    <h3>GET NOTIFIED</h3>
+                    <p>As soon as your request as been fully completed and resolved, you will get a notification telling you the request has been completed and resolve.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <!-- Signin Modal -->
+    <div id="signinModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="signinSpan" class="close">&times;</span>
+                    <h2 class="center">Sign In</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container center">
+                            <form id="loginForm" class="center">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons">email</i>
+                                            <input id="0email" name="email" type="email" placeholder="Email" required>
+                                        </div>
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons">account_circle</i>
+                                            <input id="0account_password" name="password" type="password" value="Lifeisarace" placeholder="Password" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </form>
+                            <button onclick="loginUser()" style="width: 50%">Sign In</button>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+
+    <!-- SignUp Modal -->
+    <div id="signupModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="signupSpan" class="close">&times;</span>
+                    <h2 class="center">Create Account</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container center">
+                            <form id="signUpForm" class="center">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_box</i>
+                                            <input id="fullName" name="fullName" type="text" placeholder="Full Name" required>
+                                        </div>
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">email</i>
+                                            <input id="email" name="email" type="email" placeholder="Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="account_password" name="password" type="password" placeholder="Password" required>
+                                        </div>
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">phone</i>
+                                            <input id="phoneNo" name="phoneNo" type="text" placeholder="Phone Number" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </form>
+                            <button onclick="signUpUser()" style="width: 50%">Sign Up</button>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="modal-footer">
+                </div>
+            </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <div class="footer">
+        <div class="row">
+            <!-- <p>
+                Icons made by
+                    <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
+                    <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+                    <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                        target="_blank">CC 3.0 BY</a>
+            </p> -->
+            <p>
+                © 2018 Copyright M-T-A by
+                <a target="_blank" href="http://www.fakunlesamuel.com">FakSam</a> 
+            </p>
+        </div>
+    </div>
+
+    <!--Import jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--Import js scripts-->
+    <script type="text/javascript" src="./app/login/login.js"> </script>
+    <script type="text/javascript" src="./app/signup/signup.js"> </script>
+    <script type="text/javascript" src="./assets/js/scripts.js"> </script>
+</body>
+
+</html>
