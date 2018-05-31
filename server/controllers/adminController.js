@@ -36,6 +36,42 @@ export default class usersController {
   }
 
   /**
+   * @description - Get a Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} response JSON Object
+   */
+  static getRequest(req, res) {
+    const error = {};
+    error.message = {};
+    const requestId = parseInt(req.params.id, 10);
+    const pool = new Pool({
+      connectionString,
+
+    });
+    const selectQuery = {
+      name: 'get-users-request',
+      text: `SELECT requests.id, requests.title, requests.description, requests.comment, requests.date, requests.status, requests.userid, users.fullname 
+      FROM requests INNER JOIN users ON (requests.userid = users.id) 
+      WHERE requests.id = $1`,
+      values: [requestId],
+    };
+    pool.query(selectQuery, (err, result) => {
+      pool.end();
+      return res.status(200).send({
+        success: true,
+        status: 200,
+        data: result.rows,
+      });
+    });
+  }
+
+  /**
    * @description - Approve a Request
    * @static
    *
@@ -80,6 +116,9 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static rejectRequest(req, res) {
+    const {
+      rejectionReason,
+    } = req.body;
     const requestId = parseInt(req.params.id, 10);
     const status = 'Disapproved';
     const pool = new Pool({
@@ -88,8 +127,8 @@ export default class usersController {
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
-      values: [status, requestId],
+      text: 'UPDATE requests SET status=$1, comment=$3 WHERE id = $2 RETURNING *',
+      values: [status, requestId, rejectionReason],
     };
     pool.query(insertQuery, (err, result) => {
       const queryValues = [];

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Track your maintenance request - MTA</title>
+    <meta name="author" content="Fakunle Samuel">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Import css-->
+    <link type="text/css" rel="stylesheet" href="./assets/css/styles.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/navigation.css" />
+</head>
+
+<body>
+    <div class="row">
+        <section class="navigation">
+            <div class="nav-container">
+                <div class="brand">
+                    <a href="./index.html">
+                        <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
+                </div>
+                <nav>
+                    <div class="nav-mobile">
+                        <a id="nav-toggle" href="#!">
+                            <span></span>
+                        </a>
+                    </div>
+                    <ul class="nav-list">
+                        <li>
+                            <a href="./user_account.html">My Account</a>
+                        </li>
+                        <li>
+                            <a href="./index.html">Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </div>
+    <div class="main-container">
+        <div class="row">
+            <div class="container">
+                <div class="row center">
+                    <h2>My Account Details</h2>
+                    <div class="container">
+                        <div>
+                            <img src="./assets/images/avatar.png" style="height: 70px;" />
+                        </div>
+                        <br>
+                        <form class=" center">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">account_box</i>
+                                        <input id="fullName" type="text" placeholder="Full Name" value="Fakunle Mayowa Samuel" class="validate" readonly>
+                                    </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">email</i>
+                                        <input id="email" type="text" placeholder="Email" value="contact@fakunlesamuel.com" class="validate" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input id="account_password" type="password" placeholder="Password" value="********" class="validate" readonly>
+                                    </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">phone</i>
+                                        <input id="phoneNo" type="text" placeholder="Phone Number" value="07039248533" class="validate" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                        <a class="center" href="#">
+                            <button id="editAccountBtn" style="width: 50%">Edit</button>
+                        </a>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Account Modal -->
+        <div id="userAccountModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="userAccountSpan" class="close">&times;</span>
+                    <h2 class="center">Edit Account Details</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container">
+                            <form class=" center" action="./user_account.html">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_box</i>
+                                            <input id="fullName" type="text" placeholder="Full Name" value="Fakunle Mayowa Samuel" required>
+                                        </div>
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">email</i>
+                                            <input id="email" type="email" placeholder="Email"  value="contact@fakunlesamuel.com"  required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="account_password" type="password" placeholder="Password" required>
+                                        </div>
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="account_password" type="password" placeholder="Confirm Password" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">phone</i>
+                                            <input id="phoneNo" type="text" placeholder="Phone Number" value="07039248533" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <button style="width: 50%">Save</button>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="footer">
+            <div class="row">
+                <p>
+                    © 2018 Copyright M-T-A by
+                    <a target="_blank" href="http://www.fakunlesamuel.com">FakSam</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!--Import jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--Import js scripts-->
+    <script type="text/javascript" src="./assets/js/scripts.js"> </script>
+</body>
+
+</html>

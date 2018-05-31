@@ -61,6 +61,7 @@ export const verifyUserToken = (req, res, next) => {
   const error = {};
   error.message = {};
   let decode = '';
+  console.log(req.headers.authorization)
   if (req.headers.authorization === undefined || req.headers.authorization === null || req.headers.authorization === '') {
     error.message = 'Token not valid';
     return res.status(400).send({
