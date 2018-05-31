@@ -14,7 +14,6 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-
 });
 
 /**
@@ -34,11 +33,4 @@ pool.query(
     pool.end();
   },
 );
-
-const client = new Client({
-  connectionString,
-
-});
-client.connect();
-client.end();
 

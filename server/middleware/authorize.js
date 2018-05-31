@@ -10,7 +10,7 @@ const connectionString = setConnectionString();
  * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
  * @returns {boolean||object} false if token is invalid and token object if token is valid
  */
-function decodeToken(userToken) {
+const decodeToken = (userToken) => {
   const error = {};
   error.message = {};
   let decode = '';
@@ -45,7 +45,6 @@ export const authorizeAdmin = (req, res, next) => {
   const decode = decodeToken(req.headers.authorization);
   const pool = new Pool({
     connectionString,
-
   });
   const queryValues = [];
   queryValues.push(decode.sub);
@@ -84,13 +83,10 @@ export const authorizeUser = (req, res, next) => {
   const pool = new Pool({
     connectionString,
   });
-  console.log(req.headers.authorization);
-  console.log(decode);
   const queryValues = [];
   queryValues.push(decode.sub);
   pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
     pool.end();
-    console.log(result);
     if (err) {
       error.message = 'You are not authorized. You do not seem to be logged in, please login and try again.';
       return res.status(403).send({

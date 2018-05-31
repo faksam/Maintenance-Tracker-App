@@ -16,7 +16,7 @@ const connectionString = setConnectionString();
  * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
  * @returns {boolean||object} false if token is invalid and token object if token is valid
  */
-function decodeToken(userToken) {
+const decodeToken = (userToken) => {
   const error = {};
   error.message = {};
   let decode = '';
@@ -40,7 +40,6 @@ export default class usersController {
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
-
     });
     const decode = decodeToken(req.headers.authorization);
     const selectQuery = {
@@ -79,7 +78,6 @@ export default class usersController {
     const requestId = parseInt(req.params.id, 10);
     const pool = new Pool({
       connectionString,
-
     });
     const decode = decodeToken(req.headers.authorization);
     const selectQuery = {
@@ -114,7 +112,6 @@ export default class usersController {
     } = req.body;
     const pool = new Pool({
       connectionString,
-
     });
     const decode = decodeToken(req.headers.authorization);
     const insertQuery = {
@@ -154,7 +151,6 @@ export default class usersController {
     } = req.body;
     const pool = new Pool({
       connectionString,
-
     });
     const decode = decodeToken(req.headers.authorization);
     const updateQuery = {

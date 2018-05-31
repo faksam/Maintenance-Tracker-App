@@ -14,17 +14,8 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-
 });
 
 pool.query('DROP TABLE IF EXISTS users, requests CASCADE;', () => {
 
 });
-
-const client = new Client({
-  connectionString,
-
-});
-client.connect();
-client.end();
-

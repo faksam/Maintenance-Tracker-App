@@ -10,5 +10,5 @@ usersRoute(app);
 adminRoute(app);
 authenticationRoute(app);
 
-module.exports = app;
+export default app;
 
