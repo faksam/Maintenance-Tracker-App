@@ -19,9 +19,15 @@ function loginUser() {
     .then((body) => {
       if (body.status === 200 && body.success === true) {
         sessionStorage.setItem('token', body.token);
-        console.log(body);
+        console.log((body.data.role === 'Admin'));
         console.log(sessionStorage.getItem('token'));
-        window.location = './homepage.html';
+        if (body.data.role === 'Admin') {
+          console.log(body.data);
+          console.log(body.data.role);
+          window.location = './adminhomepage.html';
+        } else {
+          window.location = './homepage.html';
+        }
       } else {
         console.log(body);
       }

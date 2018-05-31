@@ -71,10 +71,10 @@
                     </div>
 
                 </div>
-                <table>
+                <table id="requestTable">
                     <tr class="header">
-                        <th>Name</th>
-                        <th colspan="2">Request</th>
+                        <th>Title</th>
+                        <th colspan="2">Description</th>
                         <th>Status</th>
                         <th colspan="3">Date</th>
                     </tr>
@@ -168,18 +168,18 @@
                                     <div class="row">
                                         <div class="row">
                                             <div class="input col col-1">
-                                                <input id="editRequestTitle" type="text" placeholder="Request Title" value="Broken AC" required>
+                                                <input id="editRequestTitle" name="title" type="text" placeholder="Request Title" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input col col-1">
-                                                <textarea rows="5" cols="50" id="editRequestDescription" placeholder="Request Description" style="height: unset;" required>One of the Air conditioner's in my office is broken.</textarea>
+                                                <textarea name="description" rows="5" cols="50" id="editRequestDescription" placeholder="Request Description" style="height: unset;" required></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <br>
                                 </form>
-                                <button onclick="editRequest()"  style="width: 50%">Edit</button>
+                                <button id="editRequestFormButton" onclick="editRequest()"  style="width: 50%">Edit</button>
                                 <br>
                             </div>
                         </div>
@@ -207,14 +207,14 @@
                                         <h2>
                                             <b>Request title: </b>
                                         </h2>
-                                        <h3>
+                                        <h3 id="viewRequestTitle">
                                             <b>Broken Desk</b>
                                         </h3>
                                         <hr>
                                         <h2>
                                             <b>Request content:</b>
                                         </h2>
-                                        <h3>One of the desk's in my office is broken.One of the desk's in my office is broken.One
+                                        <h3 id="viewRequestDescription">One of the desk's in my office is broken.One of the desk's in my office is broken.One
                                             of the desk's in my office is broken.One of the desk's in my office is broken.
                                             One of the desk's in my office is broken.One of the desk's in my office is broken.One
                                             of the desk's in my office is broken.One of the desk's in my office is broken.
@@ -223,15 +223,15 @@
                                         <h2>
                                             <b>Request by:</b>
                                         </h2>
-                                        <h3>Mr Stephen Colbert</h3>
+                                        <h3 id="viewRequestUser">Mr Stephen Colbert</h3>
                                         <h2>
                                             <b>Request date:</b>
                                         </h2>
-                                        <h3>18-04-2018</h3>
+                                        <h3 id="viewRequestDate">18-04-2018</h3>
                                         <h2>
                                             <b>Status:</b>
                                         </h2>
-                                        <h3>Approved</h3>
+                                        <h3 id="viewRequestStatus">Approved</h3>
                                     </div>
 
                                 </div>

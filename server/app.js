@@ -23,7 +23,7 @@ app.set('view engine', 'html');
  */
 const PORT = process.env.PORT || 3456;
 app.listen(PORT, () => {
-
+  console.log(`The app is running on port ${PORT}`);
 });
 
 app.use(expressValidator());
@@ -31,12 +31,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../client')));
 
 /**
  * @description - Require static assets from template folder
  */
-app.use('../client', express.static(path.join(`${__dirname}../client`)));
+app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/api/v1/', apiv1);
 

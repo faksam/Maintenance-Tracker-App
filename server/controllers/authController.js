@@ -41,23 +41,25 @@ const signup = (req, res) => {
       const userId = uuid.v4();
       const signUpQuery = {
         name: 'signup-user',
-        text: 'INSERT INTO users (id,fullname,email,phoneNo,password,role) VALUES ($1, $2, $3, $4, $5, $6)',
+        text: 'INSERT INTO users (id,fullname,email,phoneNo,password,role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
         values: [userId, fullName, userEmail, phoneNo, hash, 'User'],
       };
-      pool.query(signUpQuery, () => {
-        pool.end();
+      pool.query(signUpQuery, (err, result) => {
+        const [ user ] = result.rows;
+        userToken = tokenForUser({ user: { id: userId } });
+        res.set('authorization', userToken).status(201).send({
+          success: true,
+          status: 201,
+          token: userToken,
+          data: {
+            fullname: user.fullname,
+            email: user.email,
+            phoneno: user.phoneno,
+            role: user.role,
+          },
+        });
       });
-      userToken = tokenForUser({ user: { id: userId } });
-      res.set('authorization', userToken).status(201).send({
-        success: true,
-        status: 201,
-        token: userToken,
-        data: {
-          Fullname: fullName,
-          Email: email,
-          Phone: phoneNo,
-        },
-      });
+      pool.end();
     });
 };
   /**
@@ -95,9 +97,10 @@ const login = (req, res) => {
           status: 200,
           token: userToken,
           data: {
-            Fullname: user.fullname,
-            Email: user.email,
-            Phone: user.phoneno,
+            fullname: user.fullname,
+            email: user.email,
+            phoneno: user.phoneno,
+            role: user.role,
           },
         });
       });

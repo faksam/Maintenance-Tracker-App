@@ -175,14 +175,6 @@ function clickedResolved(x) {
 function clickedRejected(x) {
   viewRejectedModal.style.display = 'block';
 }
-// Approve Request
-function approveRequest() {
-  viewRequestModal.style.display = 'block';
-}
-// Reject request
-function rejectRequest() {
-  addRejectReasonModal.style.display = 'block';
-}
 
 // when table row is clicked
 function clickedRequest(x) {
@@ -192,6 +184,9 @@ function createRequest() {
   createRequestModal.style.display = 'block';
 }
 function editRequest() {
+  const target = event.target || event.srcElement;
+
+  console.log(this.getAttribute('id'));
   editRequestModal.style.display = 'block';
 }
 
