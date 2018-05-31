@@ -121,7 +121,6 @@ export default class usersController {
     const pool = new Pool({
       connectionString,
     });
-    console.log(comment)
     const insertQuery = {
       name: 'get-users-requests',
       text: 'UPDATE requests SET status=$1, comment=$2 WHERE id = $3 RETURNING *',
