@@ -162,7 +162,7 @@ export const checkIfUserExist = (req, res, next) => {
  */
 export const checkDuplicateRequest = (req, res, next) => {
   const {
-    title, description
+    title, description,
   } = req.body;
   const error = {};
   error.message = {};
@@ -180,15 +180,13 @@ export const checkDuplicateRequest = (req, res, next) => {
             AND status = $4`,
     values: [decode.sub, title, description, 'New'],
   };
-  console.log(selectQuery)
   pool.query(selectQuery, (err, result) => {
-  console.log(result.rows)
     if (err) {
       errorChecker = true;
       error.err = err;
     } else if (result.rows.length !== 0) {
       errorChecker = true;
-      error.message = 'Request already exist in database. You cannot create a duplicate database.';
+      error.message = 'Request already exist in database. You cannot create a duplicate request.';
       pool.end();
     }
     if (!errorChecker) { return next(); }

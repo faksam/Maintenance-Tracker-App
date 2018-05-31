@@ -20,9 +20,9 @@ function signUpUser() {
         sessionStorage.setItem('token', body.token);
         console.log(body);
         console.log(sessionStorage.getItem('token'));
-        if (body.data.role === 'Admin') { 
+        if (body.data.role === 'Admin') {
           window.location = './adminhomepage.html';
-       }
+        }
         window.location = './homepage.html';
       } else {
         console.log(body);

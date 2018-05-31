@@ -147,6 +147,22 @@ describe('API endpoint /users/requests', () => {
   });
 
   /**
+   * @description - POST  Should not create duplicate request
+   */
+  it('should not create duplicate request', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('authorization', `Bearer ${userToken}`)
+      .send(request[0])
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('Request already exist in database. You cannot create a duplicate request.');
+        done();
+      });
+  });
+
+  /**
    * @description - POST  Add new request with incomplete input
    */
   it('should return 400 Bad Request', (done) => {
@@ -157,7 +173,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.title).to.equal('Title is required');
+        expect(res.body.error.message.title).to.equal('Title is required, must be between 10-50 characters');
         done();
       });
   });
@@ -173,7 +189,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.description).to.equal('Description is required');
+        expect(res.body.error.message.description).to.equal('Description is required, must be between 20-500 characters');
         done();
       });
   });

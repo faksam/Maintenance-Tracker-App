@@ -22,12 +22,12 @@ function getRequests() {
 
   // cell2.colSpan = "2";
   // cell4.colSpan = "2";
- const token = 'Bearer '+sessionStorage.getItem('token')
+  const token = `Bearer ${sessionStorage.getItem('token')}`;
   const fetchData = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   fetch(url, fetchData)
@@ -117,7 +117,7 @@ function viewClickedRequest() {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
@@ -161,7 +161,7 @@ function createUserRequest() {
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
@@ -199,7 +199,7 @@ function editUserRequest() {
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
@@ -245,7 +245,7 @@ function displayEditUserRequest() {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
