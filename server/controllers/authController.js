@@ -25,7 +25,6 @@ const tokenForUser = (user) => {
 const signup = (req, res) => {
   const pool = new Pool({
     connectionString,
-
   });
   const {
     fullName, email, phoneNo, password,
@@ -74,7 +73,6 @@ const signup = (req, res) => {
 const login = (req, res) => {
   const pool = new Pool({
     connectionString,
-
   });
   const {
     email, password,
@@ -108,4 +106,4 @@ const login = (req, res) => {
   pool.end();
 };
 
-module.exports = { signup, login };
+export default { signup, login };

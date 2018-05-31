@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { setConnectionString } from '../helpers/validator';
+import { setConnectionString, verifyToken } from '../helpers/validator';
 
 const connectionString = setConnectionString();
 
@@ -14,7 +14,6 @@ const connectionString = setConnectionString();
 export const verrifyUserExist = (req, res, next) => {
   const pool = new Pool({
     connectionString,
-
   });
 
   const email = req.body.email.toLowerCase();
@@ -132,7 +131,6 @@ export const checkIfUserExist = (req, res, next) => {
 
   const pool = new Pool({
     connectionString,
-
   });
   queryValues.push(email.toLowerCase());
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
@@ -154,3 +152,51 @@ export const checkIfUserExist = (req, res, next) => {
   });
 };
 
+  /**
+ * @description - Check If Request Exist
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkDuplicateRequest = (req, res, next) => {
+  const {
+    title, description
+  } = req.body;
+  const error = {};
+  error.message = {};
+  let errorChecker = false;
+  const decode = verifyToken(req.headers.authorization);
+  const pool = new Pool({
+    connectionString,
+  });
+  const selectQuery = {
+    name: 'get-users-requests',
+    text: `SELECT title, description, status
+            FROM requests WHERE userid = $1
+            AND title = $2
+            AND description = $3
+            AND status = $4`,
+    values: [decode.sub, title, description, 'New'],
+  };
+  console.log(selectQuery)
+  pool.query(selectQuery, (err, result) => {
+  console.log(result.rows)
+    if (err) {
+      errorChecker = true;
+      error.err = err;
+    } else if (result.rows.length !== 0) {
+      errorChecker = true;
+      error.message = 'Request already exist in database. You cannot create a duplicate database.';
+      pool.end();
+    }
+    if (!errorChecker) { return next(); }
+
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error,
+    });
+  });
+};
