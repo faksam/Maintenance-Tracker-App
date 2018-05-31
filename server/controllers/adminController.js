@@ -114,17 +114,18 @@ export default class usersController {
    */
   static rejectRequest(req, res) {
     const {
-      rejectionReason,
+      comment,
     } = req.body;
     const requestId = parseInt(req.params.id, 10);
     const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
     });
+    console.log(comment)
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1, comment=$3 WHERE id = $2 RETURNING *',
-      values: [status, requestId, rejectionReason],
+      text: 'UPDATE requests SET status=$1, comment=$2 WHERE id = $3 RETURNING *',
+      values: [status, comment, requestId ],
     };
     pool.query(insertQuery, (err, result) => {
       const queryValues = [];
