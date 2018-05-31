@@ -23,7 +23,7 @@ const decodeToken = (userToken) => {
   const authHeader = userToken.split(' ');
   decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
   return decode;
-}
+};
 
 export default class usersController {
 /**

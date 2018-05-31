@@ -28,7 +28,7 @@ const decodeToken = (userToken) => {
     }
   }
   return decode;
-}
+};
 
 /**
  * @description - Authorize Admin

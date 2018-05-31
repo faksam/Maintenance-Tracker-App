@@ -8,7 +8,7 @@ function getRequests() {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   fetch(url, fetchData)
@@ -118,7 +118,7 @@ function viewClickedRequest() {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
@@ -181,7 +181,7 @@ function approveRequest() {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
@@ -250,7 +250,7 @@ function rejectRequest() {
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
@@ -310,7 +310,7 @@ function resolveRequest() {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer '+sessionStorage.getItem('token'),
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
   };
   console.log(data);
