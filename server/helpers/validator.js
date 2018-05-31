@@ -19,9 +19,7 @@ if (env === 'development') {
  * @param {*} n the id parameter passed with HTTP request
  * @returns {boolean} Is the parameter an integer
  */
-const isInt = (n) => {
-  return n === parseInt(n, 10);
-}
+const isInt = n => n === parseInt(n, 10);
 
 export const setConnectionString = () => {
   let envConnectionString;
@@ -46,7 +44,7 @@ export const verifyToken = (userToken) => {
   const authHeader = userToken.split(' ');
   decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
   return decode;
-}
+};
 
 
 /**
@@ -103,7 +101,7 @@ export const verifyRequestInput = (req, res, next) => {
   req.sanitizeBody('title').trim();
   req.sanitizeBody('description').trim();
   req.checkBody('title', 'Title is required, must be between 10-50 characters').notEmpty().isLength({ min: 10, max: 50 }).isString();
-  req.checkBody('description', 'Description is required, must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();;
+  req.checkBody('description', 'Description is required, must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();
 
   const errors = req.validationErrors();
   if (errors) {
@@ -290,7 +288,7 @@ export const verifyDisapprovalInput = (req, res, next) => {
   error.message = {};
   const errorChecker = false;
 
-  req.checkBody('comment', 'Please input the reason why this request is disapproved, input must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();;
+  req.checkBody('comment', 'Please input the reason why this request is disapproved, input must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();
 
   const errors = req.validationErrors();
   if (errors) {
@@ -338,7 +336,6 @@ export const checkIfRequestNew = (req, res, next) => {
   };
   pool.query(selectQuery, (err, result) => {
     pool.end();
-    console.log(result.rows)
     if (err || (result.rows[0].status !== 'New')) {
       error.message = 'You can only approve a new request';
       return res.status(400).send({
@@ -373,7 +370,6 @@ export const checkIfRequestPending = (req, res, next) => {
   };
   pool.query(selectQuery, (err, result) => {
     pool.end();
-    console.log(result.rows)
     if (err || (result.rows[0].status !== 'Pending')) {
       error.message = 'You can only resolve a pending request';
       return res.status(400).send({
@@ -408,12 +404,11 @@ export const checkIfRequestRejectable = (req, res, next) => {
   };
   pool.query(selectQuery, (err, result) => {
     pool.end();
-    console.log(result.rows)
     if (err || (result.rows[0].status !== 'New')) {
       error.message = 'You can only reject a new request';
-      return res.status(404).send({
+      return res.status(400).send({
         success: false,
-        status: 404,
+        status: 400,
         error,
       });
     }

@@ -44,16 +44,16 @@ const signup = (req, res) => {
         values: [userId, fullName, userEmail, phoneNo, hash, 'User'],
       };
       pool.query(signUpQuery, (err, result) => {
-        const [ user ] = result.rows;
+        const [user] = result.rows;
         userToken = tokenForUser({ user: { id: userId } });
         res.set('authorization', userToken).status(201).send({
           success: true,
           status: 201,
           token: userToken,
           data: {
-            fullname: user.fullname,
+            fullName: user.fullname,
             email: user.email,
-            phoneno: user.phoneno,
+            phoneNo: user.phoneno,
             role: user.role,
           },
         });
@@ -95,9 +95,9 @@ const login = (req, res) => {
           status: 200,
           token: userToken,
           data: {
-            fullname: user.fullname,
+            fullName: user.fullname,
             email: user.email,
-            phoneno: user.phoneno,
+            phoneNo: user.phoneno,
             role: user.role,
           },
         });

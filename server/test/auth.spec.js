@@ -40,9 +40,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(201);
         expect(res.body).to.be.an('object');
-        expect(res.body.data.Fullname).to.equal(users.user[6].fullName);
-        expect(res.body.data.Email).to.equal(users.user[6].email);
-        expect(res.body.data.Phone).to.equal(users.user[6].phoneNo);
+        expect(res.body.data.fullName).to.equal(users.user[6].fullName);
+        expect(res.body.data.email).to.equal(users.user[6].email);
+        expect(res.body.data.phoneNo).to.equal(users.user[6].phoneNo);
         done();
       });
   });
@@ -147,9 +147,9 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.data.Fullname).to.equal(users.user[6].fullName);
-        expect(res.body.data.Email).to.equal(users.user[6].email);
-        expect(res.body.data.Phone).to.equal(users.user[6].phoneNo);
+        expect(res.body.data.fullName).to.equal(users.user[6].fullName);
+        expect(res.body.data.email).to.equal(users.user[6].email);
+        expect(res.body.data.phoneNo).to.equal(users.user[6].phoneNo);
         done();
       });
   });
