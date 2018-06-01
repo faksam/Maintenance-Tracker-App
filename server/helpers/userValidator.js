@@ -56,10 +56,18 @@ export const verrifyUserExist = (req, res, next) => {
 export const validateSignUpInput = (req, res, next) => {
   const error = {};
   error.message = {};
-  req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().trim().isLength({ min: 3, max: 40 }).isString();
-  req.checkBody('email', 'Email is required').notEmpty().trim().isString();
-  req.checkBody('phoneNo', 'Phone No is required, must be between 7-15 characters').notEmpty().trim().isLength({ min: 7, max: 15 }).isString();
-  req.checkBody('password', 'Password is required, must be between 8-20 characters').notEmpty().trim().isLength({ min: 8, max: 20 }).isString();
+
+  req.sanitizeBody('fullName').trim();
+  req.sanitizeBody('phoneNo').trim();
+  req.sanitizeBody('password').trim();
+  req.sanitizeBody('email').trim();
+
+  req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().trim().isLength({ min: 3, max: 40 })
+    .isString();
+  req.checkBody('phoneNo', 'Phone No is required, must be between 7-15 characters').notEmpty().trim().isLength({ min: 7, max: 15 })
+    .isString();
+  req.checkBody('password', 'Password is required, must be between 8-20 characters').notEmpty().trim().isLength({ min: 8, max: 20 })
+    .isString();
   req.checkBody('email', 'Email is required, and must be a valid email').isEmail().trim();
 
   // check the validation object for errors
@@ -91,9 +99,10 @@ export const validateSignInInput = (req, res, next) => {
   error.message = {};
   let errorChecker = false;
 
-  req.checkBody('email', 'Email is required').notEmpty();
+  req.sanitizeBody('password').trim();
+  req.sanitizeBody('email').trim();
   req.checkBody('password', 'Password is required').notEmpty();
-  req.checkBody('email', 'Email does not appear to be valid').isEmail();
+  req.checkBody('email', 'Email is required, and must be a valid email').isEmail();
 
   // check the validation object for errors
   const errors = req.validationErrors();
@@ -163,12 +172,11 @@ export const checkIfUserExist = (req, res, next) => {
  */
 export const verifyUserPassword = (req, res, next) => {
   const {
-    password, email
+    password, email,
   } = req.body;
   const queryValues = [];
   const error = {};
   error.message = {};
-  let errorChecker = false;
 
   const pool = new Pool({
     connectionString,
@@ -177,12 +185,10 @@ export const verifyUserPassword = (req, res, next) => {
   queryValues.push(password);
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
     if (err) {
-      errorChecker = true;
       error.err = err;
-    } 
-    bcrypt.compare(password, result.rows[0].password, function(err, resp){
-      if(!resp) {
-        errorChecker = true;
+    }
+    bcrypt.compare(password, result.rows[0].password, (bcrypterr, resp) => {
+      if (!resp) {
         error.message = 'Invalid Email or Password.';
         return res.status(400).send({
           success: false,
@@ -190,8 +196,8 @@ export const verifyUserPassword = (req, res, next) => {
           error,
         });
       }
-      return next(); 
-    });    
+      return next();
+    });
   });
 };
 
