@@ -88,7 +88,7 @@ const login = (req, res) => {
       .then((validPassword) => {
         if (validPassword) {
           [user] = result.rows;
-          userToken = tokenForUser(result.rows[0]);
+          userToken = tokenForUser(result.rows[0].id);
         }
         return res.set('authorization', userToken).status(200).send({
           success: true,

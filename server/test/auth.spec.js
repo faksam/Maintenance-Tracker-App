@@ -164,7 +164,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('User account does not exist.');
+        expect(res.body.error.message).to.equal('Invalid Email or Password.');
         done();
       });
   });
