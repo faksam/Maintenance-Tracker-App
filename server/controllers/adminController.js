@@ -124,7 +124,7 @@ export default class usersController {
     const insertQuery = {
       name: 'get-users-requests',
       text: 'UPDATE requests SET status=$1, comment=$2 WHERE id = $3 RETURNING *',
-      values: [status, comment, requestId ],
+      values: [status, comment, requestId],
     };
     pool.query(insertQuery, (err, result) => {
       const queryValues = [];
