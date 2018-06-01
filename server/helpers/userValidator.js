@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import bcrypt from 'bcrypt';
 import { setConnectionString, verifyToken } from '../helpers/validator';
 
 const connectionString = setConnectionString();
@@ -55,11 +56,11 @@ export const verrifyUserExist = (req, res, next) => {
 export const validateSignUpInput = (req, res, next) => {
   const error = {};
   error.message = {};
-  req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().isLength({ min: 3, max: 40 }).isString();
-  req.checkBody('email', 'Email is required').notEmpty().isString();
-  req.checkBody('phoneNo', 'Phone No is required, must be between 7-15 characters').notEmpty().isLength({ min: 7, max: 15 }).isString();
-  req.checkBody('password', 'Password is required, must be between 8-20 characters').notEmpty().isLength({ min: 8, max: 20 }).isString();
-  req.checkBody('email', 'Email does not appear to be valid').isEmail();
+  req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().trim().isLength({ min: 3, max: 40 }).isString();
+  req.checkBody('email', 'Email is required').notEmpty().trim().isString();
+  req.checkBody('phoneNo', 'Phone No is required, must be between 7-15 characters').notEmpty().trim().isLength({ min: 7, max: 15 }).isString();
+  req.checkBody('password', 'Password is required, must be between 8-20 characters').notEmpty().trim().isLength({ min: 8, max: 20 }).isString();
+  req.checkBody('email', 'Email is required, and must be a valid email').isEmail().trim();
 
   // check the validation object for errors
   const errors = req.validationErrors();
@@ -139,7 +140,7 @@ export const checkIfUserExist = (req, res, next) => {
       error.err = err;
     } else if ((result === undefined) || result.rows.length === 0) {
       errorChecker = true;
-      error.message = 'User account does not exist.';
+      error.message = 'Invalid Email or Password.';
       pool.end();
     }
     if (!errorChecker) { return next(); }
@@ -149,6 +150,48 @@ export const checkIfUserExist = (req, res, next) => {
       status: 400,
       error,
     });
+  });
+};
+
+/**
+ * @description - Verify If User Password is correct
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const verifyUserPassword = (req, res, next) => {
+  const {
+    password, email
+  } = req.body;
+  const queryValues = [];
+  const error = {};
+  error.message = {};
+  let errorChecker = false;
+
+  const pool = new Pool({
+    connectionString,
+  });
+  queryValues.push(email.toLowerCase());
+  queryValues.push(password);
+  pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
+    if (err) {
+      errorChecker = true;
+      error.err = err;
+    } 
+    bcrypt.compare(password, result.rows[0].password, function(err, resp){
+      if(!resp) {
+        errorChecker = true;
+        error.message = 'Invalid Email or Password.';
+        return res.status(400).send({
+          success: false,
+          status: 400,
+          error,
+        });
+      }
+      return next(); 
+    });    
   });
 };
 
