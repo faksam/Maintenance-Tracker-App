@@ -4,24 +4,7 @@ function getRequests() {
   const form = document.getElementById('loginForm');
 
   const requestTable = document.getElementById('requestTable');
-  //   var requestRow = requestTable.insertRow(1);
 
-  // // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-  // let cell1 = requestRow.insertCell(0);
-  // let cell2 = requestRow.insertCell(1);
-  // let cell3 = requestRow.insertCell(2);
-  // let cell4= requestRow.insertCell(3);
-  // let cell5 = requestRow.insertCell(4);
-
-  // // Add some text to the new cells:
-  // cell1.innerHTML = "NEW CELL1";
-  // cell2.innerHTML = "NEW CELL2";
-  // cell3.innerHTML = "NEW CELL1";
-  // cell4.innerHTML = "NEW CELL2";
-  // cell5.innerHTML = "NEW CELL1";
-
-  // cell2.colSpan = "2";
-  // cell4.colSpan = "2";
   const token = `Bearer ${sessionStorage.getItem('token')}`;
   const fetchData = {
     method: 'GET',
