@@ -1,4 +1,4 @@
-import { Pool, Client } from 'pg';
+import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,7 +14,6 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-
 });
 
 /**
@@ -34,11 +33,3 @@ pool.query(
     pool.end();
   },
 );
-
-const client = new Client({
-  connectionString,
-
-});
-client.connect();
-client.end();
-

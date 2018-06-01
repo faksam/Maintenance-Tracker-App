@@ -23,7 +23,6 @@ export default class usersController {
   static getRequests(req, res) {
     const pool = new Pool({
       connectionString,
-
     });
     pool.query('SELECT * FROM requests ORDER BY id', (err, result) => {
       res.status(200).send({
@@ -52,7 +51,6 @@ export default class usersController {
     const requestId = parseInt(req.params.id, 10);
     const pool = new Pool({
       connectionString,
-
     });
     const selectQuery = {
       name: 'get-users-request',
@@ -87,7 +85,6 @@ export default class usersController {
     const status = 'Pending';
     const pool = new Pool({
       connectionString,
-
     });
     const insertQuery = {
       name: 'get-users-requests',
@@ -117,18 +114,17 @@ export default class usersController {
    */
   static rejectRequest(req, res) {
     const {
-      rejectionReason,
+      comment,
     } = req.body;
     const requestId = parseInt(req.params.id, 10);
     const status = 'Disapproved';
     const pool = new Pool({
       connectionString,
-
     });
     const insertQuery = {
       name: 'get-users-requests',
-      text: 'UPDATE requests SET status=$1, comment=$3 WHERE id = $2 RETURNING *',
-      values: [status, requestId, rejectionReason],
+      text: 'UPDATE requests SET status=$1, comment=$2 WHERE id = $3 RETURNING *',
+      values: [status, comment, requestId],
     };
     pool.query(insertQuery, (err, result) => {
       const queryValues = [];
@@ -160,7 +156,6 @@ export default class usersController {
     queryValues.push(requestId);
     const pool = new Pool({
       connectionString,
-
     });
     const insertQuery = {
       name: 'get-users-requests',

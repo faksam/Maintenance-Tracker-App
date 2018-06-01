@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import expressValidator from 'express-validator';
 import dotenv from 'dotenv';
+import ejs from 'ejs';
 
 import apiv1 from './routes/v1/api1';
 
@@ -14,7 +15,7 @@ dotenv.config();
  * @description - view engine setup
  */
 app.set('views', path.join(__dirname, '../client'));
-app.engine('html', require('ejs').renderFile);
+app.engine('html', ejs.renderFile);
 
 app.set('view engine', 'html');
 
@@ -22,9 +23,7 @@ app.set('view engine', 'html');
  * @description - Start server
  */
 const PORT = process.env.PORT || 3456;
-app.listen(PORT, () => {
-  console.log(`The app is running on port ${PORT}`);
-});
+app.listen(PORT, () => {});
 
 app.use(expressValidator());
 app.use(logger('dev'));
@@ -52,7 +51,6 @@ app.use((req, res) => {
   res.status(404).send({
     success: false,
     status: 404,
-    message: 'Path Not Found',
     error,
   });
 });
@@ -73,11 +71,10 @@ app.use((err, req, res) => {
   res.send({
     success: false,
     status: err.status,
-    message: err.message,
     error: {
       message: err.message,
     },
   });
 });
 
-module.exports = app;
+export default app;

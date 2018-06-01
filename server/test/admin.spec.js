@@ -54,7 +54,6 @@ describe('API endpoint login user', () => {
       });
   });
 
-
   /**
    * @description - Approve a requests with invalid token
    */
@@ -93,7 +92,7 @@ describe('API endpoint login user', () => {
     chai.request(app)
       .put('/api/v1/requests/2/disapprove')
       .set('authorization', `Bearer ${userToken}`)
-      .send({ status: 'Disapproved' })
+      .send({ status: 'Disapproved', comment: 'The Broken Monitor was damaged by employee and after investigation, it has been concluded that the said employee should repair it' })
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -106,17 +105,83 @@ describe('API endpoint login user', () => {
   /**
    * @description - PUT Resolve specific request/3 by id
    */
-  it('should resolve request/1', (done) => {
+  it('should resolve request/3', (done) => {
     chai.request(app)
-      .put('/api/v1/requests/1/resolve')
+      .put('/api/v1/requests/3/resolve')
       .set('authorization', `Bearer ${userToken}`)
       .send({ status: 'Resolved' })
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         expect(res.body.data[0].status).to.equal('Resolved');
-        expect(res.body.data[0].title).to.equal('Broken Desk');
+        expect(res.body.data[0].title).to.equal('Laptop Over-Heating');
+        done();
+      });
+  });
+
+
+  /**
+   * @description - PUT Should not Resolve if request status is not Pending
+   */
+  it('should not Resolve if request status is not New request/3', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/3/resolve')
+      .set('authorization', `Bearer ${userToken}`)
+      .send({ status: 'Resolve' })
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('You can only resolve a pending request');
+        done();
+      });
+  });
+
+  /**
+   * @description - PUT Should not Disapprove if request status is not New
+   */
+  it('should not Disapprove if rejection comment is invalid request/3', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/3/disapprove')
+      .set('authorization', `Bearer ${userToken}`)
+      .send({ status: 'Disapprove' })
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message.comment).to.equal('Please input the reason why this request is disapproved, input must be between 20-500 characters');
+        done();
+      });
+  });
+
+  /**
+   * @description - PUT Should not Disapprove if request status is not New
+   */
+  it('should not Disapprove if request status is not New request/3', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/3/disapprove')
+      .set('authorization', `Bearer ${userToken}`)
+      .send({ status: 'Disapproved', comment: 'The Broken Monitor was damaged by employee and after investigation, it has been concluded that the said employee should repair it' })
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('You can only reject a new request');
+        done();
+      });
+  });
+
+  /**
+   * @description - PUT Should not Approve if request status is not New
+   */
+  it('should approve request/3', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/3/approve')
+      .set('authorization', `Bearer ${userToken}`)
+      .send({ status: 'Pending' })
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('You can only approve a new request');
         done();
       });
   });
 });
+

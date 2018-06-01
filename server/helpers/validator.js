@@ -19,9 +19,7 @@ if (env === 'development') {
  * @param {*} n the id parameter passed with HTTP request
  * @returns {boolean} Is the parameter an integer
  */
-function isInt(n) {
-  return n === parseInt(n, 10);
-}
+const isInt = n => n === parseInt(n, 10);
 
 export const setConnectionString = () => {
   let envConnectionString;
@@ -39,14 +37,14 @@ export const setConnectionString = () => {
  * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
  * @returns {boolean||object} false if token is invalid and token object if token is valid
  */
-function verifyToken(userToken) {
+export const verifyToken = (userToken) => {
   const error = {};
   error.message = {};
   let decode = '';
   const authHeader = userToken.split(' ');
   decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
   return decode;
-}
+};
 
 
 /**
@@ -61,7 +59,6 @@ export const verifyUserToken = (req, res, next) => {
   const error = {};
   error.message = {};
   let decode = '';
-  console.log(req.headers.authorization)
   if (req.headers.authorization === undefined || req.headers.authorization === null || req.headers.authorization === '') {
     error.message = 'Token not valid';
     return res.status(400).send({
@@ -100,12 +97,12 @@ export const verifyRequestInput = (req, res, next) => {
   const error = {};
   error.message = {};
   const errorChecker = false;
+
   req.sanitizeBody('title').trim();
   req.sanitizeBody('description').trim();
-  req.checkBody('title', 'Title is required').notEmpty();
-  req.checkBody('description', 'Description is required').notEmpty();
-  req.checkBody('title', 'Title is required').isString();
-  req.checkBody('description', 'Description is required').isString();
+  req.checkBody('title', 'Title is required, must be between 10-50 characters').notEmpty().isLength({ min: 10, max: 50 }).isString();
+  req.checkBody('description', 'Description is required, must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();
+
   const errors = req.validationErrors();
   if (errors) {
     errors.forEach((value) => {
@@ -168,7 +165,6 @@ export const checkIfUserRequestExist = (req, res, next) => {
   const requestId = parseInt(req.params.id, 10);
   const pool = new Pool({
     connectionString,
-
   });
   const selectQuery = {
     name: 'get-users-request',
@@ -203,7 +199,6 @@ export const checkIfRequestExist = (req, res, next) => {
   const requestId = parseInt(req.params.id, 10);
   const pool = new Pool({
     connectionString,
-
   });
   const selectQuery = {
     name: 'get-users-request',
@@ -263,7 +258,6 @@ export const checkRequestStatus = (req, res, next) => {
   const queryValues = [];
   const pool = new Pool({
     connectionString,
-
   });
   queryValues.push(requestId);
   pool.query('SELECT * FROM requests WHERE id = $1', [queryValues[0]], (err, result) => {
@@ -276,6 +270,148 @@ export const checkRequestStatus = (req, res, next) => {
       });
     }
     pool.end();
+    return next();
+  });
+};
+
+
+/**
+ * @description - Verify Reject/Disapprove Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const verifyDisapprovalInput = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const errorChecker = false;
+
+  req.checkBody('comment', 'Please input the reason why this request is disapproved, input must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();
+
+  const errors = req.validationErrors();
+  if (errors) {
+    errors.forEach((value) => {
+      error.message[value.param] = value.msg;
+    });
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error,
+    });
+  }
+
+  if (errorChecker) {
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error,
+    });
+  }
+
+  return next();
+};
+
+
+/**
+ * @description - Check If Request is New
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkIfRequestNew = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const requestId = parseInt(req.params.id, 10);
+  const pool = new Pool({
+    connectionString,
+  });
+  const selectQuery = {
+    name: 'get-users-request',
+    text: 'SELECT * FROM requests WHERE id = $1',
+    values: [requestId],
+  };
+  pool.query(selectQuery, (err, result) => {
+    pool.end();
+    if (err || (result.rows[0].status !== 'New')) {
+      error.message = 'You can only approve a new request';
+      return res.status(400).send({
+        success: false,
+        status: 400,
+        error,
+      });
+    }
+    return next();
+  });
+};
+
+/**
+ * @description - Check If Request is Pending
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkIfRequestPending = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const requestId = parseInt(req.params.id, 10);
+  const pool = new Pool({
+    connectionString,
+  });
+  const selectQuery = {
+    name: 'get-users-request',
+    text: 'SELECT * FROM requests WHERE id = $1',
+    values: [requestId],
+  };
+  pool.query(selectQuery, (err, result) => {
+    pool.end();
+    if (err || (result.rows[0].status !== 'Pending')) {
+      error.message = 'You can only resolve a pending request';
+      return res.status(400).send({
+        success: false,
+        status: 400,
+        error,
+      });
+    }
+    return next();
+  });
+};
+
+/**
+ * @description - Check If Request is New
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkIfRequestRejectable = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const requestId = parseInt(req.params.id, 10);
+  const pool = new Pool({
+    connectionString,
+  });
+  const selectQuery = {
+    name: 'get-users-request',
+    text: 'SELECT * FROM requests WHERE id = $1',
+    values: [requestId],
+  };
+  pool.query(selectQuery, (err, result) => {
+    pool.end();
+    if (err || (result.rows[0].status !== 'New')) {
+      error.message = 'You can only reject a new request';
+      return res.status(400).send({
+        success: false,
+        status: 400,
+        error,
+      });
+    }
     return next();
   });
 };

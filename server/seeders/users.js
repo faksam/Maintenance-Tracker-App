@@ -1,4 +1,4 @@
-import { Pool, Client } from 'pg';
+import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,7 +14,6 @@ if (env === 'development') {
 
 const pool = new Pool({
   connectionString,
-
 });
 
 /**
@@ -78,12 +77,4 @@ const pool = new Pool({
     "'User'); ");
   await pool.end();
 })().catch(e => setImmediate(() => { throw e; }));
-
-
-const client = new Client({
-  connectionString,
-
-});
-client.connect();
-client.end();
 

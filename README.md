@@ -5,7 +5,7 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 <b> View UI Template Here: </b> https://faksam.github.io/Maintenance-Tracker-App/UI/ <br>
  <br/><b> Test API Endpoint Here: </b> https://maintenancetracker.herokuapp.com/api/v1
- <br/><b> View API Documentation Here: </b> maintenancetracker.docs.apiary.io
+ <br/><b> View API Documentation Here: </b> https://maintenancetracker.docs.apiary.io/
 
 ## Table of Content
 
