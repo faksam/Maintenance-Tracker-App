@@ -72,7 +72,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.email).to.equal('Email does not appear to be valid');
+        expect(res.body.error.message.email).to.equal('Email is required, and must be a valid email');
         done();
       });
   });
@@ -117,7 +117,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.email).to.equal('Email does not appear to be valid');
+        expect(res.body.error.message.email).to.equal('Email is required, and must be a valid email');
         done();
       });
   });
@@ -164,7 +164,7 @@ describe('API endpoint /auth/signin & /auth/signup', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('User account does not exist.');
+        expect(res.body.error.message).to.equal('Invalid Email or Password.');
         done();
       });
   });

@@ -45,7 +45,7 @@ const signup = (req, res) => {
       };
       pool.query(signUpQuery, (err, result) => {
         const [user] = result.rows;
-        userToken = tokenForUser({ user: { id: userId } });
+        userToken = tokenForUser(user);
         res.set('authorization', userToken).status(201).send({
           success: true,
           status: 201,
@@ -83,12 +83,11 @@ const login = (req, res) => {
   queryValues.push(userEmail);
 
   pool.query('SELECT * FROM users WHERE email = $1', [queryValues[0]], (err, result) => {
-    let user;
+    const [user] = result.rows;
     bcrypt.compare(password, result.rows[0].password)
       .then((validPassword) => {
         if (validPassword) {
-          [user] = result.rows;
-          userToken = tokenForUser(result.rows[0]);
+          userToken = tokenForUser(user);
         }
         return res.set('authorization', userToken).status(200).send({
           success: true,
