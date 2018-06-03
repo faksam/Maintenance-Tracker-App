@@ -173,22 +173,4 @@ $(document).ready(() => {
       window.location.reload(true);
     }
   };
-}); // end DOM ready
-// // when table row is clicked
-// function clickedRequest(x) {
-//   viewRequestModal.style.display = 'block';
-// }
-// // when table row of resolved is clicked
-// function clickedResolved(x) {
-//   viewResolvedModal.style.display = 'block';
-// }
-// // when table row of rejected is clicked
-// function clickedRejected(x) {
-//   viewRejectedModal.style.display = 'block';
-// }
-
-// // when table row is clicked
-// function clickedRequest(x) {
-//   viewRequestModal.style.display = 'block';
-// }
-
+});
