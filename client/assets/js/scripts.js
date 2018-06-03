@@ -107,6 +107,7 @@ $(document).ready(() => {
     // When the user clicks on <span> (x), close the modal
     userAccountSpan.onclick = function () {
       userAccountModal.style.display = 'none';
+      window.location.reload(true);
     };
   }
 
@@ -114,18 +115,21 @@ $(document).ready(() => {
     // When the user clicks on <span> (x), close the modal
     viewRequestSpan.onclick = function () {
       viewRequestModal.style.display = 'none';
+      window.location.reload(true);
     };
   }
   if (viewResolvedSpan != null) {
     // When the user clicks on <span> (x), close the modal
     viewResolvedSpan.onclick = function () {
       viewResolvedModal.style.display = 'none';
+      window.location.reload(true);
     };
   }
   if (viewRejectedSpan != null) {
     // When the user clicks on <span> (x), close the modal
     viewRejectedSpan.onclick = function () {
       viewRejectedModal.style.display = 'none';
+      window.location.reload(true);
     };
   }
   if (addRejectReasonSpan != null) {
@@ -137,59 +141,54 @@ $(document).ready(() => {
   if (createRequestSpan != null) {
     createRequestSpan.onclick = function () {
       createRequestModal.style.display = 'none';
+      window.location.reload(true);
     };
   }
   if (editRequestSpan != null) {
     editRequestSpan.onclick = function () {
       editRequestModal.style.display = 'none';
+      window.location.reload(true);
     };
   }
   window.onclick = function (event) {
     if (event.target === viewRequestModal) {
       viewRequestModal.style.display = 'none';
+      window.location.reload(true);
     } else if (event.target === createRequestModal) {
       createRequestModal.style.display = 'none';
+      window.location.reload(true);
     } else if (event.target === editRequestModal) {
       editRequestModal.style.display = 'none';
+      window.location.reload(true);
     } else if (event.target === viewResolvedModal) {
       viewResolvedModal.style.display = 'none';
+      window.location.reload(true);
     } else if (event.target === addRejectReasonModal) {
       addRejectReasonModal.style.display = 'none';
     } else if (event.target === viewRejectedModal) {
       viewRejectedModal.style.display = 'none';
+      window.location.reload(true);
     } else if (event.target === userAccountModal) {
       userAccountModal.style.display = 'none';
+      window.location.reload(true);
     }
   };
 }); // end DOM ready
+// // when table row is clicked
+// function clickedRequest(x) {
+//   viewRequestModal.style.display = 'block';
+// }
+// // when table row of resolved is clicked
+// function clickedResolved(x) {
+//   viewResolvedModal.style.display = 'block';
+// }
+// // when table row of rejected is clicked
+// function clickedRejected(x) {
+//   viewRejectedModal.style.display = 'block';
+// }
 
-// when table row is clicked
-function clickedRequest(x) {
-  viewRequestModal.style.display = 'block';
-}
-// when table row of resolved is clicked
-function clickedResolved(x) {
-  viewResolvedModal.style.display = 'block';
-}
-// when table row of rejected is clicked
-function clickedRejected(x) {
-  viewRejectedModal.style.display = 'block';
-}
+// // when table row is clicked
+// function clickedRequest(x) {
+//   viewRequestModal.style.display = 'block';
+// }
 
-// when table row is clicked
-function clickedRequest(x) {
-  viewRequestModal.style.display = 'block';
-}
-function createRequest() {
-  createRequestModal.style.display = 'block';
-}
-function editRequest() {
-  const target = event.target || event.srcElement;
-
-  console.log(this.getAttribute('id'));
-  editRequestModal.style.display = 'block';
-}
-
-function order() {
-  signInModal.style.display = 'block';
-}
