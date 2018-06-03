@@ -17,7 +17,7 @@
     <link type="text/css" rel="stylesheet" href="./assets/css/navigation.css" />
 </head>
 
-<body onload="getRequests()">
+<body id="body">
     <div class="main-container">
         <div class="row">
             <section class="navigation">
@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class="col-m col-1-6-m">
                         <a>
-                            <button onclick="createRequest()">
+                            <button id="createRequestButton">
                                 <i class="material-icons">add</i>
                             </button>
                         </a>
@@ -91,7 +91,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="container center">
-                                <form class=" center" id="createRequestForm">
+                                <form class=" center" id="createRequestForm" method="POST">
                                     <div class="row">
                                         <div class="row">
                                             <div class="input col col-1">
@@ -105,8 +105,9 @@
                                         </div>
                                     </div>
                                     <br>
+                                    <p id="createErrorMessage" style="display: none;"></p>
+                                <button id="createUserRequestButton" style="width: 50%">Create</button>
                                 </form>
-                                <button onclick="createUserRequest()" style="width: 50%">Create</button>
                                 <br>
                             </div>
                         </div>
@@ -142,8 +143,9 @@
                                         </div>
                                     </div>
                                     <br>
+                                    <p id="editErrorMessage" style="display: none;"></p>
+                                    <button id="editRequestFormButton" style="width: 50%">Edit</button>
                                 </form>
-                                <button id="editRequestFormButton" onclick="editRequest()"  style="width: 50%">Edit</button>
                                 <br>
                             </div>
                         </div>

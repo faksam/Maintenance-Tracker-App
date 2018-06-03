@@ -23,7 +23,8 @@ app.set('view engine', 'html');
  * @description - Start server
  */
 const PORT = process.env.PORT || 3456;
-app.listen(PORT, () => {});
+app.listen(PORT, () => {
+});
 
 app.use(expressValidator());
 app.use(logger('dev'));
