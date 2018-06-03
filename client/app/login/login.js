@@ -1,39 +1,50 @@
-function loginUser() {
-  const data = {};
+const loginForm = document.getElementById('loginForm');
+
+/**
+ * @description - Helps to display Error Recieved from API
+ *
+ * @param {string} error - Error string to be displayed
+ * @param {string} errorElement - HTML Element to display Error
+ */
+const displayLoginError = (error, errorElement) => {
+  const errorMessage = document.getElementById(errorElement);
+  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.entries(error); }
+  errorMessage.style.display = 'block';
+  errorMessage.style.color = 'red';
+};
+
+/**
+ * @description - Consume API to login user
+ *
+ * @param {Event} evt - Event that trigerred the function
+ */
+const loginUser = (evt) => {
+  evt.preventDefault();
+  const { email, password } = loginForm.elements;
   const url = '/api/v1/auth/login';
-  const form = document.getElementById('loginForm');
-  const elements = form.elements;
 
-  for (element in elements) {
-    if (elements[element].value !== undefined) { data[elements[element].name] = elements[element].value; }
-  }
-
+  const data = { email: email.value, password: password.value };
   const fetchData = {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' },
   };
-  console.log(data);
+
   fetch(url, fetchData)
     .then(resp => resp.json())
     .then((body) => {
       if (body.status === 200 && body.success === true) {
         sessionStorage.setItem('token', body.token);
-        console.log((body.data.role === 'Admin'));
-        console.log(sessionStorage.getItem('token'));
         if (body.data.role === 'Admin') {
-          console.log(body.data);
-          console.log(body.data.role);
           window.location = './adminhomepage.html';
         } else {
           window.location = './homepage.html';
         }
       } else {
-        console.log(body);
+        displayLoginError(body.error.message, 'loginErrorMessage');
       }
-    })
-    .catch((error) => {
-      console.log(JSON.stringify(error));
     });
-}
+};
+
+loginForm.addEventListener('submit', loginUser);
 
