@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <!--Import css-->
     <link type="text/css" rel="stylesheet" href="./assets/css/styles.css" />
     <link type="text/css" rel="stylesheet" href="./assets/css/navigation.css" />
@@ -58,8 +58,11 @@
         </div>
         <div class="row center">
             <div class="col col-1">
-                <p>M-T-A (Maintenance - Tracker - App) is an online maintenance service assistant that allows you to create a maintenance request and track the progress of your request until it is resolved and completely done.</p>
-                <p>With M-T-A there are no worries of leaving your office to look for the maitenance guy or waiting for days to know the progress of your maitenance request, all you need to do is just track it right from your comfort.</p>
+                <p>M-T-A (Maintenance - Tracker - App) is an online maintenance service assistant that allows you to create
+                    a maintenance request and track the progress of your request until it is resolved and completely done.</p>
+                <p>With M-T-A there are no worries of leaving your office to look for the maitenance guy or waiting for days
+                    to know the progress of your maitenance request, all you need to do is just track it right from your
+                    comfort.</p>
             </div>
         </div>
     </div>
@@ -75,7 +78,8 @@
                 </div>
                 <div class="row">
                     <h3>CREATE A REQUEST</h3>
-                    <p>To create a new request you are required to fill in a request form. This form will contain details of your request (e.g Title, Description, and your Location/Department.)</p>
+                    <p>To create a new request you are required to fill in a request form. This form will contain details of
+                        your request (e.g Title, Description, and your Location/Department.)</p>
                 </div>
             </div>
             <div class="col col-1-4">
@@ -84,7 +88,8 @@
                 </div>
                 <div class="row">
                     <h3>AWAIT APPROVAL</h3>
-                    <p>Once your create a new request by submitting a request form, your are to wait for the maintenance department to read and approve your request. If your request is not approved it will be rejected.</p>
+                    <p>Once your create a new request by submitting a request form, your are to wait for the maintenance department
+                        to read and approve your request. If your request is not approved it will be rejected.</p>
                 </div>
             </div>
             <div class="col col-1-4">
@@ -93,7 +98,8 @@
                 </div>
                 <div class="row">
                     <h3>TRACK PROGRESS</h3>
-                    <p>You can easily track the progress or your request and know how much work has been done by selecting the request or inputing the request id in the tracker.</p>
+                    <p>You can easily track the progress or your request and know how much work has been done by selecting the
+                        request or inputing the request id in the tracker.</p>
                 </div>
             </div>
             <div class="col col-1-4">
@@ -102,7 +108,8 @@
                 </div>
                 <div class="row">
                     <h3>GET NOTIFIED</h3>
-                    <p>As soon as your request as been fully completed and resolved, you will get a notification telling you the request has been completed and resolve.</p>
+                    <p>As soon as your request as been fully completed and resolved, you will get a notification telling you
+                        the request has been completed and resolve.</p>
                 </div>
             </div>
         </div>
@@ -113,88 +120,90 @@
 
     <!-- Signin Modal -->
     <div id="signinModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span id="signinSpan" class="close">&times;</span>
-                    <h2 class="center">Sign In</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="container center">
-                            <form id="loginForm" class="center">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="signinSpan" class="close">&times;</span>
+                <h2 class="center">Sign In</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="container center">
+                        <form id="loginForm" class="center" method="POST">
+                            <div class="row">
                                 <div class="row">
-                                    <div class="row">
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons">email</i>
-                                            <input id="0email" name="email" type="email" placeholder="Email" required>
-                                        </div>
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons">account_circle</i>
-                                            <input id="0account_password" name="password" type="password" value="Lifeisarace" placeholder="Password" required>
-                                        </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons">email</i>
+                                        <input id="0email" name="email" type="email" placeholder="Email" required>
+                                    </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons">account_circle</i>
+                                        <input id="0account_password" name="password" type="password" value="Lifeisarace" placeholder="Password" required>
                                     </div>
                                 </div>
-                                <br>
-                            </form>
-                            <button onclick="loginUser()" style="width: 50%">Sign In</button>
+                            </div>
                             <br>
-                        </div>
+                            <p id="loginErrorMessage" style="display: none;"></p>
+                            <button style="width: 50%">Sign In</button>
+                        </form>
+                        <br>
                     </div>
                 </div>
-                <br>
-                <br>
-                <div class="modal-footer">
-                </div>
+            </div>
+            <br>
+            <br>
+            <div class="modal-footer">
             </div>
         </div>
+    </div>
 
     <!-- SignUp Modal -->
     <div id="signupModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span id="signupSpan" class="close">&times;</span>
-                    <h2 class="center">Create Account</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="container center">
-                            <form id="signUpForm" class="center">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="signupSpan" class="close">&times;</span>
+                <h2 class="center">Create Account</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="container center">
+                        <form id="signUpForm" class="center" method="POST">
+                            <div class="row">
                                 <div class="row">
-                                    <div class="row">
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons prefix">account_box</i>
-                                            <input id="fullName" name="fullName" type="text" placeholder="Full Name" required>
-                                        </div>
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons prefix">email</i>
-                                            <input id="email" name="email" type="email" placeholder="Email" required>
-                                        </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">account_box</i>
+                                        <input id="fullName" name="fullName" type="text" placeholder="Full Name" required>
                                     </div>
-                                    <div class="row">
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons prefix">account_circle</i>
-                                            <input id="account_password" name="password" type="password" placeholder="Password" required>
-                                        </div>
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons prefix">phone</i>
-                                            <input id="phoneNo" name="phoneNo" type="text" placeholder="Phone Number" required>
-                                        </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">email</i>
+                                        <input id="email" name="email" type="email" placeholder="Email" required>
                                     </div>
                                 </div>
-                                <br>
-                            </form>
-                            <button onclick="signUpUser()" style="width: 50%">Sign Up</button>
+                                <div class="row">
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input id="account_password" name="password" type="password" placeholder="Password" required>
+                                    </div>
+                                    <div class="input col col-1-2">
+                                        <i class="material-icons prefix">phone</i>
+                                        <input id="phoneNo" name="phoneNo" type="text" placeholder="Phone Number" required>
+                                    </div>
+                                </div>
+                            </div>
                             <br>
-                        </div>
+                            <p id="signupErrorMessage" style="display: none;"></p>
+                            <button style="width: 50%">Sign Up</button>
+                        </form>
+                        <br>
                     </div>
                 </div>
-                <br>
-                <br>
-                <div class="modal-footer">
-                </div>
             </div>
+            <br>
+            <br>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
 
     <br>
@@ -212,7 +221,7 @@
             </p> -->
             <p>
                 © 2018 Copyright M-T-A by
-                <a target="_blank" href="http://www.fakunlesamuel.com">FakSam</a> 
+                <a target="_blank" href="http://www.fakunlesamuel.com">FakSam</a>
             </p>
         </div>
     </div>
