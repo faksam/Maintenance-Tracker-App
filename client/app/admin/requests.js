@@ -245,11 +245,11 @@ const populateTable = (requests) => {
  */
 const getRequests = () => {
   const userRole = sessionStorage.getItem('user_role');
-  if (userRole !== 'Admin')  {
+  if (userRole !== 'Admin') {
     window.location = './index.html';
   } else if (userRole === 'Admin') {
     const url = '/api/v1/requests/';
-  
+
     const fetchData = {
       method: 'GET',
       headers: {
@@ -264,7 +264,7 @@ const getRequests = () => {
           populateTable(body.data);
         }
       });
-  } 
+  }
 };
 
 rejectionReasonForm.addEventListener('submit', rejectRequest);

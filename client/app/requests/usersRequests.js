@@ -206,7 +206,7 @@ const getRequests = () => {
   const userRole = sessionStorage.getItem('user_role');
 
   if (userRole === 'User' || userRole === 'Admin') {
-    if(userRole === 'Admin') {
+    if (userRole === 'Admin') {
       adminhomepage.style.display = 'block';
     }
     const url = '/api/v1/users/requests/';
@@ -229,7 +229,7 @@ const getRequests = () => {
       });
   } else {
     window.location = './index.html';
-  } 
+  }
 };
 
 /**
