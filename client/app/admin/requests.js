@@ -30,7 +30,7 @@ const token = `Bearer ${sessionStorage.getItem('token')}`;
  */
 const displayError = (error, errorElement) => {
   const errorMessage = document.getElementById(errorElement);
-  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.entries(error); }
+  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.values(error); }
   errorMessage.style.display = 'block';
   errorMessage.style.color = 'red';
 };
@@ -244,22 +244,27 @@ const populateTable = (requests) => {
  *
  */
 const getRequests = () => {
-  const url = '/api/v1/requests/';
+  const userRole = sessionStorage.getItem('user_role');
+  if (userRole !== 'Admin') {
+    window.location = './index.html';
+  } else if (userRole === 'Admin') {
+    const url = '/api/v1/requests/';
 
-  const fetchData = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token,
-    },
-  };
-  fetch(url, fetchData)
-    .then(resp => resp.json())
-    .then((body) => {
-      if (body.status === 200 && body.success === true) {
-        populateTable(body.data);
-      }
-    });
+    const fetchData = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    };
+    fetch(url, fetchData)
+      .then(resp => resp.json())
+      .then((body) => {
+        if (body.status === 200 && body.success === true) {
+          populateTable(body.data);
+        }
+      });
+  }
 };
 
 rejectionReasonForm.addEventListener('submit', rejectRequest);

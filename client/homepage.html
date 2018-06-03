@@ -33,11 +33,22 @@
                             </a>
                         </div>
                         <ul class="nav-list">
-                            <li>
-                                <a href="./user_account.html">My Account</a>
+                            <li id="adminhomepage" style="display: none;">
+                                <a href="./adminhomepage.html">Home</a>
                             </li>
                             <li>
-                                <a href="./index.html">Sign Out</a>
+                                <a href="#!">Account</a>
+                                <ul class="nav-dropdown">
+                                    <li>
+                                        <a href="./homepage.html">My Requests</a>
+                                    </li>
+                                    <li>
+                                        <a href="./user_account.html">My Account</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a id="signoutButton" href="./index.html">Sign Out</a>
                             </li>
                         </ul>
                     </nav>
@@ -231,6 +242,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!--Import js scripts-->
     <script type="text/javascript" src="./app/requests/usersRequests.js"> </script>
+    <script type="text/javascript" src="./app/logout/logout.js"> </script>
     <script type="text/javascript" src="./assets/js/scripts.js"> </script>
 </body>
 

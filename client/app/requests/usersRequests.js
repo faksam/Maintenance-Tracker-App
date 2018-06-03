@@ -1,5 +1,6 @@
 const createRequestForm = document.getElementById('createRequestForm');
 const createRequestButton = document.getElementById('createRequestButton');
+const adminhomepage = document.getElementById('adminhomepage');
 
 const viewRequestModal = document.getElementById('viewRequestModal');
 const editRequestModal = document.getElementById('editRequestModal');
@@ -49,7 +50,7 @@ const setViewModalElements = (request) => {
  */
 const displayError = (error, errorElement) => {
   const errorMessage = document.getElementById(errorElement);
-  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.entries(error); }
+  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.values(error); }
   errorMessage.style.display = 'block';
   errorMessage.style.color = 'red';
 };
@@ -202,24 +203,33 @@ const populateTable = (requests) => {
  *
  */
 const getRequests = () => {
-  const url = '/api/v1/users/requests/';
+  const userRole = sessionStorage.getItem('user_role');
 
-  const fetchData = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token,
-    },
-  };
+  if (userRole === 'User' || userRole === 'Admin') {
+    if (userRole === 'Admin') {
+      adminhomepage.style.display = 'block';
+    }
+    const url = '/api/v1/users/requests/';
 
-  fetch(url, fetchData)
-    .then(resp => resp.json())
-    .then((body) => {
-      if (body.status === 200 && body.success === true) {
-        const { data } = body;
-        populateTable(data);
-      }
-    });
+    const fetchData = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    };
+
+    fetch(url, fetchData)
+      .then(resp => resp.json())
+      .then((body) => {
+        if (body.status === 200 && body.success === true) {
+          const { data } = body;
+          populateTable(data);
+        }
+      });
+  } else {
+    window.location = './index.html';
+  }
 };
 
 /**

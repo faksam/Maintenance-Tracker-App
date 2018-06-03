@@ -9,7 +9,9 @@ const connectionString = setConnectionString();
 let userToken;
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET_TOKEN);
+  return jwt.encode({
+    email: user.email, role: user.role, sub: user.id, iat: timestamp,
+  }, process.env.SECRET_TOKEN);
 };
   /**
    * @description - Signup a new user
