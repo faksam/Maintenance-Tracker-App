@@ -8,7 +8,7 @@ const loginForm = document.getElementById('loginForm');
  */
 const displayLoginError = (error, errorElement) => {
   const errorMessage = document.getElementById(errorElement);
-  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.entries(error); }
+  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.values(error); }
   errorMessage.style.display = 'block';
   errorMessage.style.color = 'red';
 };
@@ -35,6 +35,7 @@ const loginUser = (evt) => {
     .then((body) => {
       if (body.status === 200 && body.success === true) {
         sessionStorage.setItem('token', body.token);
+        sessionStorage.setItem('user_role', body.data.role);
         if (body.data.role === 'Admin') {
           window.location = './adminhomepage.html';
         } else {
