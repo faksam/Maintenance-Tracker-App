@@ -63,14 +63,14 @@
                 </h1>
                 <div class="row">
                     <div class="col-m col-2-1-3-m" style="padding-top: 10px;">
-                        <input id="search" style="width: 100%" placeholder="Search">
+                        <input id="filterRequestInput" style="width: 100%" placeholder="Search">
                     </div>
                     <div class="col-m col-1-3-m" style="padding-top: 10px;">
-                        <select>
+                        <select id="filterByStatus">
                             <option value="all">All</option>
                             <option value="new">New</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
+                            <option value="pending">Approved</option>
+                            <option value="disapproved">Rejected</option>
                             <option value="resolved">Resolved</option>
                         </select>
                     </div>
@@ -78,6 +78,7 @@
                 </div>
                 <br>
                 <table id="requestTable">
+                    <thead>
                     <tr class="header">
                         <th>Title</th>
                         <th colspan="3">Description</th>
@@ -85,6 +86,10 @@
                         <th>Date</th>
                         <th colspan="2">Approve/Reject</th>
                     </tr>
+                    </thead>
+                    <tbody id="requestTableBody">
+                        
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -105,34 +110,29 @@
                                         <b>Request title: </b>
                                     </h2>
                                     <h3 id="viewRequestTitle">
-                                        <b>Broken Desk</b>
+                                        <b></b>
                                     </h3>
                                     <hr>
                                     <h2>
                                         <b>Request content:</b>
                                     </h2>
-                                    <h3 id="viewRequestDescription">One of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
-                                        of the desk's in my office is broken.
-                                    </h3>
+                                    <h3 id="viewRequestDescription"></h3>
                                     <h2>
                                         <b>Request by:</b>
                                     </h2>
-                                    <h3 id="viewRequestUser">Mr Stephen Colbert</h3>
+                                    <h3 id="viewRequestUser"></h3>
                                     <h2>
                                         <b>Request date:</b>
                                     </h2>
-                                    <h3 id="viewRequestDate">18-04-2018</h3>
+                                    <h3 id="viewRequestDate"></h3>
                                     <h2>
                                         <b>Reason For Rejection:</b>
                                     </h2>
-                                    <h3 id="viewRejectionReason">Damage was caused by employee and is under investigation.</h3>
+                                    <h3 id="viewRejectionReason"></h3>
                                     <h2>
                                         <b>Status:</b>
                                     </h2>
-                                    <h3 id="viewRequestStatus">Approved</h3>
+                                    <h3 id="viewRequestStatus"></h3>
                                 </div>
 
                                 <div class="" style="width: 45% ;">
@@ -141,120 +141,6 @@
                                             Resolve
                                         </button>
                                     </a>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-        <!-- view Resolved Modal -->
-        <div id="viewResolvedModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span id="viewResolvedSpan" class="close">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row left">
-                        <div class="container">
-                            <br>
-                            <div class="col col-1">
-                                <div class="row">
-                                    <h2>
-                                        <b>Request title: </b>
-                                    </h2>
-                                    <h3>
-                                        <b>Broken Desk</b>
-                                    </h3>
-                                    <hr>
-                                    <h2>
-                                        <b>Request content:</b>
-                                    </h2>
-                                    <h3>One of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
-                                        of the desk's in my office is broken.
-                                    </h3>
-                                    <h2>
-                                        <b>Request by:</b>
-                                    </h2>
-                                    <h3>Mr Stephen Colbert</h3>
-                                    <h2>
-                                        <b>Request date:</b>
-                                    </h2>
-                                    <h3>18-04-2018</h3>
-                                    <h2>
-                                        <b>Status:</b>
-                                    </h2>
-                                    <h3>Resolved</h3>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-        <!-- view Rejected Modal -->
-        <div id="viewRejectedModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span id="viewRejectedSpan" class="close">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row left">
-                        <div class="container">
-                            <br>
-                            <div class="col col-1">
-                                <div class="row">
-                                    <h2>
-                                        <b>Request title: </b>
-                                    </h2>
-                                    <h3>
-                                        <b>Broken Desk</b>
-                                    </h3>
-                                    <hr>
-                                    <h2>
-                                        <b>Request content:</b>
-                                    </h2>
-                                    <h3>One of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                        of the desk's in my office is broken.One of the desk's in my office is broken. One
-                                        of the desk's in my office is broken.
-                                    </h3>
-                                    <h2>
-                                        <b>Request by:</b>
-                                    </h2>
-                                    <h3>Mr Stephen Colbert</h3>
-                                    <h2>
-                                        <b>Request date:</b>
-                                    </h2>
-                                    <h3>18-04-2018</h3>
-                                    <h2>
-                                        <b>Status:</b>
-                                    </h2>
-                                    <h3>Rejected</h3>
-                                    <h2>
-                                        <b>Reason For Rejection:</b>
-                                    </h2>
-                                    <h3>Damage was caused by employee and is under investigation.</h3>
                                 </div>
                             </div>
                             <br>
