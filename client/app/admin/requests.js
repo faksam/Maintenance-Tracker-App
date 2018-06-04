@@ -1,5 +1,7 @@
 const rejectionReasonForm = document.getElementById('rejectionReasonForm');
 const rejectionReasonButton = document.getElementById('rejectionReasonButton');
+const filterRequestInput = document.getElementById('filterRequestInput');
+const filterByStatus = document.getElementById('filterByStatus');
 
 const viewRequestModal = document.getElementById('viewRequestModal');
 const addRejectReasonModal = document.getElementById('addRejectReasonModal');
@@ -12,7 +14,7 @@ const viewRequestButton = document.getElementById('viewRequestButton');
 const viewRejectionReason = document.getElementById('viewRejectionReason');
 const viewRequestStatus = document.getElementById('viewRequestStatus');
 
-const requestTable = document.getElementById('requestTable');
+const requestTableBody = document.getElementById('requestTableBody');
 
 const options = {
   weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -195,7 +197,7 @@ function rejectRequestReason() {
  */
 const populateTable = (requests) => {
   requests.forEach((request) => {
-    const requestRow = requestTable.insertRow(1);
+    const requestRow = requestTableBody.insertRow(0);
 
     const cell1 = requestRow.insertCell(0);
     const cell2 = requestRow.insertCell(1);
@@ -267,6 +269,35 @@ const getRequests = () => {
   }
 };
 
+const filterRequest = () => {
+  const filter = filterRequestInput.value.toLowerCase();
+  const requestTableRows = Object.values(requestTableBody.rows);
+  requestTableRows.forEach((row, index) => {
+    if (row.innerText.toLowerCase().indexOf(filter) > -1) {
+      requestTableRows[index].style.display = 'table-row';
+    } else if (row.innerText.toLowerCase().indexOf(filter) < 0) {
+      requestTableRows[index].style.display = 'none';
+    }
+  });
+};
+
+const filterRquestByStatus = () => {
+  filterRequestInput.value = '';
+  const requestTableRows = Object.values(requestTableBody.rows);
+  requestTableRows.forEach((row, index) => {
+    const { cells } = requestTableRows[index];
+    if (filterByStatus.value.toLowerCase() === 'all') {
+      requestTableRows[index].style.display = 'table-row';
+    } else if (cells[2].innerText.toLowerCase() === filterByStatus.value.toLowerCase()) {
+      requestTableRows[index].style.display = 'table-row';
+    } else {
+      requestTableRows[index].style.display = 'none';
+    }
+  });
+};
+
 rejectionReasonForm.addEventListener('submit', rejectRequest);
+filterRequestInput.addEventListener('keyup', filterRequest);
+filterByStatus.addEventListener('change', filterRquestByStatus);
 
 window.onload = getRequests();
