@@ -69,10 +69,10 @@
                         </a>
                     </div>
                     <div class="col-m col-1-2-m">
-                        <input id="search" style="width: 100%" placeholder="Search">
+                        <input id="filterRequestInput" id="filterRequestInput" style="width: 100%" placeholder="Search">
                     </div>
                     <div class="col-m col-1-3-m">
-                        <select>
+                        <select id="filterByStatus">
                             <option value="all">All</option>
                             <option value="new">New</option>
                             <option value="approved">Approved</option>
@@ -83,12 +83,17 @@
 
                 </div>
                 <table id="requestTable">
+                    <thead>
                     <tr class="header">
                         <th>Title</th>
                         <th colspan="2">Description</th>
                         <th>Status</th>
                         <th colspan="3">Date</th>
                     </tr>
+                    </thead>
+                    <tbody id="requestTableBody">
+                        
+                    </tbody>
                 </table>
             </div>
             <!-- Create Request Modal -->
@@ -185,30 +190,21 @@
                                             <b>Request title: </b>
                                         </h2>
                                         <h3 id="viewRequestTitle">
-                                            <b>Broken Desk</b>
+                                            <b></b>
                                         </h3>
                                         <hr>
                                         <h2>
                                             <b>Request content:</b>
                                         </h2>
-                                        <h3 id="viewRequestDescription">One of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                            of the desk's in my office is broken.One of the desk's in my office is broken.
-                                            One of the desk's in my office is broken.One of the desk's in my office is broken.One
-                                            of the desk's in my office is broken.One of the desk's in my office is broken.
-                                            One of the desk's in my office is broken.
-                                        </h3>
-                                        <h2>
-                                            <b>Request by:</b>
-                                        </h2>
-                                        <h3 id="viewRequestUser">Mr Stephen Colbert</h3>
+                                        <h3 id="viewRequestDescription"></h3>
                                         <h2>
                                             <b>Request date:</b>
                                         </h2>
-                                        <h3 id="viewRequestDate">18-04-2018</h3>
+                                        <h3 id="viewRequestDate"></h3>
                                         <h2>
                                             <b>Status:</b>
                                         </h2>
-                                        <h3 id="viewRequestStatus">Approved</h3>
+                                        <h3 id="viewRequestStatus"></h3>
                                     </div>
 
                                 </div>

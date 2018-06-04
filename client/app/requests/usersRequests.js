@@ -1,6 +1,8 @@
 const createRequestForm = document.getElementById('createRequestForm');
 const createRequestButton = document.getElementById('createRequestButton');
 const adminhomepage = document.getElementById('adminhomepage');
+const filterRequestInput = document.getElementById('filterRequestInput');
+const filterByStatus = document.getElementById('filterByStatus');
 
 const viewRequestModal = document.getElementById('viewRequestModal');
 const editRequestModal = document.getElementById('editRequestModal');
@@ -8,7 +10,6 @@ const createRequestModal = document.getElementById('createRequestModal');
 
 const viewRequestTitle = document.getElementById('viewRequestTitle');
 const viewRequestDescription = document.getElementById('viewRequestDescription');
-const viewRequestUser = document.getElementById('viewRequestUser');
 const viewRequestDate = document.getElementById('viewRequestDate');
 const viewRequestStatus = document.getElementById('viewRequestStatus');
 
@@ -16,7 +17,7 @@ const requestTitle = document.getElementById('editRequestTitle');
 const requestDescription = document.getElementById('editRequestDescription');
 const editRequestFormButton = document.getElementById('editRequestFormButton');
 
-const requestTable = document.getElementById('requestTable');
+const requestTableBody = document.getElementById('requestTableBody');
 
 
 // request a weekday along with a long date
@@ -36,7 +37,6 @@ const token = `Bearer ${sessionStorage.getItem('token')}`;
 const setViewModalElements = (request) => {
   viewRequestTitle.innerHTML = request.title;
   viewRequestDescription.innerHTML = request.description;
-  viewRequestUser.innerHTML = request.fullname;
   const date = new Date(request.date);
   viewRequestDate.innerHTML = date.toLocaleDateString('en-US', options);
   viewRequestStatus.innerHTML = request.status;
@@ -88,7 +88,6 @@ function viewClickedRequest() {
 const setViewModalEditedElements = (request) => {
   viewRequestTitle.innerHTML = request.title;
   viewRequestDescription.innerHTML = request.description;
-  viewRequestUser.innerHTML = request.fullname;
   const date = new Date(request.date);
   viewRequestDate.innerHTML = date.toLocaleDateString('en-US', options);
   viewRequestStatus.innerHTML = request.status;
@@ -169,7 +168,7 @@ function displayEditUserRequest(evt) {
  */
 const populateTable = (requests) => {
   requests.forEach((request) => {
-    const requestRow = requestTable.insertRow(1);
+    const requestRow = requestTableBody.insertRow(0);
     const cell1 = requestRow.insertCell(0);
     const cell2 = requestRow.insertCell(1);
     const cell3 = requestRow.insertCell(2);
@@ -276,6 +275,36 @@ const createRequest = () => {
   createRequestModal.style.display = 'block';
 };
 
+const filterRequest = () => {
+  const filter = filterRequestInput.value.toLowerCase();
+  const requestTableRows = Object.values(requestTableBody.rows);
+  requestTableRows.forEach((row, index) => {
+    if (row.innerText.toLowerCase().indexOf(filter) > -1) {
+      requestTableRows[index].style.display = 'table-row';
+    } else if (row.innerText.toLowerCase().indexOf(filter) < 0) {
+      requestTableRows[index].style.display = 'none';
+    }
+  });
+};
+
+const filterRquestByStatus = () => {
+  filterRequestInput.value = '';
+  const requestTableRows = Object.values(requestTableBody.rows);
+  requestTableRows.forEach((row, index) => {
+    const { cells } = requestTableRows[index];
+    if (filterByStatus.value.toLowerCase() === 'all') {
+      requestTableRows[index].style.display = 'table-row';
+    } else if (cells[2].innerText.toLowerCase() === filterByStatus.value.toLowerCase()) {
+      requestTableRows[index].style.display = 'table-row';
+    } else {
+      requestTableRows[index].style.display = 'none';
+    }
+  });
+};
+
 createRequestForm.addEventListener('submit', createUserRequest);
 createRequestButton.addEventListener('click', createRequest);
+filterRequestInput.addEventListener('keyup', filterRequest);
+filterByStatus.addEventListener('change', filterRquestByStatus);
+
 window.onload = getRequests();
