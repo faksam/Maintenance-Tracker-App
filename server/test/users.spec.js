@@ -39,6 +39,24 @@ describe('API endpoint /users/requests', () => {
   });
 
   /**
+   * @description - GET Users Account Details
+   */
+  it('should return users acccount details', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/account')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.success).to.equal(true);
+        expect(res.body.data.fullName).to.equal(users.user[10].fullName);
+        expect(res.body.data.email).to.equal(users.user[10].email);
+        expect(res.body.data.phoneNo).to.equal(users.user[10].phoneNo);
+        done();
+      });
+  });
+
+  /**
    * @description - GET List all requests with invalid token
    */
   it('should not get request if authorization is missing', (done) => {

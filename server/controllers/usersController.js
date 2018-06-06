@@ -73,8 +73,6 @@ export default class usersController {
    * @returns {object} response JSON Object
    */
   static getRequest(req, res) {
-    const error = {};
-    error.message = {};
     const requestId = parseInt(req.params.id, 10);
     const pool = new Pool({
       connectionString,
@@ -165,6 +163,43 @@ export default class usersController {
         data: result.rows[0],
       });
       pool.end();
+    });
+  }
+
+  /**
+   * @description - Get a Users Account Details
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} response JSON Object
+   */
+  static getUserDetails(req, res) {
+    const pool = new Pool({
+      connectionString,
+    });
+    const decode = decodeToken(req.headers.authorization);
+    const selectQuery = {
+      name: 'get-users-account-details',
+      text: 'SELECT * FROM users WHERE id = $1',
+      values: [decode.sub],
+    };
+    pool.query(selectQuery, (err, result) => {
+      const [user] = result.rows;
+      pool.end();
+      return res.status(200).send({
+        success: true,
+        status: 200,
+        data: {
+          fullName: user.fullname,
+          email: user.email,
+          phoneNo: user.phoneno,
+          role: user.role,
+        },
+      });
     });
   }
 }
