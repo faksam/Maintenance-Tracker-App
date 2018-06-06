@@ -46,7 +46,6 @@ describe('API endpoint /users/requests', () => {
       .get('/api/v1/users/account')
       .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
-        console.log(res.body)
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);

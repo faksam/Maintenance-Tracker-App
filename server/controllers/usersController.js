@@ -198,7 +198,7 @@ export default class usersController {
           email: user.email,
           phoneNo: user.phoneno,
           role: user.role,
-        }
+        },
       });
     });
   }
