@@ -61,7 +61,7 @@
                             <img src="./assets/images/avatar.png" style="height: 70px;" />
                         </div>
                         <br>
-                        <form class=" center">
+                        <form class="center" id="accountDetailsForm">
                             <div class="row">
                                 <div class="row">
                                     <div class="input col col-1-2">
@@ -76,7 +76,7 @@
                                 <div class="row">
                                     <div class="input col col-1-2">
                                         <i class="material-icons prefix">account_circle</i>
-                                        <input id="account_password" type="password" placeholder="Password" value="********" class="validate" readonly>
+                                        <input id="role" type="text" placeholder="Role" class="validate" readonly>
                                     </div>
                                     <div class="input col col-1-2">
                                         <i class="material-icons prefix">phone</i>
@@ -111,27 +111,27 @@
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_box</i>
-                                            <input id="fullName" type="text" placeholder="Full Name" value="Fakunle Mayowa Samuel" required>
+                                            <input id="editFullName" type="text" placeholder="Full Name" value="Fakunle Mayowa Samuel" required>
                                         </div>
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">email</i>
-                                            <input id="email" type="email" placeholder="Email"  value="contact@fakunlesamuel.com"  required>
+                                            <input id="editEmail" type="email" placeholder="Email"  value="contact@fakunlesamuel.com"  required>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <input id="account_password" type="password" placeholder="Password" required>
+                                            <input id="editAccount_password" type="password" placeholder="Password" required>
                                         </div>
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <input id="account_password" type="password" placeholder="Confirm Password" required>
+                                            <input id="confirmAccount_password" type="password" placeholder="Confirm Password" required>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">phone</i>
-                                            <input id="phoneNo" type="text" placeholder="Phone Number" value="07039248533" required>
+                                            <input id="editPhoneNo" type="text" placeholder="Phone Number" value="07039248533" required>
                                         </div>
                                     </div>
                                 </div>
@@ -163,6 +163,7 @@
     <!--Import jQuery-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!--Import js scripts-->
+    <script type="text/javascript" src="./app/account/accountDetails.js"> </script>
     <script type="text/javascript" src="./app/logout/logout.js"> </script>
     <script type="text/javascript" src="./assets/js/scripts.js"> </script>
 </body>

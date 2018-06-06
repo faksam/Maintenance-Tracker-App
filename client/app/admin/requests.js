@@ -269,6 +269,10 @@ const getRequests = () => {
   }
 };
 
+/**
+ * @description - Filters the Users Request Table By Users Input to Search Field
+ *
+ */
 const filterRequest = () => {
   const filter = filterRequestInput.value.toLowerCase();
   const requestTableRows = Object.values(requestTableBody.rows);
@@ -281,6 +285,10 @@ const filterRequest = () => {
   });
 };
 
+/**
+ * @description - Filters the Users Request Table By Request Status
+ *
+ */
 const filterRquestByStatus = () => {
   filterRequestInput.value = '';
   const requestTableRows = Object.values(requestTableBody.rows);
