@@ -202,4 +202,44 @@ export default class usersController {
       });
     });
   }
+
+  /**
+   * @description - Update a Users Account Details
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf usersController
+   *
+   * @returns {object} response JSON Object
+   */
+  static updateUserDetails(req, res) {
+    const {
+      fullName, email, phoneNo,
+    } = req.body;
+    const pool = new Pool({
+      connectionString,
+    });
+    const decode = decodeToken(req.headers.authorization);
+    const insertQuery = {
+      name: 'get-users-requests',
+      text: 'UPDATE users SET fullname=$1, email=$2, phoneno=$3 WHERE id = $4 RETURNING *',
+      values: [fullName, email, phoneNo, decode.sub],
+    };
+    pool.query(insertQuery, (err, result) => {
+      const [user] = result.rows;
+      pool.end();
+      return res.status(200).send({
+        success: true,
+        status: 200,
+        data: {
+          fullName: user.fullname,
+          email: user.email,
+          phoneNo: user.phoneno,
+          role: user.role,
+        },
+      });
+    });
+  }
 }

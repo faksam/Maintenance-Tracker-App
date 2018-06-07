@@ -20,7 +20,7 @@ const tokenForUser = (user) => {
    * @param {object} req - HTTP Request
    * @param {object} res - HTTP Response
    *
-   * @memberOf usersController
+   * @memberOf authController
    *
    * @returns {object} response HTTP Response JSON Object
    */
@@ -70,6 +70,7 @@ const signup = (req, res) => {
    * @param {object} req - HTTP Request
    * @param {object} res - HTTP Response
    *
+   * @memberOf authController
    * @returns {object} response HTTP Response JSON Object
    */
 const login = (req, res) => {
