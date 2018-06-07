@@ -38,6 +38,22 @@ describe('API endpoint login user', () => {
   });
 
   /**
+   * @description - GET  List a requests
+   */
+  it('should return a /requests/:id', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests/3')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('Laptop Over-Heating');
+        expect(res.body.data[0].description).to.equal('Please My laptop is emitting smoke and over heating. When will it be fixed and repaired. It is very important.');
+        done();
+      });
+  });
+
+  /**
    * @description - PUT Approve specific request/3 by id
    */
   it('should approve request/3', (done) => {

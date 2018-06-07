@@ -80,7 +80,7 @@ export default class usersController {
    *
    * @returns {object} response JSON Object
    */
-  static approveRequest(req, res) {
+  static approveRequest(req, res, next) {
     const requestId = parseInt(req.params.id, 10);
     const status = 'Pending';
     const pool = new Pool({
@@ -92,12 +92,14 @@ export default class usersController {
       values: [status, requestId],
     };
     pool.query(insertQuery, (err, result) => {
+      req.data = result.rows;
       res.status(200).send({
         success: true,
         status: 200,
         data: result.rows,
       });
       pool.end();
+      next();
     });
   }
 
@@ -112,7 +114,7 @@ export default class usersController {
    *
    * @returns {object} response JSON Object
    */
-  static rejectRequest(req, res) {
+  static rejectRequest(req, res, next) {
     const {
       comment,
     } = req.body;
@@ -127,6 +129,7 @@ export default class usersController {
       values: [status, comment, requestId],
     };
     pool.query(insertQuery, (err, result) => {
+      req.data = result.rows;
       const queryValues = [];
       queryValues.push(requestId);
       res.status(200).send({
@@ -135,6 +138,7 @@ export default class usersController {
         data: result.rows,
       });
       pool.end();
+      next();
     });
   }
 
@@ -149,7 +153,7 @@ export default class usersController {
    *
    * @returns {object} response JSON Object
    */
-  static resolveRequest(req, res) {
+  static resolveRequest(req, res, next) {
     const requestId = parseInt(req.params.id, 10);
     const status = 'Resolved';
     const queryValues = [];
@@ -163,12 +167,14 @@ export default class usersController {
       values: [status, requestId],
     };
     pool.query(insertQuery, (err, result) => {
+      req.data = result.rows;
       res.status(200).send({
         success: true,
         status: 200,
         data: result.rows,
       });
       pool.end();
+      next();
     });
   }
 }
