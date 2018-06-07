@@ -9,4 +9,5 @@ export default (app) => {
   app.put('/requests/:id/approve', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, checkIfRequestNew, adminController.approveRequest, getUserDetails, sendNotification);
   app.put('/requests/:id/disapprove', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, verifyDisapprovalInput, checkIfRequestRejectable, adminController.rejectRequest, getUserDetails, sendNotification);
   app.put('/requests/:id/resolve', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, checkIfRequestPending, adminController.resolveRequest, getUserDetails, sendNotification);
+  app.delete('/requests/:id/delete', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, adminController.deleteRequest);
 };

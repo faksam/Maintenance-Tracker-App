@@ -87,6 +87,44 @@ export const validateSignUpInput = (req, res, next) => {
 };
 
 /**
+ * @description - Validate Update User Account Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const validateUpdateAccountInput = (req, res, next) => {
+  const error = {};
+  error.message = {};
+
+  req.sanitizeBody('fullName').trim();
+  req.sanitizeBody('phoneNo').trim();
+  req.sanitizeBody('email').trim();
+
+  req.checkBody('fullName', 'Full Name is required, must be between 3-40 characters').notEmpty().trim().isLength({ min: 3, max: 40 })
+    .isString();
+  req.checkBody('phoneNo', 'Phone No is required, must be between 7-15 characters').notEmpty().trim().isLength({ min: 7, max: 15 })
+    .isString();
+  req.checkBody('email', 'Email is required, and must be a valid email').isEmail().trim();
+
+  // check the validation object for errors
+  const errors = req.validationErrors();
+  if (errors) {
+    errors.forEach((value) => {
+      error.message[value.param] = value.msg;
+    });
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error,
+    });
+  }
+
+  return next();
+};
+
+/**
  * @description - Validate Signin Input
  *
  * @param {object} req HTTP Request
