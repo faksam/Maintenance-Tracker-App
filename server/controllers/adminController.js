@@ -4,11 +4,11 @@ import { setConnectionString } from '../helpers/validator';
 const connectionString = setConnectionString();
 
 /**
- * @class usersController
+ * @class adminController
  *
  * @export
  */
-export default class usersController {
+export default class adminController {
   /**
      * @description - Get all Users Requests
      * @static
@@ -16,7 +16,7 @@ export default class usersController {
      * @param {object} req - HTTP Request
      * @param {object} res - HTTP Response
      *
-     * @memberOf usersController
+     * @memberOf adminController
      *
      * @returns {object} response JSON Object
      */
@@ -41,7 +41,7 @@ export default class usersController {
    * @param {object} req - HTTP Request
    * @param {object} res - HTTP Response
    *
-   * @memberOf usersController
+   * @memberOf adminController
    *
    * @returns {object} response JSON Object
    */
@@ -76,7 +76,7 @@ export default class usersController {
    * @param {object} req - HTTP Request
    * @param {object} res - HTTP Response
    *
-   * @memberOf usersController
+   * @memberOf adminController
    *
    * @returns {object} response JSON Object
    */
@@ -110,7 +110,7 @@ export default class usersController {
    * @param {object} req - HTTP Request
    * @param {object} res - HTTP Response
    *
-   * @memberOf usersController
+   * @memberOf adminController
    *
    * @returns {object} response JSON Object
    */
@@ -149,7 +149,7 @@ export default class usersController {
    * @param {object} req - HTTP Request
    * @param {object} res - HTTP Response
    *
-   * @memberOf usersController
+   * @memberOf adminController
    *
    * @returns {object} response JSON Object
    */
@@ -175,6 +175,39 @@ export default class usersController {
       });
       pool.end();
       next();
+    });
+  }
+
+  /**
+   * @description - Delete a Request
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf adminController
+   *
+   * @returns {object} response JSON Object
+   */
+  static deleteRequest(req, res) {
+    const requestId = parseInt(req.params.id, 10);
+    const pool = new Pool({
+      connectionString,
+    });
+    const deleteQuery = {
+      name: 'get-users-requests',
+      text: 'DELETE FROM requests WHERE id = $1 RETURNING *',
+      values: [requestId],
+    };
+    pool.query(deleteQuery, (err, result) => {
+      req.data = result.rows;
+      req.data[0].status = 'Deleted';
+      res.status(200).send({
+        success: true,
+        status: 200,
+        data: result.rows,
+      });
+      pool.end();
     });
   }
 }
