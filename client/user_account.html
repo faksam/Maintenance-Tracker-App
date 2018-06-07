@@ -87,7 +87,7 @@
                             <br>
                         </form>
                         <a class="center" href="#">
-                            <button id="editAccountBtn" style="width: 50%">Edit</button>
+                            <button id="editAccountBtn" style="width: 30%">Edit</button>
                         </a>
                         <br>
                     </div>
@@ -106,7 +106,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="container">
-                            <form class=" center" action="./user_account.html">
+                            <form id="editAccountForm" class="center" method="POST">
                                 <div class="row">
                                     <div class="row">
                                         <div class="input col col-1-2">
@@ -120,18 +120,46 @@
                                     </div>
                                     <div class="row">
                                         <div class="input col col-1-2">
-                                            <i class="material-icons prefix">account_circle</i>
-                                            <input id="editAccount_password" type="password" placeholder="Password" required>
-                                        </div>
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons prefix">account_circle</i>
-                                            <input id="confirmAccount_password" type="password" placeholder="Confirm Password" required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input col col-1-2">
                                             <i class="material-icons prefix">phone</i>
                                             <input id="editPhoneNo" type="text" placeholder="Phone Number" value="07039248533" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p id="errorMessage" style="display: none;"></p>
+                                <br>
+                                <button style="width: 40%">Save</button>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+        <!-- User Account Password Modal -->
+        <div id="userAccountPasswordModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="userAccountPasswordSpan" class="close">&times;</span>
+                    <h2 class="center">Edit Account Password</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container">
+                            <form id="editAccountPasswordForm" class="center" action="./user_account.html">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="editAccountPassword" type="password" placeholder="Password" required>
+                                        </div>
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="confirmAccountPassword" type="password" placeholder="Confirm Password" required>
                                         </div>
                                     </div>
                                 </div>
