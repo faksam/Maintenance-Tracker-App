@@ -10,12 +10,11 @@ describe('API endpoint /api/v1/', () => {
    */
   it('should return Not Found', (done) => {
     chai.request(app)
-      .get('/INVALID_PATH')
+      .get('/api/v1/INVALID_PATH')
       .then((res) => {
         expect(res.statusCode).to.equal(404);
         done();
       });
   });
-
 });
 
