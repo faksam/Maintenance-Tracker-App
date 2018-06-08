@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
-import jwt from 'jwt-simple';
+import bcrypt from 'bcrypt';
+import { decodeToken } from '../helpers/userValidator';
 import { setConnectionString } from '../helpers/validator';
 
 const connectionString = setConnectionString();
@@ -9,21 +10,6 @@ const connectionString = setConnectionString();
  *
  * @export
  */
-
-/**
- * Decode user token if token is valid
- *
- * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
- * @returns {boolean||object} false if token is invalid and token object if token is valid
- */
-const decodeToken = (userToken) => {
-  const error = {};
-  error.message = {};
-  let decode = '';
-  const authHeader = userToken.split(' ');
-  decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
-  return decode;
-};
 
 export default class accountController {
   /**
@@ -61,6 +47,50 @@ export default class accountController {
         },
       });
     });
+  }
+
+  /**
+   * @description - Change a Users Account Password
+   * @static
+   *
+   * @param {object} req - HTTP Request
+   * @param {object} res - HTTP Response
+   *
+   * @memberOf accountController
+   *
+   * @returns {object} response JSON Object
+   */
+  static updateUserPassword(req, res) {
+    const {
+      newPassword,
+    } = req.body;
+    const pool = new Pool({
+      connectionString,
+    });
+    const decode = decodeToken(req.headers.authorization);
+    const saltRounds = 12;
+    bcrypt.hash(newPassword, saltRounds)
+      .then((hash) => {
+        const insertQuery = {
+          name: 'update-users-password',
+          text: 'UPDATE users SET password=$1 WHERE id = $2 RETURNING *',
+          values: [hash, decode.sub],
+        };
+        pool.query(insertQuery, (err, result) => {
+          const [user] = result.rows;
+          return res.status(200).send({
+            success: true,
+            status: 200,
+            data: {
+              fullName: user.fullname,
+              email: user.email,
+              phoneNo: user.phoneno,
+              role: user.role,
+            },
+          });
+        });
+        pool.end();
+      });
   }
 
   /**
