@@ -1,5 +1,5 @@
 const checkLoggedInUser = () => {
-  const userRole = sessionStorage.getItem('user_role');
+  const userRole = localStorage.getItem('mta_user_role_fms');
   if (userRole === 'User') {
     window.location = './homepage.html';
   } else if (userRole === 'Admin') {

@@ -12,6 +12,9 @@ const viewRequestTitle = document.getElementById('viewRequestTitle');
 const viewRequestDescription = document.getElementById('viewRequestDescription');
 const viewRequestDate = document.getElementById('viewRequestDate');
 const viewRequestStatus = document.getElementById('viewRequestStatus');
+const editRequestSpan = document.getElementById('editRequestSpan');
+const createRequestSpan = document.getElementById('createRequestSpan');
+const viewRequestSpan = document.getElementById('viewRequestSpan');
 
 const requestTitle = document.getElementById('editRequestTitle');
 const requestDescription = document.getElementById('editRequestDescription');
@@ -19,6 +22,7 @@ const editRequestFormButton = document.getElementById('editRequestFormButton');
 
 const requestTableBody = document.getElementById('requestTableBody');
 
+let reloadPage = false;
 
 // request a weekday along with a long date
 const options = {
@@ -27,7 +31,7 @@ const options = {
 options.timeZone = 'UTC';
 options.timeZoneName = 'short';
 
-const token = `Bearer ${sessionStorage.getItem('token')}`;
+const token = `Bearer ${localStorage.getItem('mta_token_fms')}`;
 
 /**
  * @description - Helps to set view modal html elements
@@ -124,6 +128,8 @@ function editUserRequest(evt) {
       if (body.status === 200 && body.success === true) {
         setViewModalEditedElements(body.data);
         editRequestModal.style.display = 'none';
+        // window.location.reload(true);
+        reloadPage = true;
       } else {
         displayError(body.error.message, 'editErrorMessage');
       }
@@ -202,7 +208,7 @@ const populateTable = (requests) => {
  *
  */
 const getRequests = () => {
-  const userRole = sessionStorage.getItem('user_role');
+  const userRole = localStorage.getItem('mta_user_role_fms');
 
   if (userRole === 'User' || userRole === 'Admin') {
     if (userRole === 'Admin') {
@@ -309,9 +315,48 @@ const filterRquestByStatus = () => {
   });
 };
 
+
+/**
+ * @description - Check reloadPage variable if true or false
+ *
+ */
+const checkReloadPage = (activeModal) => {
+  const modal = activeModal;
+  modal.style.display = 'none';
+  if (reloadPage) {
+    window.location.reload(true);
+  }
+};
+
 createRequestForm.addEventListener('submit', createUserRequest);
 createRequestButton.addEventListener('click', createRequest);
 filterRequestInput.addEventListener('keyup', filterRequest);
 filterByStatus.addEventListener('change', filterRquestByStatus);
-
 window.onload = getRequests();
+
+window.onclick = (event) => {
+  if (event.target === viewRequestModal) {
+    checkReloadPage(viewRequestModal);
+  } else if (event.target === createRequestModal) {
+    checkReloadPage(createRequestModal);
+  } else if (event.target === editRequestModal) {
+    checkReloadPage(editRequestModal);
+  }
+};
+document.addEventListener('DOMContentLoaded', () => {
+  if (viewRequestSpan != null) {
+    viewRequestSpan.onclick = () => {
+      checkReloadPage(viewRequestModal);
+    };
+  }
+  if (createRequestSpan != null) {
+    createRequestSpan.onclick = () => {
+      checkReloadPage(createRequestModal);
+    };
+  }
+  if (editRequestSpan != null) {
+    editRequestSpan.onclick = () => {
+      checkReloadPage(editRequestModal);
+    };
+  }
+});
