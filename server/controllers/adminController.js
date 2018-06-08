@@ -87,7 +87,7 @@ export default class adminController {
       connectionString,
     });
     const insertQuery = {
-      name: 'get-users-requests',
+      name: 'update-users-requests',
       text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
@@ -124,7 +124,7 @@ export default class adminController {
       connectionString,
     });
     const insertQuery = {
-      name: 'get-users-requests',
+      name: 'update-users-requests',
       text: 'UPDATE requests SET status=$1, comment=$2 WHERE id = $3 RETURNING *',
       values: [status, comment, requestId],
     };
@@ -162,7 +162,7 @@ export default class adminController {
       connectionString,
     });
     const insertQuery = {
-      name: 'get-users-requests',
+      name: 'update-users-requests',
       text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
       values: [status, requestId],
     };
@@ -195,7 +195,7 @@ export default class adminController {
       connectionString,
     });
     const deleteQuery = {
-      name: 'get-users-requests',
+      name: 'delete-request',
       text: 'DELETE FROM requests WHERE id = $1 RETURNING *',
       values: [requestId],
     };

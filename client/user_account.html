@@ -54,41 +54,46 @@
     <div class="main-container">
         <div class="row">
             <div class="container">
-                <div class="row center">
-                    <h2>My Account Details</h2>
+                <div class="row">
+                    <h2 class="center">My Account Details</h2>
                     <div class="container">
-                        <div>
+                        <div class="center">
                             <img src="./assets/images/avatar.png" style="height: 70px;" />
                         </div>
                         <br>
-                        <form class="center" id="accountDetailsForm">
+                        <form class="" id="accountDetailsForm">
                             <div class="row">
-                                <div class="row">
+                                <div class="row center">
                                     <div class="input col col-1-2">
                                         <i class="material-icons prefix">account_box</i>
-                                        <input id="fullName" type="text" placeholder="Full Name" value="Fakunle Mayowa Samuel" class="validate" readonly>
+                                        <input id="fullName" type="text" placeholder="Full Name" class="validate" readonly>
                                     </div>
                                     <div class="input col col-1-2">
                                         <i class="material-icons prefix">email</i>
-                                        <input id="email" type="text" placeholder="Email" value="contact@fakunlesamuel.com" class="validate" readonly>
+                                        <input id="email" type="text" placeholder="Email" class="validate" readonly>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input col col-1-2">
-                                        <i class="material-icons prefix">account_circle</i>
-                                        <input id="role" type="text" placeholder="Role" class="validate" readonly>
-                                    </div>
-                                    <div class="input col col-1-2">
                                         <i class="material-icons prefix">phone</i>
-                                        <input id="phoneNo" type="text" placeholder="Phone Number" value="07039248533" class="validate" readonly>
+                                        <input id="phoneNo" type="text" placeholder="Phone Number" class="validate" readonly>
+                                    </div>
+                                    <div class="input col col-1-2 col-1-2-center">
+                                        <button id="editAccountBtn" style="width: 50%">Edit Details</button>
                                     </div>
                                 </div>
                             </div>
                             <br>
                         </form>
-                        <a class="center" href="#">
-                            <button id="editAccountBtn" style="width: 30%">Edit</button>
-                        </a>
+                        <div class="row">
+                            <div class="input col col-1-2">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="currentPassword" value="****************" type="password" placeholder="Password" readonly>
+                            </div>
+                            <div class="input col col-1-2-center">
+                                <button id="changePasswordButton" style="width: 50%">Change Password</button>
+                            </div>
+                        </div>
                         <br>
                     </div>
                 </div>
@@ -123,11 +128,13 @@
                                             <i class="material-icons prefix">phone</i>
                                             <input id="editPhoneNo" type="text" placeholder="Phone Number" value="07039248533" required>
                                         </div>
+                                        <div class="input col col-1-2-center">
+                                                <button style="width: 50%">Save</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <p id="errorMessage" style="display: none;"></p>
                                 <br>
-                                <button style="width: 40%">Save</button>
                             </form>
                             <br>
                         </div>
@@ -155,16 +162,25 @@
                                     <div class="row">
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <input id="editAccountPassword" type="password" placeholder="Password" required>
+                                            <input id="currentAccountPassword" type="password" placeholder="Current Password" required>
                                         </div>
                                         <div class="input col col-1-2">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <input id="confirmAccountPassword" type="password" placeholder="Confirm Password" required>
+                                            <input id="newAccountPassword" type="password" placeholder="New Password" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input col col-1-2">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="confirmAccountPassword" type="password" placeholder="Confirm New Password" required>
+                                        </div>
+                                        <div class="input col col-1-2-center">
+                                            <button id="saveNewPasswordButton" style="width: 50%">Save</button>
                                         </div>
                                     </div>
                                 </div>
                                 <br>
-                                <button style="width: 50%">Save</button>
+                                <p id="passwordErrorMessage" style="display: none;"></p>
                             </form>
                             <br>
                         </div>

@@ -1,8 +1,8 @@
 const signoutButton = document.getElementById('signoutButton');
 
 const signOutUser = () => {
-  sessionStorage.removeItem('token');
-  sessionStorage.removeItem('user_role');
+  localStorage.removeItem('mta_token_fms');
+  localStorage.removeItem('mta_user_role_fms');
   window.location = './index.html';
 };
 

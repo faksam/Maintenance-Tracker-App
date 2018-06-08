@@ -5,6 +5,7 @@ const filterByStatus = document.getElementById('filterByStatus');
 
 const viewRequestModal = document.getElementById('viewRequestModal');
 const addRejectReasonModal = document.getElementById('addRejectReasonModal');
+const addRejectReasonSpan = document.getElementById('addRejectReasonSpan');
 
 const viewRequestTitle = document.getElementById('viewRequestTitle');
 const viewRequestDescription = document.getElementById('viewRequestDescription');
@@ -13,16 +14,19 @@ const viewRequestDate = document.getElementById('viewRequestDate');
 const viewRequestButton = document.getElementById('viewRequestButton');
 const viewRejectionReason = document.getElementById('viewRejectionReason');
 const viewRequestStatus = document.getElementById('viewRequestStatus');
+const viewRequestSpan = document.getElementById('viewRequestSpan');
+
 
 const requestTableBody = document.getElementById('requestTableBody');
 
+let reloadPage = false;
 const options = {
   weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
 };
 options.timeZone = 'UTC';
 options.timeZoneName = 'short';
 
-const token = `Bearer ${sessionStorage.getItem('token')}`;
+const token = `Bearer ${localStorage.getItem('mta_token_fms')}`;
 
 /**
  * @description - Helps to display Error Recieved from API
@@ -136,6 +140,7 @@ function approveRequest() {
       if (body.status === 200 && body.success === true) {
         viewRequestStatus.innerHTML = body.data[0].status;
         viewRequestModal.style.display = 'block';
+        reloadPage = true;
       }
     });
 }
@@ -172,6 +177,7 @@ function rejectRequest(evt) {
       if (body.status === 200 && body.success === true) {
         setViewModalElements(body.data[0]);
         addRejectReasonModal.style.display = 'none';
+        reloadPage = true;
       } else {
         displayError(body.error.message, 'errorMessage');
       }
@@ -246,7 +252,7 @@ const populateTable = (requests) => {
  *
  */
 const getRequests = () => {
-  const userRole = sessionStorage.getItem('user_role');
+  const userRole = localStorage.getItem('mta_user_role_fms');
   if (userRole !== 'Admin') {
     window.location = './index.html';
   } else if (userRole === 'Admin') {
@@ -309,3 +315,37 @@ filterRequestInput.addEventListener('keyup', filterRequest);
 filterByStatus.addEventListener('change', filterRquestByStatus);
 
 window.onload = getRequests();
+
+
+/**
+ * @description - Check reloadPage variable if true or false
+ *
+ */
+const checkReloadPage = (activeModal) => {
+  const modal = activeModal;
+  modal.style.display = 'none';
+  if (reloadPage) {
+    window.location.reload(true);
+  }
+};
+
+window.onclick = (event) => {
+  if (event.target === viewRequestModal) {
+    checkReloadPage(viewRequestModal);
+  } else if (event.target === addRejectReasonModal) {
+    addRejectReasonModal.style.display = 'none';
+  }
+};
+document.addEventListener('DOMContentLoaded', () => {
+  if (viewRequestSpan != null) {
+    viewRequestSpan.onclick = () => {
+      checkReloadPage(viewRequestModal);
+    };
+  }
+  if (addRejectReasonSpan != null) {
+    addRejectReasonSpan.onclick = () => {
+      addRejectReasonModal.style.display = 'none';
+    };
+  }
+});
+

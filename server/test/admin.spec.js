@@ -135,7 +135,6 @@ describe('API endpoint login user', () => {
       });
   });
 
-
   /**
    * @description - PUT Should not Resolve if request status is not Pending
    */
@@ -196,6 +195,22 @@ describe('API endpoint login user', () => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         expect(res.body.error.message).to.equal('You can only approve a new request');
+        done();
+      });
+  });
+
+  /**
+   * @description - PUT Resolve specific request/3 by id
+   */
+  it('should resolve request/3', (done) => {
+    chai.request(app)
+      .delete('/api/v1/requests/3/delete')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].status).to.equal('Deleted');
+        expect(res.body.data[0].title).to.equal('Laptop Over-Heating');
         done();
       });
   });
