@@ -1,8 +1,24 @@
 import { Pool } from 'pg';
 import bcrypt from 'bcrypt';
+import jwt from 'jwt-simple';
 import { setConnectionString, verifyToken } from '../helpers/validator';
 
 const connectionString = setConnectionString();
+
+/**
+ * Decode user token if token is valid
+ *
+ * @param {*} userToken the token parameter passed with HTTP request.headers.authorization
+ * @returns {boolean||object} false if token is invalid and token object if token is valid
+ */
+export const decodeToken = (userToken) => {
+  const error = {};
+  error.message = {};
+  let decode = '';
+  const authHeader = userToken.split(' ');
+  decode = jwt.decode(authHeader[1], process.env.SECRET_TOKEN);
+  return decode;
+};
 
 /**
  * @description - Verify if User Exist
@@ -120,6 +136,83 @@ export const validateUpdateAccountInput = (req, res, next) => {
       error,
     });
   }
+
+  return next();
+};
+
+/**
+ * @description - Check Current Password Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const checkCurrentPasswordInput = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  const pool = new Pool({
+    connectionString,
+  });
+  const {
+    password,
+  } = req.body;
+  const decode = decodeToken(req.headers.authorization);
+  const queryValues = [];
+  queryValues.push(decode.sub);
+  pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
+    bcrypt.compare(password, result.rows[0].password)
+      .then((validPassword) => {
+        if (!validPassword) {
+          error.message = 'Current Password is Invalid';
+          return res.status(400).send({
+            success: false,
+            status: 400,
+            error,
+          });
+        }
+        pool.end();
+        return next();
+      });
+  });
+};
+
+
+/**
+ * @description - Validate Update User Password Input
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const validateUpdatePasswordInput = (req, res, next) => {
+  const error = {};
+  error.message = {};
+
+  req.sanitizeBody('password').trim();
+  req.sanitizeBody('newPassword').trim();
+  req.sanitizeBody('confirmNewPassword').trim();
+
+  req.checkBody('password', 'Current Password is required, usually between 8-20 characters').notEmpty().trim().isLength({ min: 8, max: 20 })
+    .isString();
+  req.checkBody('confirmNewPassword', 'Confirm New Password is required, must be between 8-20 characters').notEmpty().trim().isLength({ min: 8, max: 20 })
+    .isString();
+  req.checkBody('newPassword', 'New Password Input & Confirm New Password must be equal between 8-20 characters').equals(req.body.confirmNewPassword);
+
+  // check the validation object for errors
+  const errors = req.validationErrors();
+  if (errors) {
+    errors.forEach((value) => {
+      error.message[value.param] = value.msg;
+    });
+    return res.status(400).send({
+      success: false,
+      status: 400,
+      error,
+    });
+  }
+
 
   return next();
 };

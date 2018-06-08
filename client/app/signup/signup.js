@@ -39,8 +39,8 @@ const signUpUser = (evt) => {
     .then(resp => resp.json())
     .then((body) => {
       if (body.status === 201 && body.success === true) {
-        sessionStorage.setItem('token', body.token);
-        sessionStorage.setItem('user_role', body.data.role);
+        localStorage.setItem('mta_token_fms', body.token);
+        localStorage.setItem('mta_user_role_fms', body.data.role);
         window.location = './homepage.html';
       } else {
         displaySignUpError(body.error.message, 'signupErrorMessage');
