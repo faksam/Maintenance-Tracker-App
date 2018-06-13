@@ -31,8 +31,40 @@ describe('API endpoint login user', () => {
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.data[0].title).to.equal('Broken Desk');
-        expect(res.body.data[0].description).to.equal('One of the desks in my office is broken. When will it be fixed and repaired. It is very important.');
+        expect(res.body.data[0].title).to.equal('Office Chairs Are All squeaky');
+        expect(res.body.data[0].description).to.equal('All the Office Chairs Are squeaky in my office and one is broken. When will it be fixed and repaired. It is very important.');
+        done();
+      });
+  });
+
+  /**
+   * @description - GET  List all requests by page
+   */
+  it('should return all /requests?page=1', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests?page=1')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('Office Chairs Are All squeaky');
+        expect(res.body.data[0].description).to.equal('All the Office Chairs Are squeaky in my office and one is broken. When will it be fixed and repaired. It is very important.');
+        done();
+      });
+  });
+
+
+  /**
+   * @description - GET  List all requests by invalid page number
+   */
+  it('should return all /requests?page=Lifeisarace', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests?page=Lifeisarace')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message).to.equal('Invalid Page Query');
         done();
       });
   });

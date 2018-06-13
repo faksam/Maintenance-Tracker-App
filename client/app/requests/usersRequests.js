@@ -174,7 +174,7 @@ function displayEditUserRequest(evt) {
  */
 const populateTable = (requests) => {
   requests.forEach((request) => {
-    const requestRow = requestTableBody.insertRow(0);
+    const requestRow = requestTableBody.insertRow(-1);
     const cell1 = requestRow.insertCell(0);
     const cell2 = requestRow.insertCell(1);
     const cell3 = requestRow.insertCell(2);
@@ -204,6 +204,26 @@ const populateTable = (requests) => {
 };
 
 /**
+ * @description - Helps to display pagination for data
+ *
+ * @param {int} dataLength - Length of all user data
+ */
+const dataPaginator = (dataLength) => {
+  const pageCount = Math.ceil(dataLength / 20);
+  const paginationSection = document.getElementById('paginationSection');
+  if (pageCount === 1) {
+    paginationSection.style.display = 'none';
+  } else {
+    paginationSection.style.display = 'block';
+    for (let index = 1; index <= pageCount; index += 1) {
+      const aTag = document.createElement('a');
+      aTag.setAttribute('href', `?page=${index}`);
+      paginationSection.appendChild(aTag);
+    }
+  }
+};
+
+/**
  * @description - Consumes API to fetch all users request
  *
  */
@@ -214,7 +234,11 @@ const getRequests = () => {
     if (userRole === 'Admin') {
       adminhomepage.style.display = 'block';
     }
-    const url = '/api/v1/users/requests/';
+    const urlParams = new URLSearchParams(window.location.search);
+    let url = '/api/v1/users/requests';
+    if (urlParams.has('page')) {
+      url = `/api/v1/users/requests?${urlParams.toString()}`;
+    }
 
     const fetchData = {
       method: 'GET',
@@ -230,6 +254,7 @@ const getRequests = () => {
         if (body.status === 200 && body.success === true) {
           const { data } = body;
           populateTable(data);
+          dataPaginator(body.total);
         }
       });
   } else {

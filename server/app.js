@@ -49,11 +49,7 @@ app.use('/api/v1/', apiv1);
 app.use((req, res) => {
   const error = {};
   error.message = 'Not Found';
-  res.status(404).send({
-    success: false,
-    status: 404,
-    error,
-  });
+  res.render('error', { error });
 });
 
 /**
@@ -69,13 +65,7 @@ app.use((err, req, res) => {
     res.status(500);
   }
 
-  res.send({
-    success: false,
-    status: err.status,
-    error: {
-      message: err.message,
-    },
-  });
+  res.render('error', { err });
 });
 
 export default app;

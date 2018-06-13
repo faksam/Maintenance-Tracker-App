@@ -128,7 +128,7 @@ describe('API endpoint /users/account', () => {
   });
 
   /**
-   * @description - PUT - Update User Account Password without new password
+   * @description - PUT - Update User Account Password with none matching password
    */
   it('should return error requesting matching new & confirm password inputs', (done) => {
     chai.request(app)
@@ -163,6 +163,28 @@ describe('API endpoint /users/account', () => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         expect(res.body.error.message).to.equal('Current Password is Invalid');
+        done();
+      });
+  });
+
+  /**
+   * @description - PUT - Update User Account Password without new password
+   */
+  it('should update user password', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/account/password')
+      .send({
+        password: 'Lifeisarace',
+        newPassword: 'Lifeisarace2',
+        confirmNewPassword: 'Lifeisarace2',
+      })
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data.fullName).to.equal(users.user[12].fullName);
+        expect(res.body.data.email).to.equal(users.user[12].email);
+        expect(res.body.data.phoneNo).to.equal(users.user[12].phoneNo);
         done();
       });
   });
