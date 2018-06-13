@@ -139,7 +139,6 @@ export const verifyUserRequest = (req, res, next) => {
   error.message = {};
   const requestId = parseInt(req.params.id, 10);
   if (requestId < 0 || !isInt(requestId)) {
-    // either age was not a valid number, integer, or is not in range
     error.message = 'id parameter must be a valid integer number';
     return res.status(400).send({
       success: false,
@@ -232,7 +231,6 @@ export const validateRequestID = (req, res, next) => {
   error.message = {};
   const requestId = parseInt(req.params.id, 10);
   if (requestId < 0 || !isInt(requestId)) {
-    // either age was not a valid number, integer, or is not in range
     error.message = 'id parameter must be a valid integer number';
     return res.status(400).send({
       success: false,
@@ -416,3 +414,72 @@ export const checkIfRequestRejectable = (req, res, next) => {
   });
 };
 
+
+/**
+ * @description - Validate Request Query Parameters
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ * @returns {object} returns res parameter
+ */
+export const validatePageQuery = (req, res, next) => {
+  const error = {};
+  error.message = {};
+  if (req.query.page !== undefined) {
+    const page = parseInt(req.query.page, 10);
+    if (!isInt(page) || page < 1) {
+      error.message = 'Invalid Page Query';
+      return res.status(400).send({
+        success: false,
+        status: 400,
+        error,
+      });
+    }
+  }
+
+  return next();
+};
+
+
+/**
+ * @description - Count All Requests
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ */
+export const countAllRequests = (req, res, next) => {
+  const pool = new Pool({
+    connectionString,
+  });
+
+  pool.query('SELECT COUNT(id) FROM requests', (err, result) => {
+    req.requestCount = result.rows[0].count;
+    return next();
+  });
+};
+
+/**
+ * @description - Count All Users Requests
+ *
+ * @param {object} req HTTP Request
+ * @param {object} res HTTP Response
+ * @param {object} next call next funtion/handler
+ */
+export const countAllUsersRequests = (req, res, next) => {
+  const pool = new Pool({
+    connectionString,
+  });
+  const decode = verifyToken(req.headers.authorization);
+  const selectQuery = {
+    name: 'get-users-requests',
+    text: `SELECT COUNT(userid) FROM requests
+            WHERE userid = $1`,
+    values: [decode.sub],
+  };
+  pool.query(selectQuery, (err, result) => {
+    req.requestCount = result.rows[0].count;
+    return next();
+  });
+};

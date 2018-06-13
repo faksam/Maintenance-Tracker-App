@@ -47,13 +47,22 @@ export default class usersController {
       text: `SELECT requests.id, requests.title, requests.description, requests.comment, requests.date, requests.status, requests.userid, users.fullname 
               FROM requests INNER JOIN users ON (requests.userid = users.id) 
               WHERE userid = $1
-              ORDER BY requests.id`,
+              ORDER BY requests.id LIMIT 20`,
       values: [decode.sub],
     };
+    if (req.query.page !== undefined) {
+      selectQuery.text = `SELECT requests.id, requests.title, requests.description, requests.comment, requests.date, requests.status, requests.userid, users.fullname 
+      FROM requests INNER JOIN users ON (requests.userid = users.id) 
+      WHERE userid = $1
+      ORDER BY requests.id DESC OFFSET $2 LIMIT $3`;
+      selectQuery.values.push(((req.query.page - 1) * 20));
+      selectQuery.values.push(20);
+    }
     pool.query(selectQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
+        total: req.requestCount,
         data: result.rows,
       });
       pool.end();

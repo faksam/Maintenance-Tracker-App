@@ -677,3 +677,39 @@ tr:hover {
     width: 32%;
   }
 }
+
+
+div.pagination a {
+  counter-increment: pages;
+}
+
+div.pagination a::before {
+  content: counter(pages);
+}
+
+div.pagination section {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+div.pagination a {
+  float: left;
+  width: 32px;
+  margin: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  border: solid 2px rgba(57, 83, 150);
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  background-color: rgb(57, 83, 150);
+  transition: all .1s;
+}
+
+div.pagination a:hover {
+  border: solid 2px rgb(31, 82, 140);
+  background-color: rgb(57, 83, 150);
+  box-shadow: 0 0 10px rgb(31, 82, 150);
+}

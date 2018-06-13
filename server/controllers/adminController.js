@@ -24,10 +24,21 @@ export default class adminController {
     const pool = new Pool({
       connectionString,
     });
-    pool.query('SELECT * FROM requests ORDER BY id', (err, result) => {
+    const selectQuery = {
+      name: 'get-users-requests',
+      text: 'SELECT * FROM requests ORDER BY id DESC LIMIT 20',
+    };
+    if (req.query.page !== undefined) {
+      selectQuery.text = 'SELECT * FROM requests ORDER BY id DESC OFFSET $1 LIMIT $2';
+      selectQuery.values = [];
+      selectQuery.values.push(((req.query.page - 1) * 20));
+      selectQuery.values.push(20);
+    }
+    pool.query(selectQuery, (err, result) => {
       res.status(200).send({
         success: true,
         status: 200,
+        total: req.requestCount,
         data: result.rows,
       });
       pool.end();
