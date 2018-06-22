@@ -1,117 +1,117 @@
+[![Build Status](https://travis-ci.org/faksam/Maintenance-Tracker-App.svg?branch=develop)](https://travis-ci.org/faksam/Maintenance-Tracker-App) [![Coverage Status](https://coveralls.io/repos/github/faksam/Maintenance-Tracker-App/badge.svg?branch=develop)](https://coveralls.io/github/faksam/Maintenance-Tracker-App?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/bd6af380f6d4c687f483/maintainability)](https://codeclimate.com/github/faksam/Maintenance-Tracker-App/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/bd6af380f6d4c687f483/test_coverage)](https://codeclimate.com/github/faksam/Maintenance-Tracker-App/test_coverage)
+
 # Maintenance-Tracker-App
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
-[![Build Status](https://travis-ci.org/faksam/Maintenance-Tracker-App.svg?branch=develop)](https://travis-ci.org/faksam/Maintenance-Tracker-App) [![Coverage Status](https://coveralls.io/repos/github/faksam/Maintenance-Tracker-App/badge.svg?branch=develop)](https://coveralls.io/github/faksam/Maintenance-Tracker-App?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/bd6af380f6d4c687f483/maintainability)](https://codeclimate.com/github/faksam/Maintenance-Tracker-App/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/bd6af380f6d4c687f483/test_coverage)](https://codeclimate.com/github/faksam/Maintenance-Tracker-App/test_coverage)
-
-<b> Working Version (Using Fetch API) Here: </b> https://maintenancetracker.herokuapp.com/ 
- <br/><b> View UI Template Here: </b> https://faksam.github.io/Maintenance-Tracker-App/UI/ 
- <br/><b> Test API Endpoint Here: </b> https://maintenancetracker.herokuapp.com/api/v1
- <br/><b> View API Documentation Here: </b> https://maintenancetracker.docs.apiary.io/
-
 ## Table of Content
 
- * [Features](#features)
- * [Technologies](#technologies)
+ * [Getting Started](#getting-started)
+ * [Technologies Used](#technologies-used)
  * [Installation](#installation)
  * [Testing](#testing)
- * [API Routes](#api-routes)
+ * [Features](#features)
+ * [API Documentation](#api-documentation)
+ * [Questions](#questions)
  * [License](#license)
 
-## Features
-Below are the features of the Maintenance-Tracker-App 
-####  Users
-* Users can signup and signin.
-* #### Admin
-    * Get all requests
-    * Approve a request
-    * Disapprove a request
-    * Resolve a request
-* #### Regular User's
-    * Get all request by that user,
-    * Create requests, 
-    * Get a specific request (created by that user), 
-    * Update a specific  requests  to view polls and vote in them.
+## Getting Started
+This is a javascript application written in [**ECMASCRIPT 6**](https://en.wikipedia.org/wiki/ECMAScript) and built with [**Express**](https://expressjs.com/) framework on the [**NodeJS**](https://nodejs.org/en/) platform.
+Codes are written in accordance with [Airbnb](https://github.com/airbnb/javascript) JavaScript style guide.
+Authentication of users is done via [**JSON Web Tokens**](https://jwt.io/).
 
-## Technologies used
+## Technologies Used
 
-Modern JavaScript technologies were adopted for this project
+**UI & Templates**
+1. HTML & CSS
+2. Javascript
+3. JQuery
 
-ES2015: Also known as ES6 or ES2015 or ECMASCRIPT 6, is a new and widely used version of Javascript
-that makes it compete healthily with other languages. See [here](https://en.wikipedia.org/wiki/ECMAScript) for more infromation.
+**Server Side**
+1. NodeJS
+2. Express
+3. PostgreSql
 
-NodeJS: Node.js is an open-source, cross-platform JavaScript run-time environment which allows you enjoy the features of Javascript off the web browsers and implement server-side web development.
-Visit [here](https://nodejs.org/en/) for more information.
+**Client Side**
+1. Javascript
 
-ExressJS: This is the web application framework for Node.js
-Visit [here](https://expressjs.com) for more information
-
-Codes are written in accordance with Airbnb JavaScript style guide, see [here](https://github.com/airbnb/javascript) for details.
+### Dependencies
+* Postgres
+* Node
 
 ## Installation
-1. Clone this repository into your local machine:
+1. Install [**Node JS**](https://nodejs.org/en/).
+2. Install [**Postgres**](https://www.postgresql.org/).
+3. Clone the [**repository here**](https://github.com/faksam/Maintenance-Tracker-App.git)
+4. [**cd**] into the root of the **project directory**.
+5. Run `npm install` on the terminal to install Dependecies
+6. Create Postgresql database, Navigate to server directory and run migrations:
+```
+cd server
+npm run migrations 
+npm run seeders
+```
+7. Create a `.env` file in the root directory of the application. Use a different database for your testing and development. Example of the content of a .env file is shown in the .env.sample
 
-`git clone https://github.com/faksam/Maintenance-Tracker-App.git`
+8. Start the application:
+**_Different Build Environment_**
 
-2. Install dependencies
-
-`npm install`
-
-3. Start the application by running
-
-`npm start`
-
-4. Open your browse and Navigate to
-
-`localhost:3456`
-
-5. Install postman to test all endpoints
+**Production**
+```
+npm start
+```
+**Development**
+```
+npm run dev
+```
 
 ## Testing
 
-- run test using `npm run test`    
+Sever side tests - Run `npm test` on the terminal while within the **project root directory**.
 
-## API Routes
+Server side testing is achieved through use of `chai-http`, `mocha` and `chai` packages. `chai-http` is used to make requests to the api and `mocha` is the testing framework and `chai` is the exception library. They will both be installed when you run `npm install` and the tests will run when you run `npm test`.
 
-<table>
+## Features
+Maintenance-Tracker-App consists of the following features:
 
-<tr><th>HTTP VERB</th><th>ENDPOINT</th><th>FUNCTIONALITY</th></tr>
+### Authentication
 
-<tr><td>POST</td> <td>api/v1/auth/signup</td>  <td>Register a user</td></tr>
-<tr><td>POST</td> <td>api/v1/auth/login</td>  <td>Login a user</td></tr>
+- It uses JSON Web Token (JWT) for authentication.
+- Token is generated on user login or when a new user signup
+- Token is perpetually verified to check the state of the user if logged in or not.
+- Admin User will br pre-seeded into the application with administrative priviledges
 
-<tr><td>GET</td> <td>api/v1/users/requests </td> <td>Fetch all the requests of a logged in user</td></tr>
-<tr><td>GET</td> <td>api/v1/users/requests/:requestId </td> <td>Fetch a request that belongs to a logged in user</td></tr>
-<tr><td>POST</td> <td>api/v1/users/requests</td>  <td>Create a request.</td></tr>
-<tr><td>PUT</td> <td>api/v1/users/requests/:requestId</td>  <td>Modify a request.</td></tr>
+### Unauthenticated Users
+- Unauthenticated Users can view the landing and see how the app works
+- Unauthenticated Users can register
 
-<tr><td>GET</td> <td>api/v1/requests/ </td> <td>Fetch all the requests.</td></tr>
-<tr><td>PUT</td> <td>api/v1/requests/:requestId/approve</td> <td>Approve request </td></tr>
-<tr><td>PUT</td> <td>api/v1/requests/:requestId/disapprove</td> <td>Disapprove request </td></tr>
-<tr><td>PUT</td> <td>api/v1/requests/:requestId/resolve</td> <td>Resolve request </td></tr>
+### Authenticated Users
+- Authenticated Users can log in
+- Authenticated Users can create a new request
+- Authenticated Users can view all their requests
+- Authenticated Users can view a specific request
+- Authenticated Users can delete a specific request
+- Authenticated Users can view their account details
+- Authenticated Users can edit their account details
 
-</table>
+
+### Admin Users
+- Admins can view all requests
+- Admins can approve a new/pending/disapproved request
+- Admins can disapprove a new/pending/ request
+- Admins can resolve a pending/disapproved request
+
+
+## API Documentation
+You can view the API Documentation [here](https://maintenancetracker.docs.apiary.io/)
+
+### Questions
+For more details contact contact@fakunlesamuel.com
 
 ## License
-MIT License
-
-Copyright (c) 2018 Fakunle Mayowa Samuel
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This project is authored by **Samuel Fakunle** (contact@fakunlesamuel.com) and is licensed for your use, modification and distribution under the **MIT** license.
+[MIT][license] © [samuel-fakunle][author]
+<!-- Definitions -->
+[license]: LICENSE
+[author]: samuel-fakunle
 
 

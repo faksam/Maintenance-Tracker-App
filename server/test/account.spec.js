@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../app';
+import app from '../src/app';
 
 import users from './mock-data/user.json';
 
@@ -21,7 +21,6 @@ describe('API endpoint /users/account', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.data.fullName).to.equal(users.user[11].fullName);
         expect(res.body.data.email).to.equal(users.user[11].email);
-        expect(res.body.data.phoneNo).to.equal(users.user[11].phoneNo);
         done();
       });
   });
@@ -39,7 +38,6 @@ describe('API endpoint /users/account', () => {
         expect(res.body.success).to.equal(true);
         expect(res.body.data.fullName).to.equal(users.user[11].fullName);
         expect(res.body.data.email).to.equal(users.user[11].email);
-        expect(res.body.data.phoneNo).to.equal(users.user[11].phoneNo);
         done();
       });
   });
@@ -57,23 +55,6 @@ describe('API endpoint /users/account', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.data.fullName).to.equal(users.user[12].fullName);
         expect(res.body.data.email).to.equal(users.user[12].email);
-        expect(res.body.data.phoneNo).to.equal(users.user[12].phoneNo);
-        done();
-      });
-  });
-
-  /**
-   * @description - PUT - Update User Details
-   */
-  it('should update user account detail', (done) => {
-    chai.request(app)
-      .put('/api/v1/users/account')
-      .set('authorization', `Bearer ${userToken}`)
-      .send(users.user[4])
-      .then((res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.be.an('object');
-        expect(res.body.error.message.phoneNo).to.equal('Phone No is required, must be between 7-15 characters');
         done();
       });
   });
@@ -89,7 +70,7 @@ describe('API endpoint /users/account', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.email).to.equal('Email is required, and must be a valid email');
+        expect(res.body.error.message.email).to.equal('Email must be a valid email');
         done();
       });
   });
@@ -105,7 +86,7 @@ describe('API endpoint /users/account', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.fullName).to.equal('Full Name is required, must be between 3-40 characters');
+        expect(res.body.error.message.fullName).to.equal('Full Name must be between 3-40 characters');
         done();
       });
   });
@@ -120,9 +101,9 @@ describe('API endpoint /users/account', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.password).to.equal('Current Password is required, usually between 8-20 characters');
+        expect(res.body.error.message.password).to.equal('Current Password usually between 8-20 characters');
         expect(res.body.error.message.newPassword).to.equal('New Password Input & Confirm New Password must be equal between 8-20 characters');
-        expect(res.body.error.message.confirmNewPassword).to.equal('Confirm New Password is required, must be between 8-20 characters');
+        expect(res.body.error.message.confirmNewPassword).to.equal('Confirm New Password must be between 8-20 characters');
         done();
       });
   });
@@ -184,7 +165,6 @@ describe('API endpoint /users/account', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.data.fullName).to.equal(users.user[12].fullName);
         expect(res.body.data.email).to.equal(users.user[12].email);
-        expect(res.body.data.phoneNo).to.equal(users.user[12].phoneNo);
         done();
       });
   });

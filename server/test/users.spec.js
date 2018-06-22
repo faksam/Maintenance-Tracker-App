@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../app';
+import app from '../src/app';
 
 import users from './mock-data/user.json';
 import request from './mock-data/usersRequest.json';
@@ -41,7 +41,7 @@ describe('API endpoint /users/requests', () => {
   /**
    * @description - GET List users requests by page
    */
-  it('should return all /requests?page=1', (done) => {
+  it('should return all /users/requests?page=1', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests?page=1')
       .set('authorization', `Bearer ${userToken}`)
@@ -53,7 +53,6 @@ describe('API endpoint /users/requests', () => {
         done();
       });
   });
-
 
   /**
    * @description - GET List all users requests by invalid page number
@@ -206,7 +205,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.title).to.equal('Title is required, must be between 10-50 characters');
+        expect(res.body.error.message.title).to.equal('Title must be between 5-50 characters');
         done();
       });
   });
@@ -222,7 +221,7 @@ describe('API endpoint /users/requests', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.description).to.equal('Description is required, must be between 20-500 characters');
+        expect(res.body.error.message.description).to.equal('Description must be between 20-500 characters');
         done();
       });
   });
@@ -271,6 +270,59 @@ describe('API endpoint /users/requests', () => {
         expect(res).to.have.status(403);
         expect(res.body).to.be.an('object');
         expect(res.body.error.message).to.equal('You are Forbidden.');
+        done();
+      });
+  });
+
+  /**
+   * @description - POST  Should create a request
+   */
+  it('should create a request', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('authorization', `Bearer ${userToken}`)
+      .send({
+        title: 'This request is to be deleted',
+        description: 'This is a sample request created and to be deleted',
+      })
+      .then((res) => {
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data.title).to.equal('This request is to be deleted');
+        expect(res.body.data.description).to.equal('This is a sample request created and to be deleted');
+        done();
+      });
+  });
+
+  /**
+   * @description - Filter Users requests
+   */
+  it('should return all /users/requests/filter', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests/filter?searchText=This&status=All&page=1')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('This request is to be deleted');
+        expect(res.body.data[0].description).to.equal('This is a sample request created and to be deleted');
+        done();
+      });
+  });
+
+  /**
+   * @description - PUT Delete specific request/3 by id
+   */
+  it('should delete request/3', (done) => {
+    chai.request(app)
+      .delete('/api/v1/users/requests/7')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].status).to.equal('Deleted');
+        expect(res.body.data[0].title).to.equal('This request is to be deleted');
+        expect(res.body.data[0].description).to.equal('This is a sample request created and to be deleted');
         done();
       });
   });

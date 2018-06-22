@@ -12,13 +12,12 @@ body {
 }
 body, input[text], button {
   color: rgb(40, 40, 40);
-  font-family: Cambria, Georgia;
+  font-family: 'Rokkitt', 'Cairo', Cambria, Georgia;
 }
 input, textarea, select, button {
   height: 2em;
   font-size: 1em;
   padding-left: .4em;
-  border-color: black;  
   width: 90%;
 }
 .main-container {
@@ -129,6 +128,21 @@ input, textarea, select, button {
 }
 */
 
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
 .wall {
   background-image: url("../images/maintenance-team.jpeg");
   width: 100%;
@@ -137,7 +151,7 @@ input, textarea, select, button {
   /* border: 1px solid red; */
   padding-top: 10px;
   z-index: -1;
-  opacity: 0.88;
+  opacity: 0.75;
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
@@ -147,7 +161,7 @@ input, textarea, select, button {
 
 /**/
 .main_title {
-  font-family: 'Brandon', sans-serif;
+  font-family: 'Cairo', 'Brandon', sans-serif;
   text-transform: uppercase;
   letter-spacing: 6px;
   font-size: 15px;
@@ -161,7 +175,7 @@ input, textarea, select, button {
   transform: translate(-50%, -50%);
 }
 .main_tagline {
-  font-family: 'Brandon', sans-serif;
+  font-family: 'Cairo', 'Brandon', sans-serif;
   text-transform: uppercase;
   letter-spacing: 6px;
   font-size: 10px;
@@ -181,12 +195,12 @@ img {
 
 h1 {
   color: #444;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cairo', Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
 h2, h3 {
   color: #444;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cairo', Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
 
@@ -195,7 +209,7 @@ a {
   cursor: hand;
 }
 button {
-  font-family: Arial;
+  font-family: 'Cairo', Arial;
   background-color: rgb(57, 83, 150);
   color: #fff;
   border: none;
@@ -208,14 +222,13 @@ button:hover {
 }
 button.danger:hover
 {
-  border: 2px solid #CB3438;
-  /**/
+  font-weight: bold;
   background-color: #CB3438;
   color: #ffffff;
 }
 button:disabled {
-  background-color: #eee;
-  color: #aaa;
+  background-color: rgb(179, 179, 179);
+  color: rgb(248, 248, 248);
   cursor: auto;
 }
 
@@ -256,7 +269,7 @@ nav a.active {
 
 /* everywhere else */
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cairo', Arial, Helvetica, sans-serif;
 }
 
 /**/
@@ -378,16 +391,21 @@ nav a.active {
     float: left;
     padding: 10px;
   }
+  
+  /* Modal Content */
+  .modal-content {
+    width: 50%;
+  }
 
   .wall {
     background-image: url("../images/maintenance-team.jpeg");
     width: 100%;
-    height: 450px;
+    height: 250px;
     background-size: 100% 200px;
     /* border: 1px solid red; */
     padding-top: 10px;
     z-index: -1;
-    opacity: 0.88;
+    opacity: 0.75;
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
@@ -395,7 +413,7 @@ nav a.active {
   }
   .main_title
   {
-    font-family: 'Brandon', sans-serif;
+    font-family: 'Cairo', 'Brandon', sans-serif;
     text-transform: uppercase;
     letter-spacing: 6px;
     font-size: 35px;
@@ -410,7 +428,7 @@ nav a.active {
   }
   .main_tagline
   {
-    font-family: 'Brandon', sans-serif;
+    font-family:  'Cairo', 'Brandon', sans-serif;
     text-transform: uppercase;
     letter-spacing: 6px;
     font-size: 10px;
@@ -461,21 +479,6 @@ nav a.active {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
 }
 
 /* Add Animation */
@@ -560,7 +563,7 @@ nav a.active {
 }
 
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Cairo', arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
@@ -581,18 +584,23 @@ tr {
 tr.header {
   background-color: #d0d0d0;
 }
-tr:hover.header {
+/* tr:hover.header {
   border: 2px solid ;
   border-bottom-color: black;
-  /**/
   background-color: #dcdada;
   color: black;
-}
-tr:hover {
+} */
+/* tr:hover {
   border: 2px solid rgb(91, 124, 209);
-  /**/
   background-color: rgb(91, 124, 209);
   color: #ffffff;
+} */
+tr:hover {
+  cursor: pointer;
+  cursor: hand;
+}
+tr:hover.header {
+  cursor: auto;
 }
 .footer .row p a {
   color: rgb(242, 239, 239);
@@ -606,7 +614,7 @@ tr:hover {
 }
 div i {
   display: inline-flex;
-  vertical-align: middle;
+  vertical-align: sub;
 }
 
 
@@ -633,13 +641,13 @@ only screen and (max-width: 760px),
 	
   tr { border: 3px solid #ffffff; }
   
-tr:hover {
+/* tr:hover {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   background-color: #ebeaea;
   line-height: 28px;
   color: black;
-}
+} */
 	
 	td { 
 		/* Behave  like a "row" */
@@ -666,12 +674,12 @@ tr:hover {
 	/*
 	Label the data
 	*/
-	td:nth-of-type(1):before { content: "Title"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
-	td:nth-of-type(2):before { content: "Description"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
-	td:nth-of-type(3):before { content: "Status"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
-	td:nth-of-type(4):before { content: "Date"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
-  td.admin:nth-of-type(5):before { content: "Approve"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
-  td.admin:nth-of-type(6):before { content: "Reject"; font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+	td:nth-of-type(1):before { content: "Title"; font-weight: bold; font-family:  'Cairo', sans-serif;}
+	td:nth-of-type(2):before { content: "Description"; font-weight: bold; font-family:  'Cairo', sans-serif;}
+	td:nth-of-type(3):before { content: "Status"; font-weight: bold; font-family:  'Cairo', sans-serif;}
+	td:nth-of-type(4):before { content: "Date"; font-weight: bold; font-family:  'Cairo', sans-serif;}
+  td.admin:nth-of-type(5):before { content: "Approve"; font-weight: bold; font-family:  'Cairo', sans-serif;}
+  td.admin:nth-of-type(6):before { content: "Reject"; font-weight: bold; font-family:  'Cairo', sans-serif;}
   
   td button {
     width: 32%;
@@ -713,3 +721,44 @@ div.pagination a:hover {
   background-color: rgb(57, 83, 150);
   box-shadow: 0 0 10px rgb(31, 82, 150);
 }
+    
+  /* Style the tab */
+  .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 1px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    color: rgb(59, 91, 170);
+    padding-left: 10px;
+  }
+
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    color: #fff;
+    background-color: rgb(48, 97, 220);
+  }
+
+  /* Create an active/current tablink class */
+  .tab button.active {
+    color: #fff;
+    background-color: rgb(59, 91, 170);
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }

@@ -41,6 +41,7 @@ nav ul li {
 } */
 nav ul li a,
 nav ul li a:visited {
+  font-size: larger;
   display: block;
   padding: 0 20px;
   line-height: 40px;

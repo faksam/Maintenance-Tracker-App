@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cairo|Rokkitt" rel="stylesheet">
     <!--Import Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Import css-->
@@ -23,8 +24,8 @@
             <section class="navigation">
                 <div class="nav-container">
                     <div class="brand">
-                        <a href="./index.html">
-                            <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
+                        <a style="font-size: 25px; font-weight: bold;" href="./homepage.html">
+                            <img src="./assets/images/maintenance.png" style="height: 60px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
                     </div>
                     <nav>
                         <div class="nav-mobile">
@@ -73,26 +74,27 @@
                     </div>
                     <div class="col-m col-1-3-m">
                         <select id="filterByStatus">
-                            <option value="all">All</option>
-                            <option value="new">New</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="resolved">Resolved</option>
+                            <option value="All">All</option>
+                            <option value="New">New</option>
+                            <option value="Pending">Approved</option>
+                            <option value="Disapproved">Rejected</option>
+                            <option value="Resolved">Resolved</option>
                         </select>
                     </div>
 
                 </div>
                 <table id="requestTable">
                     <thead>
-                    <tr class="header">
-                        <th>Title</th>
-                        <th colspan="2">Description</th>
-                        <th>Status</th>
-                        <th colspan="3">Date</th>
-                    </tr>
+                        <tr class="header">
+                            <th>Title</th>
+                            <th colspan="2">Description</th>
+                            <th>Status</th>
+                            <th colspan="2">Date</th>
+                            <th colspan="2">Edit/Delete</th>
+                        </tr>
                     </thead>
                     <tbody id="requestTableBody">
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -102,27 +104,36 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <span id="createRequestSpan" class="close">&times;</span>
-                        <h2 class="center">Create A New Request</h2>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="container center">
+                                <div class="row">
+                                    <h2 style="float: left;">Create A New Request</h2>
+                                </div>
+                                <div class="row">
+                                    <div id="errorDiv">
+                                        <p id="createErrorMessage" style="display: none;"></p>
+                                    </div>
+                                </div>
                                 <form class=" center" id="createRequestForm" method="POST">
                                     <div class="row">
                                         <div class="row">
                                             <div class="input col col-1">
                                                 <input id="requestTitle" name="title" type="text" placeholder="Request Title" required>
+                                                <label id="titleLabel"></label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input col col-1">
-                                                <textarea name="description" rows="5" cols="50" id="requestDescription" placeholder="Request Description" style="height: unset;" required></textarea>
+                                                <textarea name="description" rows="5" cols="50" id="requestDescription" placeholder="Request Description" style="height: unset;"
+                                                    required></textarea>
+                                                <label id="descriptionLabel"></label>
                                             </div>
                                         </div>
                                     </div>
                                     <br>
-                                    <p id="createErrorMessage" style="display: none;"></p>
-                                <button id="createUserRequestButton" style="width: 50%">Create</button>
+                                    <button id="createUserRequestButton" style="width: 50%">Create</button>
                                 </form>
                                 <br>
                             </div>
@@ -140,26 +151,33 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <span id="editRequestSpan" class="close">&times;</span>
-                        <h2 class="center">Edit Request</h2>
+                    </div>
+                    <div id="editErrorDiv">
+                        <p id="editErrorMessage" style="display: none;"></p>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="container center">
+                                <div class="row">
+                                    <h2 style="float: left;">Edit Request</h2>
+                                </div>
                                 <form class=" center" id="editRequestForm">
                                     <div class="row">
                                         <div class="row">
                                             <div class="input col col-1">
                                                 <input id="editRequestTitle" name="title" type="text" placeholder="Request Title" required>
+                                                <label id="titleLabelEdit"></label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input col col-1">
-                                                <textarea name="description" rows="5" cols="50" id="editRequestDescription" placeholder="Request Description" style="height: unset;" required></textarea>
+                                                <textarea name="description" rows="5" cols="50" id="editRequestDescription" placeholder="Request Description" style="height: unset;"
+                                                    required></textarea>
+                                                <label id="descriptionLabelEdit"></label>
                                             </div>
                                         </div>
                                     </div>
                                     <br>
-                                    <p id="editErrorMessage" style="display: none;"></p>
                                     <button id="editRequestFormButton" style="width: 50%">Edit</button>
                                 </form>
                                 <br>
@@ -216,6 +234,37 @@
                     </div>
                     <br>
                     <br>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+            <!-- Confirm Delete Request Modal -->
+            <div id="confirmDeleteModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span id="confirmDeleteSpan" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row left">
+                            <div class="container">
+                                <div class="col col-1">
+                                    <div class="row center">
+                                        <h2>
+                                            <b>Are you sure you want to delete this request?</b>
+                                        </h2>
+                                        <div class="col col-1-2">
+                                            <button id="deleteRequest" style="width: 50%">Delete</button>
+                                        </div>
+                                        <div class="col col-1-2">
+                                            <button id="cancelDelete" style="width: 50%">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
                     <div class="modal-footer">
                     </div>
                 </div>

@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cairo|Rokkitt" rel="stylesheet">
     <!--Import Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Import css-->
@@ -22,7 +23,7 @@
         <section class="navigation">
             <div class="nav-container">
                 <div class="brand">
-                    <a href="./index.html">
+                    <a href="./user_account.html">
                         <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
                 </div>
                 <nav>
@@ -32,6 +33,9 @@
                         </a>
                     </div>
                     <ul class="nav-list">
+                        <li id="adminhomepage" style="display: none;">
+                            <a href="./adminhomepage.html">Home</a>
+                        </li>
                         <li>
                             <a href="#!">Account</a>
                             <ul class="nav-dropdown">
@@ -75,10 +79,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="input col col-1-2">
-                                        <i class="material-icons prefix">phone</i>
-                                        <input id="phoneNo" type="text" placeholder="Phone Number" class="validate" readonly>
                                     </div>
-                                    <div class="input col col-1-2 col-1-2-center">
+                                    <div class="input col col-1-2-center">
                                         <button id="editAccountBtn" style="width: 50%">Edit Details</button>
                                     </div>
                                 </div>
@@ -106,30 +108,26 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span id="userAccountSpan" class="close">&times;</span>
-                    <h2 class="center">Edit Account Details</h2>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="container">
+                            <h2 style="float: left;">Edit Account Details</h2>
                             <form id="editAccountForm" class="center" method="POST">
                                 <div class="row">
                                     <div class="row">
-                                        <div class="input col col-1-2">
+                                        <div class="input col col-1">
                                             <i class="material-icons prefix">account_box</i>
                                             <input id="editFullName" type="text" placeholder="Full Name" value="Fakunle Mayowa Samuel" required>
                                         </div>
-                                        <div class="input col col-1-2">
+                                        <div class="input col col-1">
                                             <i class="material-icons prefix">email</i>
-                                            <input id="editEmail" type="email" placeholder="Email"  value="contact@fakunlesamuel.com"  required>
+                                            <input id="editEmail" type="email" placeholder="Email" value="contact@fakunlesamuel.com" required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="input col col-1-2">
-                                            <i class="material-icons prefix">phone</i>
-                                            <input id="editPhoneNo" type="text" placeholder="Phone Number" value="07039248533" required>
-                                        </div>
-                                        <div class="input col col-1-2-center">
-                                                <button style="width: 50%">Save</button>
+                                        <div class="input col col-1">
+                                            <button style="width: 50%">Save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -140,8 +138,6 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
                 <div class="modal-footer">
                 </div>
             </div>
@@ -152,29 +148,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span id="userAccountPasswordSpan" class="close">&times;</span>
-                    <h2 class="center">Edit Account Password</h2>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="container">
+                            <h2 style="float: left;">Edit Account Password</h2>
                             <form id="editAccountPasswordForm" class="center" action="./user_account.html">
                                 <div class="row">
                                     <div class="row">
-                                        <div class="input col col-1-2">
+                                        <div class="input col col-1">
                                             <i class="material-icons prefix">account_circle</i>
                                             <input id="currentAccountPassword" type="password" placeholder="Current Password" required>
                                         </div>
-                                        <div class="input col col-1-2">
+                                        <div class="input col col-1">
                                             <i class="material-icons prefix">account_circle</i>
                                             <input id="newAccountPassword" type="password" placeholder="New Password" required>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="input col col-1-2">
+                                        <div class="input col col-1">
                                             <i class="material-icons prefix">account_circle</i>
                                             <input id="confirmAccountPassword" type="password" placeholder="Confirm New Password" required>
                                         </div>
-                                        <div class="input col col-1-2-center">
+                                        <div class="input col col-1">
                                             <button id="saveNewPasswordButton" style="width: 50%">Save</button>
                                         </div>
                                     </div>
@@ -186,8 +182,6 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
                 <div class="modal-footer">
                 </div>
             </div>
