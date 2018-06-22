@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../app';
+import app from '../src/app';
 
 import users from './mock-data/user.json';
 
@@ -27,6 +27,22 @@ describe('API endpoint login user', () => {
   it('should return all /requests', (done) => {
     chai.request(app)
       .get('/api/v1/requests')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('Office Chairs Are All squeaky');
+        expect(res.body.data[0].description).to.equal('All the Office Chairs Are squeaky in my office and one is broken. When will it be fixed and repaired. It is very important.');
+        done();
+      });
+  });
+
+  /**
+   * @description - Filter all requests
+   */
+  it('should return all /requests/filter', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests/filter?searchText=Chairs&status=All&page=1')
       .set('authorization', `Bearer ${userToken}`)
       .then((res) => {
         expect(res).to.have.status(200);
@@ -210,7 +226,7 @@ describe('API endpoint login user', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('You can only reject a new request');
+        expect(res.body.error.message).to.equal('You can only reject a new/pending request');
         done();
       });
   });
@@ -226,7 +242,7 @@ describe('API endpoint login user', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message).to.equal('You can only approve a new request');
+        expect(res.body.error.message).to.equal('You can only approve a new/disapproved request');
         done();
       });
   });

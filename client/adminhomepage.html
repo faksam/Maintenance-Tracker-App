@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cairo|Rokkitt" rel="stylesheet">
     <!--Import Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Import css-->
@@ -23,8 +24,8 @@
             <section class="navigation">
                 <div class="nav-container">
                     <div class="brand">
-                        <a href="./index.html">
-                            <img src="./assets/images/maintenance.png" style="height: 50px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
+                        <a style="font-size: 25px; font-weight: bold;" href="./adminhomepage.html">
+                            <img src="./assets/images/maintenance.png" style="height: 60px; float: left;" alt="Logo"> &nbsp; M-T-A</a>
                     </div>
                     <nav>
                         <div class="nav-mobile">
@@ -67,11 +68,11 @@
                     </div>
                     <div class="col-m col-1-3-m" style="padding-top: 10px;">
                         <select id="filterByStatus">
-                            <option value="all">All</option>
-                            <option value="new">New</option>
-                            <option value="pending">Approved</option>
-                            <option value="disapproved">Rejected</option>
-                            <option value="resolved">Resolved</option>
+                            <option value="All">All</option>
+                            <option value="New">New</option>
+                            <option value="Pending">Approved</option>
+                            <option value="Disapproved">Rejected</option>
+                            <option value="Resolved">Resolved</option>
                         </select>
                     </div>
                     <br>
@@ -84,7 +85,6 @@
                         <th colspan="3">Description</th>
                         <th>Status</th>
                         <th>Date</th>
-                        <th colspan="2">Approve/Reject</th>
                     </tr>
                     </thead>
                     <tbody id="requestTableBody">
@@ -106,46 +106,28 @@
                             <br>
                             <div class="col col-1">
                                 <div class="row">
-                                    <h2>
-                                        <b>Request title: </b>
-                                    </h2>
-                                    <h3 id="viewRequestTitle">
-                                        <b></b>
-                                    </h3>
+                                    <h3 id="viewRequestTitle"></h3>
                                     <hr>
-                                    <h2>
-                                        <b>Request content:</b>
-                                    </h2>
                                     <h3 id="viewRequestDescription"></h3>
-                                    <h2>
-                                        <b>Request by:</b>
-                                    </h2>
                                     <h3 id="viewRequestUser"></h3>
-                                    <h2>
-                                        <b>Request date:</b>
-                                    </h2>
                                     <h3 id="viewRequestDate"></h3>
-                                    <h2>
-                                        <b>Reason For Rejection:</b>
-                                    </h2>
-                                    <h3 id="viewRejectionReason"></h3>
-                                    <h2>
-                                        <b>Status:</b>
-                                    </h2>
-                                    <h3 id="viewRequestStatus"></h3>
                                 </div>
-
-                                <div class="" style="width: 45% ;">
-                                    <a class="" href="./adminhomepage.html">
-                                        <button id="viewRequestButton" class="">
-                                            Resolve
-                                        </button>
-                                    </a>
+                                <div class="row">
+                                    <h3><b>Status:</b></h3>
+                                    <h3 id="viewRequestStatus"></h3>
+                                    <h3><b>Reason For Rejection:</b></h3>
+                                    <h3 id="viewRejectionReason"></h3>
                                 </div>
                             </div>
-                            <br>
-                            <br>
-                            <br>
+                            <div class="col col-1-3">
+                                <button id="viewRequestApprove" class="">Approve</button>
+                            </div>
+                            <div class="col col-1-3">
+                                <button id="viewRequestDisapprove" class="">Disapprove</button>
+                            </div>
+                            <div class="col col-1-3">
+                                <button id="viewRequestResolve" class="">Resolve</button>
+                            </div>
                         </div>
                     </div>
                 </div>

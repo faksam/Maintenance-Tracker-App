@@ -8,6 +8,7 @@ const userAccountSpan = document.getElementById('userAccountSpan');
 const userAccountPasswordSpan = document.getElementById('userAccountPasswordSpan');
 
 const changePasswordButton = document.getElementById('changePasswordButton');
+const adminhomepage = document.getElementById('adminhomepage');
 
 const token = `Bearer ${localStorage.getItem('mta_token_fms')}`;
 
@@ -19,7 +20,11 @@ const token = `Bearer ${localStorage.getItem('mta_token_fms')}`;
  */
 const displayError = (error, errorElement) => {
   const errorMessage = document.getElementById(errorElement);
-  if (typeof (error) === 'string') { errorMessage.innerHTML = error; } else if (typeof (error) === 'object') { errorMessage.innerHTML = Object.values(error); }
+  if (typeof (error) === 'string') {
+    errorMessage.innerHTML = error;
+  } else if (typeof (error) === 'object') {
+    errorMessage.innerHTML = Object.values(error);
+  }
   errorMessage.style.display = 'block';
   errorMessage.style.color = 'red';
 };
@@ -30,10 +35,10 @@ const displayError = (error, errorElement) => {
  */
 const displayAccountDetails = () => {
   const {
-    fullName, email, phoneNo,
+    fullName, email,
   } = accountDetailsForm.elements;
   const {
-    editFullName, editEmail, editPhoneNo,
+    editFullName, editEmail,
   } = editAccountForm.elements;
   const url = '/api/v1/users/account';
 
@@ -51,10 +56,8 @@ const displayAccountDetails = () => {
       if (body.status === 200 && body.success === true) {
         fullName.value = body.data.fullName;
         email.value = body.data.email;
-        phoneNo.value = body.data.phoneNo;
         editFullName.value = body.data.fullName;
         editEmail.value = body.data.email;
-        editPhoneNo.value = body.data.phoneNo;
       }
     });
 };
@@ -67,12 +70,12 @@ const displayAccountDetails = () => {
 const editAccount = (evt) => {
   evt.preventDefault();
   const {
-    editFullName, editEmail, editPhoneNo,
+    editFullName, editEmail,
   } = editAccountForm.elements;
   const url = '/api/v1/users/account';
 
   const data = {
-    email: editEmail.value, fullName: editFullName.value, phoneNo: editPhoneNo.value,
+    email: editEmail.value, fullName: editFullName.value,
   };
 
   const fetchData = {
@@ -199,3 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userRole = localStorage.getItem('mta_user_role_fms');
+
+  if (userRole === 'Admin') {
+    adminhomepage.style.display = 'block';
+  }
+});
