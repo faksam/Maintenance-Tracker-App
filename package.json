@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "clean": "rimraf ./dist/",
+    "build-babel": "babel ./server/src --out-dir ./dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log,./dist --copy-files",
+    "build": "npm run clean && npm run build-babel",
     "start": "babel-node ./server/src/app.js",
     "drop-table": "babel-node ./server/src/migrations/drop/requests.table.js && babel-node ./server/src/migrations/drop/users.table.js",
     "create-table": "babel-node ./server/src/migrations/create/users.table.js && babel-node ./server/src/migrations/create/requests.table.js",
