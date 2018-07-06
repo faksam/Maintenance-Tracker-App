@@ -17,7 +17,7 @@ export default (app) => {
   app.get('/requests/filter', verifyUserToken, authorizeAdmin, adminController.filterRequests);
   app.get('/requests/:id([0-9]+)', verifyUserToken, authorizeAdmin, adminController.getRequest);
   app.put('/requests/:id([0-9]+)/approve', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, checkIfRequestIsNew, adminController.approveRequest, getUserDetails, sendNotification);
-  app.put('/requests/:id([0-9]+)/disapprove', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, checkDisapprovalInput, verifyDisapprovalInput, checkIfRequestRejectable, adminController.rejectRequest, getUserDetails, sendNotification);
+  app.put('/requests/:id([0-9]+)/disapprove', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, verifyDisapprovalInput, checkDisapprovalInput, checkIfRequestRejectable, adminController.rejectRequest, getUserDetails, sendNotification);
   app.put('/requests/:id([0-9]+)/resolve', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, checkIfRequestPending, adminController.resolveRequest, getUserDetails, sendNotification);
   app.delete('/requests/:id([0-9]+)/delete', verifyUserToken, authorizeAdmin, validateRequestID, checkIfRequestExist, adminController.deleteRequest);
 };

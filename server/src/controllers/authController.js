@@ -12,7 +12,7 @@ let userToken;
    * @description - Create Token
    * @static
    *
-   * @param {object} user - User Object 
+   * @param {object} user - User Object
    *
    * @returns {object} Encoded token
    */

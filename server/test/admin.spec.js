@@ -210,7 +210,24 @@ describe('API endpoint login user', () => {
       .then((res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.error.message.comment).to.equal('Please input the reason why this request is disapproved, input must be between 20-500 characters');
+        expect(res.body.error.message.comment).to.equal('Please input the reason why this request is disapproved.');
+        done();
+      });
+  });
+
+
+  /**
+   * @description - PUT Should not Disapprove if request status is not New
+   */
+  it('should not Disapprove if rejection comment is invalid request/3', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/3/disapprove')
+      .set('authorization', `Bearer ${userToken}`)
+      .send({ status: 'Disapprove', comment: 'I do ' })
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error.message.comment).to.equal('Input must be between 20-500 characters.');
         done();
       });
   });
