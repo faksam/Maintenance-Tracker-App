@@ -23,7 +23,7 @@ export const checkIfUserRequestExist = (req, res, next) => {
   const selectQuery = {
     name: 'get-users-request',
     text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
-    values: [decode.sub, requestId],
+    values: [decode.id, requestId],
   };
   pool.query(selectQuery, (err, result) => {
     pool.end();

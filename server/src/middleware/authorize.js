@@ -45,7 +45,7 @@ export const authorizeAdmin = (req, res, next) => {
     connectionString,
   });
   const queryValues = [];
-  queryValues.push(decode.sub);
+  queryValues.push(decode.id);
   pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
     pool.end();
     if (err) {
@@ -82,7 +82,7 @@ export const authorizeUser = (req, res, next) => {
     connectionString,
   });
   const queryValues = [];
-  queryValues.push(decode.sub);
+  queryValues.push(decode.id);
   pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
     pool.end();
     if (err) {

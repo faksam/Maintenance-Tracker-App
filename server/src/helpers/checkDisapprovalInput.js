@@ -1,17 +1,17 @@
 /**
- * @description - Verify Reject/Disapprove Input
+ * @description - Check Reject/Disapprove Input
  *
  * @param {object} req HTTP Request
  * @param {object} res HTTP Response
  * @param {object} next call next funtion/handler
  * @returns {object} returns res parameter
  */
-export const verifyDisapprovalInput = (req, res, next) => {
+export const checkDisapprovalInput = (req, res, next) => {
   const error = {};
   error.message = {};
   const errorChecker = false;
 
-  req.checkBody('comment', 'Please input the reason why this request is disapproved.').notEmpty().isString();
+  req.checkBody('comment', 'Input must be between 20-500 characters.').notEmpty().isLength({ min: 20, max: 500 }).isString();
 
   const errors = req.validationErrors();
   if (errors) {
@@ -36,4 +36,5 @@ export const verifyDisapprovalInput = (req, res, next) => {
   return next();
 };
 
-export default verifyDisapprovalInput;
+export default checkDisapprovalInput;
+

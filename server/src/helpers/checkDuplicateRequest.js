@@ -30,7 +30,7 @@ export const checkDuplicateRequest = (req, res, next) => {
             AND title = $2
             AND description = $3
             AND status = $4`,
-    values: [decode.sub, title, description, 'New'],
+    values: [decode.id, title, description, 'New'],
   };
   pool.query(selectQuery, (err, result) => {
     if (err) {

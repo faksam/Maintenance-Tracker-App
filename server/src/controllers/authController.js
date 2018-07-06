@@ -7,23 +7,33 @@ import { setConnectionString } from '../helpers/connectionString';
 const connectionString = setConnectionString();
 
 let userToken;
+
+/**
+   * @description - Create Token
+   * @static
+   *
+   * @param {object} user - User Object
+   *
+   * @returns {object} Encoded token
+   */
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
   return jwt.encode({
-    email: user.email, role: user.role, sub: user.id, iat: timestamp,
+    email: user.email, role: user.role, id: user.id, iat: timestamp,
   }, process.env.SECRET_TOKEN);
 };
-  /**
-   * @description - Signup a new user
-   * @static
-   *
-   * @param {object} req - HTTP Request
-   * @param {object} res - HTTP Response
-   *
-   * @memberOf authController
-   *
-   * @returns {object} response HTTP Response JSON Object
-   */
+
+/**
+ * @description - Signup a new user
+ * @static
+ *
+ * @param {object} req - HTTP Request
+ * @param {object} res - HTTP Response
+ *
+ * @memberOf authController
+ *
+ * @returns {object} response HTTP Response JSON Object
+ */
 const signup = (req, res) => {
   const pool = new Pool({
     connectionString,
@@ -62,16 +72,16 @@ const signup = (req, res) => {
       pool.end();
     });
 };
-  /**
-   * @description - Login a new user
-   * @static
-   *
-   * @param {object} req - HTTP Request
-   * @param {object} res - HTTP Response
-   *
-   * @memberOf authController
-   * @returns {object} response HTTP Response JSON Object
-   */
+/**
+ * @description - Login a new user
+ * @static
+ *
+ * @param {object} req - HTTP Request
+ * @param {object} res - HTTP Response
+ *
+ * @memberOf authController
+ * @returns {object} response HTTP Response JSON Object
+ */
 const login = (req, res) => {
   const pool = new Pool({
     connectionString,

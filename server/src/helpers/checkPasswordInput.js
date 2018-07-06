@@ -24,7 +24,7 @@ export const checkPasswordInput = (req, res, next) => {
   } = req.body;
   const decode = decodeToken(req.headers.authorization);
   const queryValues = [];
-  queryValues.push(decode.sub);
+  queryValues.push(decode.id);
   pool.query('SELECT * FROM users WHERE id = $1', [queryValues[0]], (err, result) => {
     bcrypt.compare(password, result.rows[0].password)
       .then((validPassword) => {

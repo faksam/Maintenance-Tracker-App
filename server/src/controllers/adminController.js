@@ -142,8 +142,8 @@ export default class adminController {
     });
     const insertQuery = {
       name: 'update-users-requests',
-      text: 'UPDATE requests SET status=$1 WHERE id = $2 RETURNING *',
-      values: [status, requestId],
+      text: 'UPDATE requests SET status=$1, comment=$3 WHERE id = $2 RETURNING *',
+      values: [status, requestId, null],
     };
     pool.query(insertQuery, (err, result) => {
       req.data = result.rows;

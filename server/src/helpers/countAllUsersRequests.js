@@ -20,7 +20,7 @@ export const countAllUsersRequests = (req, res, next) => {
     name: 'get-users-requests',
     text: `SELECT COUNT(userid) FROM requests
               WHERE userid = $1`,
-    values: [decode.sub],
+    values: [decode.id],
   };
   pool.query(selectQuery, (err, result) => {
     req.requestCount = result.rows[0].count;
