@@ -39,6 +39,22 @@ describe('API endpoint /users/requests', () => {
   });
 
   /**
+   * @description - GET List all Users requests
+   */
+  it('should return all /users/requests', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests/filter?searchText=&status=New&page=1')
+      .set('authorization', `Bearer ${userToken}`)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data[0].title).to.equal('Office Chairs Are All squeaky');
+        expect(res.body.data[0].description).to.equal('All the Office Chairs Are squeaky in my office and one is broken. When will it be fixed and repaired. It is very important.');
+        done();
+      });
+  });
+
+  /**
    * @description - GET List users requests by page
    */
   it('should return all /users/requests?page=1', (done) => {
