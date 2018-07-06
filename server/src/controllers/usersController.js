@@ -33,7 +33,7 @@ export default class usersController {
               FROM requests INNER JOIN users ON (requests.userid = users.id) 
               WHERE userid = $1
               ORDER BY requests.id LIMIT 20`,
-      values: [decode.sub],
+      values: [decode.id],
     };
     if (req.query.page !== undefined) {
       selectQuery.text = `SELECT requests.id, requests.title, requests.description, requests.comment, requests.date, requests.status, requests.userid, users.fullname 
@@ -75,7 +75,7 @@ export default class usersController {
     const selectQuery = {
       name: 'get-users-request',
       text: 'SELECT * FROM requests WHERE userid = $1 AND id = $2',
-      values: [decode.sub, requestId],
+      values: [decode.id, requestId],
     };
     pool.query(selectQuery, (err, result) => {
       pool.end();
@@ -111,7 +111,7 @@ export default class usersController {
                 WHERE userid = $1 AND title like $2 AND description like $2
                 OR userid = $1 AND title like $2 AND description like $2
                 ORDER BY id DESC LIMIT 20`,
-      values: [decode.sub, `%${req.query.searchText}%`],
+      values: [decode.id, `%${req.query.searchText}%`],
     };
     if (req.query.status !== 'All') {
       selectQuery.text = `SELECT requests.id, requests.title, requests.description, 
@@ -162,7 +162,7 @@ export default class usersController {
     const insertQuery = {
       name: 'create-a-new-users-requests',
       text: 'INSERT INTO requests (title, description, date, status, userid) VALUES ($1, $2, $3, $4, $5)',
-      values: [title, description, new Date(), 'New', decode.sub],
+      values: [title, description, new Date(), 'New', decode.id],
     };
     pool.query(insertQuery, () => {
       res.status(201).send({
@@ -201,7 +201,7 @@ export default class usersController {
     const updateQuery = {
       name: 'update-users-requests',
       text: 'UPDATE requests SET title=$1, description=$2 WHERE id = $3 AND userid = $4 RETURNING *',
-      values: [title, description, requestId, decode.sub],
+      values: [title, description, requestId, decode.id],
     };
     pool.query(updateQuery, (err, result) => {
       res.status(200).send({

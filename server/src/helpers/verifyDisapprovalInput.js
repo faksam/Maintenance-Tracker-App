@@ -11,7 +11,7 @@ export const verifyDisapprovalInput = (req, res, next) => {
   error.message = {};
   const errorChecker = false;
 
-  req.checkBody('comment', 'Please input the reason why this request is disapproved, input must be between 20-500 characters').notEmpty().isLength({ min: 20, max: 500 }).isString();
+  req.checkBody('comment', 'Please input the reason why this request is disapproved.').notEmpty().isString();
 
   const errors = req.validationErrors();
   if (errors) {

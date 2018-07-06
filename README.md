@@ -109,9 +109,7 @@ For more details contact contact@fakunlesamuel.com
 
 ## License
 This project is authored by **Samuel Fakunle** (contact@fakunlesamuel.com) and is licensed for your use, modification and distribution under the **MIT** license.
-[MIT][license] © [samuel-fakunle][author]
+[MIT][license] © [Samuel Fakunle](https://github.com/faksam)
 <!-- Definitions -->
 [license]: LICENSE
-[author]: samuel-fakunle
-
 

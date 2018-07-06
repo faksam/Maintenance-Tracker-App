@@ -31,7 +31,7 @@ export default class accountController {
     const selectQuery = {
       name: 'get-users-account-details',
       text: 'SELECT * FROM users WHERE id = $1',
-      values: [decode.sub],
+      values: [decode.id],
     };
     pool.query(selectQuery, (err, result) => {
       const [user] = result.rows;
@@ -73,7 +73,7 @@ export default class accountController {
         const insertQuery = {
           name: 'update-users-password',
           text: 'UPDATE users SET password=$1 WHERE id = $2 RETURNING *',
-          values: [hash, decode.sub],
+          values: [hash, decode.id],
         };
         pool.query(insertQuery, (err, result) => {
           const [user] = result.rows;
@@ -113,7 +113,7 @@ export default class accountController {
     const insertQuery = {
       name: 'get-users-requests',
       text: 'UPDATE users SET fullname=$1, email=$2 WHERE id = $3 RETURNING *',
-      values: [fullName, email, decode.sub],
+      values: [fullName, email, decode.id],
     };
     pool.query(insertQuery, (err, result) => {
       const [user] = result.rows;
