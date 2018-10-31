@@ -4,6 +4,7 @@ import logger from 'morgan';
 import expressValidator from 'express-validator';
 import dotenv from 'dotenv';
 import ejs from 'ejs';
+import cors from 'cors';
 
 import apiv1 from './routes/v1/';
 
@@ -26,6 +27,7 @@ const PORT = process.env.PORT || 3456;
 app.listen(PORT, () => {
 });
 
+app.use(cors());
 app.use(expressValidator());
 app.use(logger('dev'));
 app.use(express.json());
